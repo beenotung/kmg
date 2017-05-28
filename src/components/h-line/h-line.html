@@ -1,0 +1,16 @@
+<!-- Generated template for the HLineComponent component -->
+
+<div
+  *ngIf="rawColor"
+  [style.background]="color"
+  [style.height]="height"
+  [style.padding]="padding"
+  class="center-line"
+></div>
+<ion-navbar
+  *ngIf="!rawColor"
+  [color]="color"
+  no-padding
+  [style.padding]="padding"
+  [style.height]="height"
+></ion-navbar>

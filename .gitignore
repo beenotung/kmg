@@ -34,4 +34,5 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 !.idea/modules.xml
-!.idea/ionic-horizon-seed.iml
+!.idea/*.iml
+*.orig

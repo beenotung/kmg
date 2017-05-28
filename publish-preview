@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+cd ./platforms/browser/
+rm preview -rf
+mv www preview
+tar czf preview.tar.gz preview
+#aipfs preview.tar.gz

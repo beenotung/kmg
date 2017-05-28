@@ -1,0 +1,8 @@
+#!/bin/bash
+res=$(hz version)
+if [ $? != 0 ]; then
+  ./install-dev
+fi
+if [ ! -d node_modules ]; then
+  ./init
+fi
