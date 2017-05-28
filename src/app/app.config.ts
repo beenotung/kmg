@@ -1,4 +1,3 @@
-
 import {bindFunction} from "../../lib/tslib/src/lang";
 import {setProp} from "../../lib/tslib/src/functional";
 import {createAsyncLazy} from "../../lib/tslib/src/lazy";
@@ -16,12 +15,14 @@ export namespace config {
   export const Toast_Duration_Long = 8000;
 
   const server_name = "STUB";
+
   class Delayed {
     serverIp: string;
     serverPort: number;
     serverHost = () => `${this.serverIp}:${this.serverPort}`;
     serverUrlBase = () => `http://${this.serverHost()}/`;
   }
+
   let delayed = new Delayed();
 
   /**@remark must be called before loading horizon */
@@ -44,7 +45,6 @@ export namespace config {
     } else {
       delayed.serverIp = 'localhost';
       delayed.serverPort = 8181;
-      delayed.serverIp = 'ec2-35-165-53-195.us-west-2.compute.amazonaws.com';
     }
 
 

@@ -39,7 +39,6 @@ export class DatabaseProvider {
   }
 
   initialize() {
-    debugger;
     console.log('bootstrapping horizon...');
     (async () => {
       let sub = CustomBrowserXhr.progressEventEmitter.subscribe((event: any) => {
@@ -82,7 +81,6 @@ export class DatabaseProvider {
   }
 
   getHz(): Promise<typeStubHorizon.Horizon> {
-    debugger;
     let defer = createDefer();
     if (DatabaseProvider.dbCache.hz) {
       defer.resolve(DatabaseProvider.dbCache.hz);
