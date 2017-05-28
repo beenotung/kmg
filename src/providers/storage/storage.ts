@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import {Injectable} from "@angular/core";
+import {Storage} from "@ionic/storage";
+import "rxjs/add/operator/map";
 
 /*
   Generated class for the StorageProvider provider.
@@ -10,9 +10,24 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class StorageProvider {
-
-  constructor(public http: Http) {
-    console.log('Hello StorageProvider Provider');
+  constructor(public storage: Storage) {
   }
 
+  set(key: StorageKey, value: any): Promise<any> {
+    return this.storage.set(StorageKey[key], value);
+  }
+
+  get<A>(key: StorageKey): Promise<A> {
+    return this.storage.get(StorageKey[key]);
+  }
+
+  remove(key: StorageKey): Promise<any> {
+    return this.storage.remove(StorageKey[key]);
+  }
+
+}
+
+export enum StorageKey {
+  Lang
+    , UserId
 }

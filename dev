@@ -1,0 +1,21 @@
+#!/bin/bash
+if [ ! -d node_modules ]; then
+  ./init
+fi
+name="STUB"
+hash "tmux" 2>/dev/null
+if [ $? == 0 ]; then
+  ## has tmux installed
+  tmux start
+  tmux new -dP -s ionic 'ionic serve -a'
+  cd "../$name-horizon"
+  tmux new -dP -s hz 'hz serve --dev'
+  cd "../$name-ionic"
+  tmux attach -t ionic
+else
+  ## do not has tmux installed
+  cd "../$name-horizon"
+  hz serve --dev &
+  cd "../$name-ionic"
+  ionic serve -a
+fi

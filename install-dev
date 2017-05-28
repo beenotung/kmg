@@ -1,0 +1,3 @@
+#!/bin/bash
+npm i -g ionic cordova horizon
+echo 'install-dev done.'
