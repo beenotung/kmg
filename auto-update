@@ -1,0 +1,12 @@
+#!/bin/bash
+version="0"
+while [ true ]; do
+  git pull
+  v=$(./version)
+  if [ "$v" != "$version" ]; then
+    git submodule update --init
+    date
+    echo "version changed: $version -> $v"
+  fi
+  sleep 8
+done

@@ -1,6 +1,5 @@
 #!/bin/bash
 npm install
-ionic plugin reset
 git submodule update --init
 lib/tslib/inject-lib
 echo 'done.'

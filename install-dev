@@ -1,3 +1,13 @@
 #!/bin/bash
-npm i -g ionic cordova horizon
+##
+## install npm packages
+##
+## use -f | --full flag to indicate a full installation
+##
+
+packages="npm-run"
+if [ "$1" == "-f" ] || [ "$1" == "--full" ]; then
+  packages="$packages ionic cordova horizon"
+fi
+npm i -g $packages
 echo 'install-dev done.'
