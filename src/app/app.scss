@@ -14,3 +14,9 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@import "../../lib/scsslib/src/common";
+@import "../theme/variables";
+/* to be extracted to scsslib */
+@import "../theme/common";
+@import "../theme/theme";

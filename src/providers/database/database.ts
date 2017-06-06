@@ -1,19 +1,17 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/map";
-import * as typeStubHorizon from "../../../lib/typestub-horizon-client/index";
-import {OldRecord} from "../../../lib/typestub-horizon-client/index";
 import {autoRetryAsync, createDefer, Defer} from "../../../lib/tslib/src/async";
 import {config} from "../../app/app.config";
 import {CustomBrowserXhr} from "../../../lib/tslib/src/angular";
-import {horizon_api_size, load_horizon_ng} from "../../../lib/tslib/src/horizon";
+import {getHorizon, horizon_api_size, load_horizon_ng} from "../../../lib/tslib/src/horizon";
 import {StorageKey, StorageProvider} from "../storage/storage";
 import {clear} from "../../../lib/tslib/src/array";
+import {Horizon, OldRecord, TableObject} from "../../../lib/typestub-horizon-client/index";
 
-declare let Horizon: typeStubHorizon.Horizon;
 
 export class DBCache {
-  hz: typeStubHorizon.Horizon;
+  hz: Horizon;
 }
 
 /*
@@ -51,7 +49,7 @@ export class DatabaseProvider {
 
       console.log('connecting to horizon...');
       // let hz = Horizon({host: config.serverIp});
-      DatabaseProvider.dbCache.hz = Horizon();
+      DatabaseProvider.dbCache.hz = getHorizon()();
       DatabaseProvider.dbCache.hz.onReady(() => {
         console.log('horizon is ready');
         onConnected().then(() =>
@@ -80,7 +78,7 @@ export class DatabaseProvider {
     return this.storage.remove(StorageKey.UserId);
   }
 
-  getHz(): Promise<typeStubHorizon.Horizon> {
+  getHz(): Promise<Horizon> {
     let defer = createDefer();
     if (DatabaseProvider.dbCache.hz) {
       defer.resolve(DatabaseProvider.dbCache.hz);
@@ -91,7 +89,7 @@ export class DatabaseProvider {
     return defer.promise;
   }
 
-  getTable<A>(name: string): Promise<typeStubHorizon.TableObject<A>> {
+  getTable<A>(name: string): Promise<TableObject<A>> {
     return this.getHz().then(hz => hz(name));
   }
 
@@ -103,13 +101,13 @@ export class DatabaseProvider {
 
 type Table<A> = {
   initTable: (db: DatabaseProvider) => Promise<any>
-  getTable: (db: DatabaseProvider) => Promise<typeStubHorizon.TableObject<A>>
+  getTable: (db: DatabaseProvider) => Promise<TableObject<A>>
 }
 export const Tables: Table<OldRecord>[] = [];
 
 
 export namespace DatabaseProvider {
-  export const pendings: Defer<typeStubHorizon.Horizon, any>[] = [];
+  export const pendings: Defer<Horizon, any>[] = [];
   export let progress: number;
   export let dbCache = new DBCache();
 }

@@ -1,0 +1,5 @@
+/* themed background color */
+[bg-color=dark] {
+  background-color: map_get($colors, dark);
+  color: white;
+}

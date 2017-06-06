@@ -2,16 +2,15 @@ import {Component} from "@angular/core";
 import {Platform} from "ionic-angular";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
-
-import {HomePage} from "../pages/home/home";
-import {TranslateService} from "ng2-translate";
 import {CommonProvider} from "../providers/common/common";
+import {TranslateService} from "@ngx-translate/core";
+import {WelcomePage} from "../pages/welcome/welcome";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = HomePage;
+  rootPage: any = WelcomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     , translate: TranslateService
@@ -22,6 +21,8 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+    /* dev */
+    // this.rootPage = SignupPage;
   }
 }
 

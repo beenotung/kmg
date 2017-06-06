@@ -1,0 +1,32 @@
+
+[fill-width] {
+  min-width: 100%;
+}
+
+[fill-height] {
+  min-height: 100%;
+}
+
+[fill-parent] {
+  @extend [fill-width];
+  @extend [fill-height];
+}
+
+[center-verticle] {
+  display: flex;
+  align-items: center;
+}
+
+.center-wrapper {
+  text-align: center;
+}
+
+.center-wrapper * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-line {
+  @extend .center-wrapper;
+  width: 100%;
+}

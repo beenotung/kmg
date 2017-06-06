@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
-import {TranslateService} from "ng2-translate";
 import {StorageKey, StorageProvider} from "../storage/storage";
 import {first_non_null} from "../../../lib/tslib/src/lang";
 import {config} from "../../app/app.config";
+import {TranslateService} from "@ngx-translate/core";
 
 /*
   Generated class for the CommonProvider provider.
@@ -25,12 +25,15 @@ export class CommonProvider {
     /* use env default language */
     translate.setDefaultLang(lang);
     translate.use(lang);
+    console.debug('use lang', lang);
 
     /* use user choice language */
     storage.get<string>(StorageKey.Lang)
       .then(lang => {
-        if (lang)
-          translate.use(lang)
+        if (lang) {
+          translate.use(lang);
+          console.debug('use lang', lang);
+        }
       })
     ;
   }
