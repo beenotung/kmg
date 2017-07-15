@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noImplicitThis": true,
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "es2015"

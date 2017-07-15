@@ -1,13 +1,4 @@
 #!/bin/bash
-##
-## install npm packages
-##
-## use -f | --full flag to indicate a full installation
-##
 
-packages="npm-run"
-if [ "$1" == "-f" ] || [ "$1" == "--full" ]; then
-  packages="$packages ionic cordova horizon"
-fi
-npm i -g $packages
+npm i -g npm-run
 echo 'install-dev done.'

@@ -1,0 +1,33 @@
+page-login {
+
+  //img.logo {
+  //  width: 25px;
+  //  height: 29px;
+  //}
+
+  font-size: medium;
+
+  .lang-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  p.title {
+    font-size: xx-large;
+    margin: 1em;
+  }
+
+  ion-row.inputfield {
+    padding: 1em 0 0;
+    ion-item {
+      background: transparent;
+    }
+  }
+
+  ion-footer {
+    ion-row {
+      padding: 0.5em;
+      flex-direction: row-reverse;
+    }
+  }
+}

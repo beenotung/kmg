@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+#./build-web && ./publish-web && echo 'done dev-web.'
+
+./build-web
+cd ./platforms/browser/www
+echo "STUB.surge.sh" > CNAME
+echo "*" > CORS
+npm-run surge .
+cd ../../../
+
+./publish-web
+
+echo 'done dev-web.'

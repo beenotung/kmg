@@ -1,6 +1,13 @@
-import {Injectable} from "@angular/core";
-import {Storage} from "@ionic/storage";
-import "rxjs/add/operator/map";
+import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import 'rxjs/add/operator/map';
+
+export enum StorageKey {
+  lang
+    , role
+    , user_id
+    , notices
+}
 
 /*
   Generated class for the StorageProvider provider.
@@ -13,21 +20,21 @@ export class StorageProvider {
   constructor(public storage: Storage) {
   }
 
-  set(key: StorageKey, value: any): Promise<any> {
+  async set(key: StorageKey, value: any) {
     return this.storage.set(StorageKey[key], value);
   }
 
-  get<A>(key: StorageKey): Promise<A> {
+  async get<A>(key: StorageKey): Promise<A> {
     return this.storage.get(StorageKey[key]);
   }
 
-  remove(key: StorageKey): Promise<any> {
+  async remove(key: StorageKey) {
     return this.storage.remove(StorageKey[key]);
   }
 
-}
-
-export enum StorageKey {
-  Lang
-    , UserId
+  async append<A>(key: StorageKey, x: A) {
+    const xs: A[] = await this.get<A[]>(key) || <A[]>[];
+    xs.push(x);
+    return this.set(key, xs);
+  }
 }

@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-set -p pipefail
-
-npm-run tsc src/app/main.ts --lib es2015,dom --experimentalDecorators --sourcemap --target es5
-ionic cordova build browser --aot
-cd ./platforms/browser/www/
-for f in **/*.js; do sed 's,/config.xml,config.xml,g' -i "$f"; done
-echo "done build-preview."

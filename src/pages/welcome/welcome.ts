@@ -1,9 +1,9 @@
-import {Component} from "@angular/core";
-import {NavController, NavParams} from "ionic-angular";
-import {TranslateService} from "@ngx-translate/core";
-import {CommonProvider} from "../../providers/common/common";
-import "rxjs/add/operator/toPromise";
-import {DatabaseProvider} from "../../providers/database/database";
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
+import {TranslateService} from '@ngx-translate/core';
+import 'rxjs/add/operator/toPromise';
+import {DatabaseProvider} from '../../providers/database/database';
+import {CommonService} from '../../providers/common-service/common-service';
 
 /**
  * Generated class for the WelcomePage page.
@@ -23,7 +23,7 @@ export class WelcomePage {
 
   constructor(public navCtrl: NavController
     , private translate: TranslateService
-    , private comm: CommonProvider
+    , private comm: CommonService
     , private db: DatabaseProvider
     , public navParams: NavParams) {
     translate.get('test').toPromise().then(s => this.text = s);

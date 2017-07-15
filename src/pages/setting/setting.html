@@ -1,0 +1,36 @@
+<!--
+  Generated template for the SettingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'setting_.title'|translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-title>{{'setting_.app-setting'|translate}}</ion-title>
+    <ion-item>
+      <ion-label>
+        {{'setting_.lang'|translate}}
+      </ion-label>
+      <ion-select [(ngModel)]="lang" (ionChange)="changeLang()">
+        <ion-option value="en">English</ion-option>
+        <ion-option value="zh">中文</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="false">
+      <ion-label>{{'setting_.notice'|translate}}</ion-label>
+      <ion-toggle [(ngModel)]="pushNotice"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

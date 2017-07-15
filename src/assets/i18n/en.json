@@ -1,5 +1,76 @@
 {
   "appname": "Ionic Horizon Seed",
   "test": "Translate Success",
+  "button_": {
+    "login": "Login",
+    "next": "Next",
+    "view-result": "View Results",
+    "save": "Save",
+    "send-for-approval": "Send for Approval",
+    "delete": "Delete",
+    "block": "Block",
+    "invite": "Invite",
+    "accept": "Accept",
+    "reject": "Reject",
+    "pay": "Pay Now",
+    "": ""
+  },
+  "login_": {
+    "greet": "Welcome Back!",
+    "no-account": "Don't have an account?",
+    "signup": "Signup now",
+    "error_": {
+      "not_found_title": "Login failed",
+      "not_found": "Sorry, but it seems we don't know each other. Please check if you have entered a correct phone number."
+    },
+    "": ""
+  },
+  "logout": "Logout",
+  "tabs_": {
+    "my": "My Post",
+    "match": "Matched",
+    "match-tutor": "Tutor Posts",
+    "match-student": "Student Posts",
+    "invite": "Invites",
+    "connect": "Approval",
+    "": ""
+  },
+  "nickname": "Nickname",
+  "phone-num": "Mobile Number",
+  "setting_": {
+    "title": "Setting",
+    "app-setting": "App Setting",
+    "lang": "Language",
+    "notice": "Notification",
+    "": ""
+  },
+  "prompt_": {
+    "error-title": "Somethings went wrong :/",
+    "": ""
+  },
+  "msg_": {
+    "error_": {
+      "update_client_title": "STUB has grew further!",
+      "update_client_web": "Please refresh the app",
+      "update_client_android": "Please update the app from Google Play Store",
+      "update_client_ios": "Please update the app from Apple App Store",
+      "update_client_windows": "Please update the app from Windows Store",
+      "update_client_others": "Please update the app",
+      "network_na_title": "Connection Failed",
+      "network_na": "Sorry, but it seems you have disconnected with the outside world. Please check your Internet connection.",
+      "not_login_title": "Authentication Failed",
+      "not_login": "Sorry, but we don't welcome any unidentified guys. Please click 'OK' to login first.",
+      "account_banned_title": "Account Banned",
+      "account_banned": "Please contact us for more information.",
+      "not_impl_title": "Working in progress",
+      "not_impl": "Sorry, we are still building it. This feature is coming soon.",
+      "": ""
+    },
+    "loading": "Please wait for a moment...",
+    "version_not_match_title": "New version available",
+    "version_not_match": "Please update your version to continue.",
+    "": ""
+  },
+  ",": ", ",
   "": ""
 }

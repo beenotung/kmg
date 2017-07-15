@@ -1,9 +1,16 @@
 #!/bin/bash
+##
+## deprecated to use aws hosting the app
+## use ionic view for now
+##
 set -e
 set -o pipefail
+
+echo "[deprecated] better to use ionic view for now ..."
+sleep 2
 
 cd ./platforms/browser/
 rm preview -rf
 mv www preview
 tar czf preview.tar.gz preview
-#aipfs preview.tar.gz
+aipfs preview.tar.gz
