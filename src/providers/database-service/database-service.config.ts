@@ -1,26 +1,17 @@
-import {NavOptions} from "ionic-angular";
 import {createAsyncLazy} from "@beenotung/tslib/src/lazy";
-import {is_compatible, to_semver} from "@beenotung/tslib/src/semver";
 import {createDefer} from "@beenotung/tslib/src/async";
 import {setProp} from "@beenotung/tslib/src/functional";
 import {bindFunction} from "@beenotung/tslib/src/lang";
 import {externalAPI} from "@beenotung/tslib/src/externAPI";
 
-export namespace config {
-  export const client_version = "0.3.2";
-  export const fallbackLang = "en";
-  export let typing_speed = 1000 / 30;
+export namespace DBConfig {
+  export const db_version = "0.4.0";
   export let network_retry_interval = 8000;
-
-  export const Toast_Duration_Short = 2000;
-  export const Toast_Duration_Normal = 4000;
-  export const Toast_Duration_Long = 8000;
-
 
   export const mode: "dev" | "test" | "prod" = "dev";
   // export const mode: 'dev' | 'test' | 'prod' = 'test';
 
-  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : "seed";
+  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : "td-tmp";
 
   class Delayed {
     serverIp: string;
@@ -33,27 +24,7 @@ export namespace config {
 
   /**@remark must be called before loading horizon */
   export const initialize = createAsyncLazy<Delayed>(async () => {
-    /* check local storage client_version */
-    try {
-      const k = "client_version";
-      const old = localStorage[k];
-      if (old) {
-        const os = to_semver(old);
-        const ns = to_semver(client_version);
-        if (!is_compatible(os, ns)) {
-          console.log("Incompatible update: reset localStorage");
-          localStorage.clear();
-        }
-      }
-      localStorage[k] = client_version;
-    } catch (e) {
-      console.error(e);
-      localStorage.clear();
-      localStorage["client_version"] = client_version;
-    }
-
     const defer = createDefer<Delayed, any>();
-
 
     /* redirect horizon websocket */
     const RealWebSocket = WebSocket;
@@ -86,10 +57,15 @@ export namespace config {
 
     /* resolve backend url */
     if (server_name != "STUB") {
-      const host = await externalAPI.getHostByName(server_name);
-      // console.debug('host', host);
-      delayed.serverIp = host.ip;
-      delayed.serverPort = host.port;
+      if (location.hostname === "127.0.0.1") {
+        /* it wont work without CORS ... */
+        const host = await externalAPI.getHostByName(server_name);
+        delayed.serverIp = host.ip;
+        delayed.serverPort = host.port;
+      } else {
+        delayed.serverIp = location.hostname;
+        delayed.serverPort = +location.port;
+      }
     } else {
       delayed.serverIp = location.hostname;
       delayed.serverPort = 8181;
@@ -101,9 +77,3 @@ export namespace config {
 }
 
 
-config.initialize();
-
-export const nextPageNavOptions: NavOptions = {
-  animate: true
-  , direction: "forward"
-};

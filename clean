@@ -1,3 +1,2 @@
 #!/bin/bash
-lib/tslib/clean
-git status --ignored | grep src | xargs rm
+git status --ignored | grep src | grep -v modified | grep -v deleted  | grep -v 'new file' | grep -v renamed | xargs rm

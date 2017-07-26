@@ -1,14 +1,14 @@
-import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {CommonService} from '../providers/common-service/common-service';
-import {LoginPage} from '../pages/login/login';
-import {config} from './app.config';
-import {Role} from '../model/data/role';
+import {Component, ViewChild} from "@angular/core";
+import {Nav, Platform} from "ionic-angular";
+import {StatusBar} from "@ionic-native/status-bar";
+import {SplashScreen} from "@ionic-native/splash-screen";
+import {CommonService} from "../providers/common-service/common-service";
+import {LoginPage} from "../pages/login/login";
+import {config} from "./app.config";
+import {Role} from "../model/data/role";
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: "app.html"
 })
 export class MyApp {
   @ViewChild(Nav) nav;
@@ -24,16 +24,16 @@ export class MyApp {
     });
     common.config();
     common.nav.subscribe(res => {
-      if (res.type === 'root') {
+      if (res.type === "root") {
         this.nav.setRoot(res.pageOrViewCtrl, res.params, res.opts, res.done);
-      } else if (res.type === 'push') {
+      } else if (res.type === "push") {
       } else {
         this.nav.push(res.pageOrViewCtrl, res.params, res.opts, res.done);
-        console.error('unknown type', res);
+        console.error("unknown type", res);
       }
     });
     /* dev */
-    if (config.mode === 'dev') {
+    if (config.mode === "dev") {
       // this.rootPage = SignupStudentProfilePage;
       // this.rootPage = DemoPopupPage;
     }
@@ -42,7 +42,7 @@ export class MyApp {
 
 export module app {
   export function setRole(role: Role) {
-    document.querySelector('[data-role]')
-      .setAttribute('data-role', Role[role]);
+    document.querySelector("[data-role]")
+      .setAttribute("data-role", Role[role]);
   }
 }

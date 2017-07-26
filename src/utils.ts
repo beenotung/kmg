@@ -1,7 +1,7 @@
-import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {clear} from '../lib/tslib/src/array';
+import "rxjs/add/operator/toPromise";
+import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
+import {clear} from "@beenotung/tslib/src/array";
 
 export function subToList<A>(sub: Observable<A>, list: A[], replace = true): Subscription {
   /* TODO [later] change subscribe function to this (need mapping) */

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {isDefined} from '../../../lib/tslib/src/lang';
+import {Component, Input} from "@angular/core";
+import {isDefined} from "@beenotung/tslib/src/lang";
 
 /**
  * Generated class for the LoadingComponent component.
@@ -8,8 +8,8 @@ import {isDefined} from '../../../lib/tslib/src/lang';
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'loading',
-  templateUrl: 'loading.html'
+  selector: "loading",
+  templateUrl: "loading.html"
 })
 export class LoadingComponent {
 
@@ -19,7 +19,7 @@ export class LoadingComponent {
   imgHeight: number | string;
 
   constructor() {
-    console.log('Hello LoadingComponent Component');
+    console.log("Hello LoadingComponent Component");
   }
 
   customSize(): boolean {

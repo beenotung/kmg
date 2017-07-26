@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/observable/fromPromise';
-import {Role} from '../../model/data/role';
-import {APIResponse, CommonResult, fail, ok} from '../api';
-import {StorageKey, StorageProvider} from '../storage/storage';
-import {DatabaseProvider} from '../database/database';
-import {app} from '../../app/app.component';
-import {exitFullscreen, setFullscreen} from '../../../lib/tslib/src/dom';
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/toPromise";
+import "rxjs/add/observable/fromPromise";
+import {Role} from "../../model/data/role";
+import {APIResponse, CommonResult, fail, ok} from "../api";
+import {StorageKey, StorageService} from "../storage-service/storage-service";
+import {DatabaseService} from "../database-service/database-service";
+import {app} from "../../app/app.component";
+import {exitFullscreen, setFullscreen} from "@beenotung/tslib/src/dom";
 
 /*
   Generated class for the UserSessionProvider provider.
@@ -27,9 +27,9 @@ export class UserSession {
   private current_user_id: string;
 
   constructor(public http: Http
-    , private storage: StorageProvider
-    , private db: DatabaseProvider) {
-    console.log('Hello UserSessionProvider Provider');
+    , private storage: StorageService
+    , private db: DatabaseService) {
+    console.log("Hello UserSessionProvider Provider");
   }
 
   async checkAuth(): Promise<CommonResult> {
@@ -47,9 +47,9 @@ export class UserSession {
     }
     try {
       const res = await f(this.current_user_id);
-      if (typeof res === 'object') {
+      if (typeof res === "object") {
         const api_res = <APIResponse<E, A>>res;
-        if (typeof api_res.result_code === 'string' || typeof api_res.result_code === 'number') {
+        if (typeof api_res.result_code === "string" || typeof api_res.result_code === "number") {
           return api_res;
         }
       }

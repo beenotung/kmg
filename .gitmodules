@@ -1,9 +1,0 @@
-[submodule "lib/tslib"]
-	path = lib/tslib
-	url = https://github.com/beenotung/tslib.git
-[submodule "lib/scsslib"]
-	path = lib/scsslib
-	url = https://github.com/beenotung/scsslib.git
-[submodule "lib/typestub-horizon-client"]
-	path = lib/typestub-horizon-client
-	url = https://github.com/beenotung/typestub-horizon-client.git

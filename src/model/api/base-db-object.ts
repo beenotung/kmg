@@ -1,6 +1,8 @@
-import {DataType, OldRecord} from '../../../lib/typestub-horizon-client/index';
+import {DataType, OldRecord} from "typestub-horizon-client";
 
 export abstract class BaseDBObject implements OldRecord {
+  static _create_time = "create_time";
+
   id: string;
   [key: string]: DataType;
 
@@ -14,6 +16,12 @@ export abstract class BaseDBObject implements OldRecord {
   edit_time: number;
   editor_id: string;
   delete_date: number = 0;
-  delete_user_id: string = '';
+  delete_user_id: string = "";
   delete_reason: string;
+}
+
+export function genSearch<A extends BaseDBObject>(): A {
+  const res = <A>{};
+  res.delete_date = 0;
+  return res;
 }

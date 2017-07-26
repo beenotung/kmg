@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 
 /**
  * Generated class for the LoadingDivComponent component.
@@ -7,15 +7,15 @@ import {Component} from '@angular/core';
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'loading-div',
-  templateUrl: 'loading-div.html'
+  selector: "loading-div",
+  templateUrl: "loading-div.html"
 })
 export class LoadingDivComponent {
 
   text: string;
 
   constructor() {
-    console.log('Hello LoadingDivComponent Component');
+    console.log("Hello LoadingDivComponent Component");
   }
 
 }

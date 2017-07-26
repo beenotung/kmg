@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
-import {TranslateService} from '@ngx-translate/core';
-import {Role} from '../../model/data/role';
-import {UserSession} from '../../providers/user-session/user-session';
-import {SettingPage} from '../setting/setting';
+import {Component} from "@angular/core";
+import {NavController} from "ionic-angular";
+import {TranslateService} from "@ngx-translate/core";
+import {Role} from "../../model/data/role";
+import {UserSession} from "../../providers/user-session/user-session";
+import {SettingPage} from "../setting/setting";
 
 /**
  * Generated class for the TabsPage tabs.
@@ -12,8 +12,8 @@ import {SettingPage} from '../setting/setting';
  * more info on providers and Angular DI.
  */
 @Component({
-  selector: 'page-tabs',
-  templateUrl: 'tabs.html'
+  selector: "page-tabs",
+  templateUrl: "tabs.html"
 })
 export class TabsPage {
 

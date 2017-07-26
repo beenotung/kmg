@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from "@angular/core";
 
 enum Mode {
   theme, raw, nocolor
@@ -11,22 +11,22 @@ enum Mode {
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'h-line',
-  templateUrl: 'h-line.html'
+  selector: "h-line",
+  templateUrl: "h-line.html"
 })
 export class HLineComponent {
 
   @Input()
-  height = '2px';
+  height = "2px";
 
   @Input()
-  color = 'black';
+  color = "black";
 
   @Input()
   rawColor: boolean | string = false;
 
   @Input()
-  padding = '0';
+  padding = "0";
 
   @Input()
   nocolor: boolean = false;
@@ -34,13 +34,13 @@ export class HLineComponent {
   Mode = Mode;
 
   constructor() {
-    console.log('Hello HLineComponent Component');
+    console.log("Hello HLineComponent Component");
   }
 
   get mode(): Mode {
     return this.nocolor !== false
       ? Mode.nocolor
-      : this.rawColor == true || typeof this.rawColor === 'string'
+      : this.rawColor == true || typeof this.rawColor === "string"
         ? Mode.raw
         : Mode.theme;
   }

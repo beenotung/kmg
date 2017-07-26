@@ -1,6 +1,6 @@
-import {DataType, JSONObject} from '../../../lib/typestub-horizon-client/index';
-import {BaseDBObject} from './base-db-object';
-import {registryTable} from '../../providers/database/tables';
+import {BaseDBObject} from "./base-db-object";
+import {registryTable} from "../../providers/database-service/tables";
+import {DataType, JSONObject} from "typestub-horizon-client";
 
 export class UserAnalytics extends BaseDBObject {
   id: string;
@@ -14,7 +14,7 @@ export class UserAnalytics extends BaseDBObject {
     super();
     this.navigator = Object.keys(navigator)
       .map(x => {
-        if (typeof navigator[x] === 'function') {
+        if (typeof navigator[x] === "function") {
           return [x, navigator[x]()];
         } else {
           return [x, navigator[x]];
@@ -24,4 +24,4 @@ export class UserAnalytics extends BaseDBObject {
   }
 }
 
-registryTable(UserAnalytics, 'UserAnalytics');
+registryTable(UserAnalytics, "UserAnalytics");

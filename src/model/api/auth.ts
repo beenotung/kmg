@@ -1,16 +1,19 @@
-import {BaseDBObject} from './base-db-object';
-import {RoleType} from '../data/role';
-import {registryTable} from '../../providers/database/tables';
+import {BaseDBObject} from "./base-db-object";
+import {registryTable} from "../../providers/database-service/tables";
+import {enum_set_string} from "@beenotung/tslib/src/enum";
+import {Role} from "../data/role";
 
 export class Auth extends BaseDBObject {
   user_id: string;
-  user_role: RoleType;
+  user_role: Role;
   auth_id: string;
   auth_type: string;
 }
 
-registryTable(Auth, 'Auth');
+registryTable(Auth, "Auth");
 
 export enum AuthType {
   phone
 }
+
+enum_set_string(AuthType);

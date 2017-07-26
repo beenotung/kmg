@@ -1,21 +1,23 @@
-import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/map';
-import {StorageKey, StorageProvider} from '../storage/storage';
-import {first_non_null} from '../../../lib/tslib/src/lang';
-import {config} from '../../app/app.config';
-import {TranslateService} from '@ngx-translate/core';
-import {APIResponse, CommonResult} from '../api';
-import {swal} from '../../lib';
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
-import {Loading, LoadingController, NavOptions} from 'ionic-angular';
-import {Page} from 'ionic-angular/navigation/nav-util';
-import {clear} from '../../../lib/tslib/src/array';
-import {UserSession} from '../user-session/user-session';
-import {LoginPage} from '../../pages/login/login';
+import {Injectable} from "@angular/core";
+import "rxjs/add/operator/map";
+import {StorageKey, StorageService} from "../storage-service/storage-service";
+import {config} from "../../app/app.config";
+import {TranslateService} from "@ngx-translate/core";
+import {swal} from "../../lib";
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
+import {Loading, LoadingController, NavOptions} from "ionic-angular";
+import {Page} from "ionic-angular/navigation/nav-util";
+import {UserSession} from "../user-session/user-session";
+import {LoginPage} from "../../pages/login/login";
+import {first_non_null} from "@beenotung/tslib/src/lang";
+import {clear} from "@beenotung/tslib/src/array";
+import {APIResponse, CommonResult} from "../api";
+import {hookCheckClientVersion} from "../database-service/database-service.hook";
+import {NoticeService} from "../notice-service/notice-service";
 
 export interface NavMessage {
-  type: 'root' | 'push'
+  type: "root" | "push"
   pageOrViewCtrl: Page | string
   params?: any
   opts?: NavOptions
@@ -37,7 +39,8 @@ export class CommonService {
   constructor(private translate: TranslateService
     , private userSession: UserSession
     , private loadingCtrl: LoadingController
-    , private storage: StorageProvider) {
+    , private noticeService: NoticeService
+    , private storage: StorageService) {
     this.nav = Observable.create(o => {
       this.navObserver = o;
     });
@@ -49,21 +52,22 @@ export class CommonService {
       , this.translate.getBrowserLang()
       , this.translate.getDefaultLang()
       , config.fallbackLang
-    ).split('-')[0];
+    ).split("-")[0];
     /* use env default language */
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
-    console.debug('use lang', lang);
+    console.debug("use lang", lang);
 
     /* use user choice language */
     this.storage.get<string>(StorageKey.lang)
       .then(lang => {
         if (lang) {
           this.translate.use(lang);
-          console.debug('use lang', lang);
+          console.debug("use lang", lang);
         }
       })
     ;
+    hookCheckClientVersion(this.noticeService);
   }
 
   /**
@@ -76,13 +80,13 @@ export class CommonService {
     }
     switch (res.result_code) {
       case CommonResult.banned:
-        this.promptError('msg_.error_.account_banned', 'msg_.error_.account_banned_title');
+        this.promptError("msg_.error_.account_banned", "msg_.error_.account_banned_title");
         this.navObserver.next({
-          type: 'root'
+          type: "root"
           , pageOrViewCtrl: LoginPage
           , opts: {
             animate: true
-            , direction: 'forward'
+            , direction: "forward"
           }
         });
         return true;
@@ -90,10 +94,10 @@ export class CommonService {
         this.promptNotLogin();
         return true;
       case CommonResult.unknown:
-        this.promptError('msg_.error_.network_na', 'msg_.error_.network_na_title');
+        this.promptError("msg_.error_.network_na", "msg_.error_.network_na_title");
         return true;
       case CommonResult.not_impl:
-        this.promptError('msg_.error_.not_impl', 'msg_.error_.not_impl_title');
+        this.promptError("msg_.error_.not_impl", "msg_.error_.not_impl_title");
         return true;
       default:
         return false;
@@ -104,13 +108,13 @@ export class CommonService {
    * @param msg : translate key for pop up box body
    * @param title : translate key for pop up box title
    * */
-  async promptError(msg: string, title = 'prompt_.error-title') {
+  async promptError(msg: string, title = "prompt_.error-title") {
     const ss = await this.translate.get([title, msg]).toPromise();
-    return swal(ss[title], ss[msg], 'error');
+    return swal(ss[title], ss[msg], "error");
   }
 
   async promptNotLogin() {
-    await this.promptError('msg_.error_.not_login', 'msg_.error_.not_login_title');
+    await this.promptError("msg_.error_.not_login", "msg_.error_.not_login_title");
     await this.userSession.stopSession();
     // this.navObserver.next({
     //   type: 'root'
@@ -120,13 +124,13 @@ export class CommonService {
     //     direction: 'back'
     //   }
     // });
-    location.search = '';
+    location.search = "";
   }
 
 
   showLoading() {
     const x = this.loadingCtrl.create({
-      content: this.translate.instant('msg_.loading')
+      content: this.translate.instant("msg_.loading")
     });
     this.loadings.push(x);
     return x.present();

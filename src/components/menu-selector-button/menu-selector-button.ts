@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from "@angular/core";
 
 /**
  * Generated class for the MenuSelectorButtonComponent component.
@@ -7,8 +7,8 @@ import {Component, Input} from '@angular/core';
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'menu-selector-button',
-  templateUrl: 'menu-selector-button.html'
+  selector: "menu-selector-button",
+  templateUrl: "menu-selector-button.html"
 })
 export class MenuSelectorButtonComponent {
 
@@ -16,13 +16,13 @@ export class MenuSelectorButtonComponent {
   textContent: string;
 
   @Input()
-  left_icon: string = 'star-outline';
+  left_icon: string = "star-outline";
 
   @Input()
-  right_icon: string = 'ios-arrow-forward';
+  right_icon: string = "ios-arrow-forward";
 
   constructor() {
-    console.log('Hello MenuSelectorButtonComponent Component');
+    console.log("Hello MenuSelectorButtonComponent Component");
   }
 
 }

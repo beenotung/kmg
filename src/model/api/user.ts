@@ -1,6 +1,6 @@
-import {DataType} from '../../../lib/typestub-horizon-client/index';
-import {BaseDBObject} from './base-db-object';
-import {registryTable} from '../../providers/database/tables';
+import {BaseDBObject} from "./base-db-object";
+import {registryTable} from "../../providers/database-service/tables";
+import {DataType} from "typestub-horizon-client";
 
 /**
  * the account root object
@@ -13,4 +13,4 @@ export class User extends BaseDBObject {
   referer_id?: string;
 }
 
-registryTable(User, 'User');
+registryTable(User, "User");

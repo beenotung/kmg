@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
-import {Enum, enum_set_string} from '../../lib/tslib/src/enum';
+import "rxjs/add/operator/toPromise";
+import {Observable} from "rxjs/Observable";
+import {Enum, enum_set_string} from "@beenotung/tslib/src/enum";
 
 export enum CommonResult {
   ok
@@ -22,9 +22,9 @@ export interface APIResponse<E extends number, A> {
 
 export async function ok<A>(a_o_p: A | Observable<A> | Promise<A>): Promise<APIResponse<any, A>> {
   let a: A;
-  if (typeof a_o_p === 'object') {
+  if (typeof a_o_p === "object") {
     const o = <Observable<A>> <any> a_o_p;
-    if (typeof o.toPromise === 'function') {
+    if (typeof o.toPromise === "function") {
       a = await o.toPromise();
     } else {
       a = await <A | Promise<A>>a_o_p;
@@ -62,7 +62,7 @@ export async function extractData<Enum extends number, A>(o: Promise<APIResponse
   } catch (e) {
     let res: APIResponse<Enum, A>;
     if (is_error) {
-      console.error('API failed', e);
+      console.error("API failed", e);
       debugger;
       res = fail(CommonResult, CommonResult.unknown, e);
     } else {

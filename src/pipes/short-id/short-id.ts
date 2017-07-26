@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from "@angular/core";
 
 /**
  * Generated class for the ShortIdPipe pipe.
@@ -7,7 +7,7 @@ import {Pipe, PipeTransform} from '@angular/core';
  * Angular Pipes.
  */
 @Pipe({
-  name: 'shortID',
+  name: "shortID",
 })
 export class ShortIdPipe implements PipeTransform {
   /**
@@ -17,6 +17,6 @@ export class ShortIdPipe implements PipeTransform {
     if (!value) {
       return value;
     }
-    return value.split('-')[0];
+    return value.split("-")[0];
   }
 }

@@ -1,5 +1,4 @@
 #!/bin/bash
-npm install
-git submodule update --init
-lib/tslib/inject-lib
+./install
+./gu
 echo 'done.'

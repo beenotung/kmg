@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
-import 'rxjs/add/operator/map';
+import {Injectable} from "@angular/core";
+import {Storage} from "@ionic/storage";
+import "rxjs/add/operator/map";
 
 export enum StorageKey {
   lang
@@ -10,13 +10,13 @@ export enum StorageKey {
 }
 
 /*
-  Generated class for the StorageProvider provider.
+  Generated class for the StorageService provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class StorageProvider {
+export class StorageService {
   constructor(public storage: Storage) {
   }
 

@@ -22,6 +22,7 @@
     <preference name="SplashScreen" value="assets/img/icon.png"/>
     <preference name="SplashScreenBackgroundColor" value="#fff200"/>
     <preference name="SplashScreenDelay" value="3000"/>
+    <preference name="loadUrlTimeoutValue" value="120000" />
     <engine name="android" spec="^6.2.3"/>
     <engine name="browser" spec="~4.1.0"/>
     <plugin name="cordova-plugin-console" spec="^1.0.7"/>

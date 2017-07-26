@@ -12,5 +12,9 @@ fi
 echo "set version $o -> $v"
 
 sed -i "s/\"version\": \".*\"/\"version\": \"$v\"/" package.json
-sed -i "s/version = '.*'/version = '$v'/" src/app/app.config.ts
+sed -i "s/client_version = \".*\"/client_version = \"$v\"/" src/app/app.config.ts
 sed -i "s/version=\"$o\"/version=\"$v\"/" config.xml
+
+echo -n "please commit the changes made by version number update...";read line
+git tag "v$v"
+echo "created tag v$v"

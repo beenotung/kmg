@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {TranslateService} from '@ngx-translate/core';
-import {StorageKey, StorageProvider} from '../../providers/storage/storage';
-import {config} from '../../app/app.config';
+import {Component} from "@angular/core";
+import {NavController, NavParams} from "ionic-angular";
+import {TranslateService} from "@ngx-translate/core";
+import {StorageKey, StorageService} from "../../providers/storage-service/storage-service";
+import {config} from "../../app/app.config";
 
 @Component({
-  selector: 'page-setting',
-  templateUrl: 'setting.html',
+  selector: "page-setting",
+  templateUrl: "setting.html",
 })
 export class SettingPage {
 
@@ -16,13 +16,13 @@ export class SettingPage {
 
   constructor(public navCtrl: NavController
     , public translate: TranslateService
-    , private storage: StorageProvider
+    , private storage: StorageService
     , public navParams: NavParams) {
     this.storage.get<Lang>(StorageKey.lang).then(x => this.lang = x);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
+    console.log("ionViewDidLoad SettingPage");
   }
 
   changeLang() {
@@ -32,4 +32,4 @@ export class SettingPage {
 
 }
 
-type Lang = 'en' | 'zh';
+type Lang = "en" | "zh";

@@ -1,11 +1,11 @@
-import {Component, forwardRef, Inject} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {TabsPage} from '../tabs/tabs';
-import {is_hk_mobile_phone} from '../../../lib/tslib/src/validate';
-import {TranslateService} from '@ngx-translate/core';
-import {StorageKey, StorageProvider} from '../../providers/storage/storage';
-import {CommonService} from '../../providers/common-service/common-service';
-import {config} from '../../app/app.config';
+import {Component, forwardRef, Inject} from "@angular/core";
+import {NavController, NavParams} from "ionic-angular";
+import {TabsPage} from "../tabs/tabs";
+import {TranslateService} from "@ngx-translate/core";
+import {StorageKey, StorageService} from "../../providers/storage-service/storage-service";
+import {CommonService} from "../../providers/common-service/common-service";
+import {config} from "../../app/app.config";
+import {is_hk_mobile_phone} from "@beenotung/tslib/src/validate";
 
 /**
  * Generated class for the LoginPage page.
@@ -14,19 +14,19 @@ import {config} from '../../app/app.config';
  * on Ionic pages and navigation.
  */
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: "page-login",
+  templateUrl: "login.html",
 })
 export class LoginPage {
 
-  phone_num = '';
+  phone_num = "";
   version = config.client_version;
 
   lang: string;
 
   constructor(public navCtrl: NavController
     , private translate: TranslateService
-    , private storage: StorageProvider
+    , private storage: StorageService
     , @Inject(forwardRef(() => CommonService)) private common: CommonService
     , public navParams: NavParams) {
 
@@ -41,11 +41,11 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    console.log("ionViewDidLoad LoginPage");
   }
 
   signup() {
-    console.log('signup');
+    console.log("signup");
   }
 
   //
@@ -60,7 +60,7 @@ export class LoginPage {
   }
 
   login() {
-    console.log('login');
+    console.log("login");
     this.navCtrl.setRoot(TabsPage);
   }
 

@@ -1,14 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import {UserSession} from '../user-session/user-session';
-import {DatabaseProvider} from '../database/database';
-import {StorageProvider} from '../storage/storage';
-import {APIResponse} from '../api';
-import {BugReport} from '../../model/api/bug-report';
-import {Role, RoleType} from '../../model/data/role';
-import {isDefined} from '../../../lib/tslib/src/lang';
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/toPromise";
+import {UserSession} from "../user-session/user-session";
+import {DatabaseService} from "../database-service/database-service";
+import {StorageService} from "../storage-service/storage-service";
+import {APIResponse} from "../api";
+import {BugReport} from "../../model/api/bug-report";
+import {isDefined} from "@beenotung/tslib/src/lang";
 
 /*
   Generated class for the DebugApiProvider provider.
@@ -21,9 +20,9 @@ export class BugReportAPI {
 
   constructor(public http: Http
     , private userSession: UserSession
-    , private db: DatabaseProvider
-    , private storage: StorageProvider) {
-    console.log('Hello DebugApiProvider Provider');
+    , private db: DatabaseService
+    , private storage: StorageService) {
+    console.log("Hello DebugApiProvider Provider");
   }
 
   /**
@@ -32,18 +31,18 @@ export class BugReportAPI {
    * 3. remove from local if step 2 success
    * */
   async storeBugReport(bugReport: BugReport) {
-    const key = 'debug-' + Date.now();
+    const key = "debug-" + Date.now();
     let stored = false;
     let sent = false;
-    bugReport.creator_id = this.userSession.tryGetUserID() || '';
-    bugReport.role = <RoleType> Role[this.userSession.current_user_role] || '';
+    bugReport.creator_id = this.userSession.tryGetUserID() || "";
+    bugReport.role = this.userSession.current_user_role || "";
     return this.storage.storage.set(key, bugReport)
       .then(_ => stored = true)
-      .catch(err => console.error('failed to store bug report:', err))
+      .catch(err => console.error("failed to store bug report:", err))
       .then(_ => this.db.getTable(BugReport))
       .then(table => table.insert(bugReport).toPromise())
       .then(res => sent = true)
-      .catch(err => console.error('failed to send bug report', err))
+      .catch(err => console.error("failed to send bug report", err))
       .then(_ => {
         if (stored && sent) {
           return this.storage.storage.remove(key);

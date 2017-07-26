@@ -1,6 +1,6 @@
-import {BaseDBObject} from './base-db-object';
-import {RoleType} from '../data/role';
-import {registryTable} from '../../providers/database/tables';
+import {BaseDBObject} from "./base-db-object";
+import {registryTable} from "../../providers/database-service/tables";
+import {Role} from "../data/role";
 
 export class BugReport extends BaseDBObject {
   api_response: {
@@ -15,7 +15,7 @@ export class BugReport extends BaseDBObject {
   };
   data: any;
 
-  role: RoleType | '';
+  role: Role | "";
 }
 
-registryTable(BugReport, 'BugReport');
+registryTable(BugReport, "BugReport");
