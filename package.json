@@ -1,8 +1,8 @@
 {
   "name": "ionic-horizon-seed",
   "version": "0.1.0",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Beeno Tung",
+  "homepage": "https://github.com/beenotung",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -63,6 +63,18 @@
     "typestub-horizon-client": "^0.1.2"
   },
   "description": "An Ionic project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beenotung/ionic-horizon-seed.git"
+  },
+  "keywords": [
+    "Ionic",
+    "Library"
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/beenotung/ionic-horizon-seed/issues"
+  }
   "cordova": {
     "plugins": {
       "cordova-plugin-console": {},

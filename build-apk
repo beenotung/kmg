@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-keystore="TDTMP-mobileapps.keystore"
+keystore="STUB-mobileapps.keystore"
 
 if [ ! -f "apk/$keystore" ]; then
   echo "keystore file 'apk/$keystore' is not provided";

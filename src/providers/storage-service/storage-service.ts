@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Storage} from "@ionic/storage";
 import "rxjs/add/operator/map";
+import {enum_only_string} from "@beenotung/tslib/src/enum";
 
 export enum StorageKey {
   lang
@@ -8,6 +9,8 @@ export enum StorageKey {
     , user_id
     , notices
 }
+
+enum_only_string(StorageKey);
 
 /*
   Generated class for the StorageService provider.

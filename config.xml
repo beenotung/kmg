@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="100" id="com.github.beenotung.ionic_horizon_seed" version="0.1.0">
     <name>Ionic Horizon Seed</name>
-    <description>An awesome Ionic/Cordova app.</description>
+    <description>An awesome Ionic/Cordova app seed.</description>
     <author email="aabbcc1241@yahoo.com.hk" href="https://github.com/beenotung/">
-        Tutorduck Development Team
+        Beeno Tung
     </author>
     <content src="index.html"/>
     <access origin="*"/>
@@ -20,7 +20,7 @@
     <preference name="android-minSdkVersion" value="16"/>
     <preference name="BackupWebStorage" value="none"/>
     <preference name="SplashScreen" value="assets/img/icon.png"/>
-    <preference name="SplashScreenBackgroundColor" value="#fff200"/>
+    <preference name="SplashScreenBackgroundColor" value="#4e8ef7"/>
     <preference name="SplashScreenDelay" value="3000"/>
     <preference name="loadUrlTimeoutValue" value="120000" />
     <engine name="android" spec="^6.2.3"/>
