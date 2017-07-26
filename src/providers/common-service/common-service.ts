@@ -3,7 +3,6 @@ import "rxjs/add/operator/map";
 import {StorageKey, StorageService} from "../storage-service/storage-service";
 import {config} from "../../app/app.config";
 import {TranslateService} from "@ngx-translate/core";
-import {swal} from "../../lib";
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Loading, LoadingController, NavOptions} from "ionic-angular";
@@ -15,6 +14,7 @@ import {clear} from "@beenotung/tslib/src/array";
 import {APIResponse, CommonResult} from "../api";
 import {hookCheckClientVersion} from "../database-service/database-service.hook";
 import {NoticeService} from "../notice-service/notice-service";
+import {swal} from "@beenotung/tslib/src/typestub-sweetalert2";
 
 export interface NavMessage {
   type: "root" | "push"

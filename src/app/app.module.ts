@@ -12,7 +12,6 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LoginPage} from "../pages/login/login";
 import {TabsPage} from "../pages/tabs/tabs";
-import {HLineComponent} from "../components/h-line/h-line";
 import {TabHeaderComponent} from "../components/tab-header/tab-header";
 import {MenuSelectorButtonComponent} from "../components/menu-selector-button/menu-selector-button";
 import {SearchSelectListPage} from "../pages/search-select-list/search-select-list";
@@ -22,13 +21,14 @@ import {BugReportAPI} from "../providers/debug-report-api/bug-report-api";
 import {LoadingDivComponent} from "../components/loading-div/loading-div";
 import {ShortIdPipe} from "../pipes/short-id/short-id";
 import {NoticeService} from "../providers/notice-service/notice-service";
-import {LoadingComponent} from "../components/loading/loading";
 import {WelcomePage} from "../pages/welcome/welcome";
 import {ProgressService} from "ioniclib/src/providers/progress-service/progress-service";
 import {CustomBrowserXhr} from "ioniclib/src/providers/custom-browser-xhr/custom-browser-xhr";
 import {HorizonService} from "ioniclib/src/providers/horizon-service/horizon-service";
 import {DatabaseService} from "../providers/database-service/database-service";
 import {StorageService} from "../providers/storage-service/storage-service";
+import {HLineComponent} from "ioniclib/src/components/h-line/h-line";
+import {LoadingComponent} from "ioniclib/src/components/loading/loading";
 
 export function provideStorage() {
   return new Storage({
@@ -52,14 +52,12 @@ export function HttpLoaderFactory(http: Http) {
     TabsPage,
     SearchSelectListPage,
     SettingPage,
-    HLineComponent,
 
     /* main four tabs */
 
     /* other components */
     TabHeaderComponent,
     MenuSelectorButtonComponent,
-    LoadingComponent,
     LoadingDivComponent,
     ShortIdPipe,
 
