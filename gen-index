@@ -1,0 +1,11 @@
+#!/bin/bash
+function main {
+  pwd=$PWD
+  cd "$1"
+  ls | grep -v '^index.ts$' | sed 's/.ts//' | awk '{print "export * from \"./" $1 "\";"}' > index.ts
+  cd "$pwd"
+  return 0
+}
+for f in $(find src -type d -not -empty); do
+  main "$f"
+done
