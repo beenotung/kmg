@@ -8,13 +8,13 @@ import {Observer} from "rxjs/Observer";
 import {Loading, LoadingController, NavOptions} from "ionic-angular";
 import {Page} from "ionic-angular/navigation/nav-util";
 import {UserSession} from "../user-session/user-session";
-import {LoginPage} from "../../pages/login/login";
-import {first_non_null} from "@beenotung/tslib/src/lang";
-import {clear} from "@beenotung/tslib/src/array";
+import {first_non_null} from "@beenotung/tslib/lang";
+import {clear} from "@beenotung/tslib/array";
 import {APIResponse, CommonResult} from "../api";
 import {hookCheckClientVersion} from "../database-service/database-service.hook";
 import {NoticeService} from "../notice-service/notice-service";
-import {swal} from "@beenotung/tslib/src/typestub-sweetalert2";
+import {WelcomePage} from "../../pages/welcome/welcome";
+import {swal} from "@beenotung/tslib/typestub-sweetalert2";
 
 export interface NavMessage {
   type: "root" | "push"
@@ -83,7 +83,7 @@ export class CommonService {
         this.promptError("msg_.error_.account_banned", "msg_.error_.account_banned_title");
         this.navObserver.next({
           type: "root"
-          , pageOrViewCtrl: LoginPage
+          , pageOrViewCtrl: WelcomePage
           , opts: {
             animate: true
             , direction: "forward"
@@ -115,7 +115,7 @@ export class CommonService {
 
   async promptNotLogin() {
     await this.promptError("msg_.error_.not_login", "msg_.error_.not_login_title");
-    await this.userSession.stopSession();
+    await this.userSession.logout();
     // this.navObserver.next({
     //   type: 'root'
     //   , pageOrViewCtrl: LoginPage

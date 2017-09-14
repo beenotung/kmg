@@ -1,4 +1,5 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Ionic Horizon seed
+This is a starter template for [Ionic](http://ionicframework.com/docs/) projects with [Horizon](http://horizon.io/docs/).
 
 ## How to use this template
 
@@ -10,12 +11,15 @@ To use this template, either create a new ionic project using the ionic node.js 
 
 Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
 
+## Guide for beginner developer / QA
+
+Install global packages:
+
 ```bash
 $ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
 ```
 
-Then, to run it, cd into `myBlank` and run:
+Then, run:
 
 ```bash
 $ ionic cordova platform add ios

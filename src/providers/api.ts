@@ -1,6 +1,6 @@
 import "rxjs/add/operator/toPromise";
 import {Observable} from "rxjs/Observable";
-import {Enum, enum_set_string} from "@beenotung/tslib/src/enum";
+import {Enum, enum_set_string} from "@beenotung/tslib/enum";
 
 export enum CommonResult {
   ok

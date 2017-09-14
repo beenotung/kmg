@@ -1,10 +1,10 @@
 import {NavOptions} from "ionic-angular";
-import {createAsyncLazy} from "@beenotung/tslib/src/lazy";
-import {is_compatible, to_semver} from "@beenotung/tslib/src/semver";
-import {createDefer} from "@beenotung/tslib/src/async";
-import {setProp} from "@beenotung/tslib/src/functional";
-import {bindFunction} from "@beenotung/tslib/src/lang";
-import {externalAPI} from "@beenotung/tslib/src/externAPI";
+import {createAsyncLazy} from "@beenotung/tslib/lazy";
+import {is_compatible, to_semver} from "@beenotung/tslib/semver";
+import {createDefer} from "@beenotung/tslib/async";
+import {setProp} from "@beenotung/tslib/functional";
+import {bindFunction} from "@beenotung/tslib/lang";
+import {externalAPI} from "@beenotung/tslib/externAPI";
 
 export namespace config {
   export const client_version = "0.3.2";

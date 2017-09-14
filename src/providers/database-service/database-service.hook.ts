@@ -1,20 +1,21 @@
-import {getSemverDiffType, SemverDiffType, to_semver} from "@beenotung/tslib/src/semver";
+import {getSemverDiffType, SemverDiffType, to_semver} from "@beenotung/tslib/semver";
 import {assets} from "../../app/app.res";
-import {tryWithDefault} from "@beenotung/tslib/src/lang";
-import {AppType, getAppType} from "@beenotung/tslib/src/ionic";
-import {swal, SweetAlertOptions} from "@beenotung/tslib/src/typestub-sweetalert2";
+import {tryWithDefault} from "@beenotung/tslib/lang";
+import {swal, SweetAlertOptions} from "@beenotung/tslib/typestub-sweetalert2";
 import {data} from "../../app/app.data";
 import {config} from "../../app/app.config";
-import {HintType, NoticeService} from "../notice-service/notice-service";
+import {LocalNotice, NoticeService} from "../notice-service/notice-service";
 import {databaseService, DatabaseService} from "./database-service";
-import {Config} from "../../model/api/config";
+import {Config} from "../../model/api/custom/config";
+import {AppType, getAppType} from "ioniclib/utils/platform";
+import "rxjs/add/operator/toPromise";
 
 export function hookCheckClientVersion(noticeService: NoticeService) {
   databaseService.hooks.checkClientVersion = async (db: DatabaseService, remote_config: Config) => {
     console.log({local_version: config.client_version, remote_version: remote_config.client_version});
     if (!remote_config.db_version) {
       remote_config.client_version = config.client_version;
-      return (await db.getTable(Config)).store(remote_config).toPromise();
+      return db.store<Config>(Config, remote_config).toPromise();
     }
     if (remote_config.client_version == config.client_version) {
       console.log("client is latest version");
@@ -33,11 +34,14 @@ export function hookCheckClientVersion(noticeService: NoticeService) {
         newConfig.id = remote_config.id;
         newConfig.edit_time = Date.now();
         newConfig.client_version = config.client_version;
-        return db.getTable(Config).then(table => table.update(newConfig).toPromise());
+        return db.update(Config, newConfig).toPromise();
       case SemverDiffType.compatible:
         /* there is a backward compatible update */
-        return noticeService.showLocalNotice(
-          HintType.client_update, assets.i18n.update_optional);
+        return noticeService.showNotice(
+          LocalNotice.client_update
+          , assets.i18n.update_optional
+          , remote_config.edit_time + remote_config.create_time + ""
+        );
       case SemverDiffType.breaking:
         /* there is a breaking update */
         console.log("client is outdated");
@@ -55,7 +59,7 @@ export function hookCheckClientVersion(noticeService: NoticeService) {
             /**
              * tmp disable itune and ms store link
              * */
-            if (eval("true")) {
+            if ("true") {
               if (getAppType(db.platform) === AppType.android) {
                 location.href = data.google_play;
               } else {

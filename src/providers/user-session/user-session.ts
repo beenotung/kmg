@@ -3,12 +3,19 @@ import {Http} from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/observable/fromPromise";
-import {Role} from "../../model/data/role";
-import {APIResponse, CommonResult, fail, ok} from "../api";
+import {CommonResult} from "../api";
 import {StorageKey, StorageService} from "../storage-service/storage-service";
 import {DatabaseService} from "../database-service/database-service";
-import {app} from "../../app/app.component";
-import {exitFullscreen, setFullscreen} from "@beenotung/tslib/src/dom";
+import {createDefer, Defer} from "@beenotung/tslib/async";
+import {UserAnalytics} from "../../model/api/custom/user-analytics";
+import {isDefined} from "@beenotung/tslib/lang";
+import {UniqueDeviceID} from "@ionic-native/unique-device-id";
+import {is_non_empty_string} from "@beenotung/tslib/string";
+import {SearchByDeviceID} from "../../model/api/custom/user-analytics.index";
+
+export function isRealDeviceID(s: string) {
+  return !s.startsWith("db_");
+}
 
 /*
   Generated class for the UserSessionProvider provider.
@@ -19,87 +26,105 @@ import {exitFullscreen, setFullscreen} from "@beenotung/tslib/src/dom";
 @Injectable()
 export class UserSession {
 
-  /* must sync with storage */
-  current_user_role: Role;
-
-
-  /* must sync with storage */
-  private current_user_id: string;
+  public readonly sessionID = Date.now().toString();
+  private userIDDefer: Defer<string, any> = createDefer<string, any>();
+  private userID?: string;
 
   constructor(public http: Http
     , private storage: StorageService
+    , private uniqueDeviceID: UniqueDeviceID
     , private db: DatabaseService) {
     console.log("Hello UserSessionProvider Provider");
+
+    (async () => {
+      const deviceID = await this.getDeviceID();
+      const res = await this.db.query<UserAnalytics, SearchByDeviceID>(UserAnalytics, new SearchByDeviceID(deviceID)).mergeMap(q => q
+        .find().fetch().defaultIfEmpty()).toPromise();
+      if (res && res.user_id && res.user_id !== "") {
+        this.userIDDefer.resolve(res.user_id);
+        this.userID = res.user_id;
+      } else {
+        console.debug("new user");
+      }
+    })();
+
+  }
+
+  async getDeviceID(): Promise<string> {
+    let deviceID: string | undefined = await this.getNativeDeviceID();
+    if (is_non_empty_string(deviceID)) {
+      return deviceID;
+    }
+    deviceID = await this.storage.get<string>(StorageKey.device_id);
+    if (is_non_empty_string(deviceID)) {
+      return deviceID;
+    }
+    return this.registerDeviceID();
+  }
+
+  async getUserID() {
+    return this.userIDDefer.promise;
+  }
+
+  tryGetUserID(): string | "" {
+    return this.userID || "";
+  }
+
+  setUserID(userID: string) {
+    this.userID = userID;
+    this.userIDDefer.resolve(userID);
+    this.userIDDefer.promise.then(x => {
+      if (x !== userID) {
+        this.userIDDefer = createDefer<string, any>();
+        this.userIDDefer.resolve(userID);
+      }
+    });
+  }
+
+  logout() {
+    this.userID = undefined;
+    this.userIDDefer = createDefer<string, any>();
+  }
+
+  hasLogin() {
+    return isDefined(this.userID) && this.userID !== "";
   }
 
   async checkAuth(): Promise<CommonResult> {
-    if (!this.current_user_id) {
+    if (!this.userID) {
       return CommonResult.not_login;
     }
     /* TODO [later] check if banned from db */
     return CommonResult.ok;
   }
 
-  async useCurrentUserID<E extends number, A>(f: (user_id: string) => A | Promise<A> | Promise<APIResponse<E, A>>): Promise<APIResponse<E, A>> {
-    const auth = await this.checkAuth();
-    if (auth !== CommonResult.ok) {
-      return fail(CommonResult, auth);
-    }
+  private async getNativeDeviceID(): Promise<string | undefined> {
     try {
-      const res = await f(this.current_user_id);
-      if (typeof res === "object") {
-        const api_res = <APIResponse<E, A>>res;
-        if (typeof api_res.result_code === "string" || typeof api_res.result_code === "number") {
-          return api_res;
-        }
-      }
-      const a = <A | Promise<A>> res;
-      return ok(Promise.resolve(a));
+      const res = await this.uniqueDeviceID.get();
+      console.log("device_id=" + res);
+      return res;
     } catch (e) {
-      fail(CommonResult, CommonResult.unknown, e);
+      /* not supported, e.g. in web browser */
+      console.warn(e);
+      const s = await this.storage.get<string>(StorageKey.device_id);
+      return is_non_empty_string(s) ? s : undefined;
     }
   }
 
-  async getCurrentUserID() {
-    this.checkAuth().then(x => {
-      if (x === CommonResult.ok) {
-        return this.current_user_id;
-      } else {
-        throw <APIResponse<CommonResult, any>>{
-          result_code: x
-          , result_enum: CommonResult
-        };
-      }
-    });
-  }
-
-  startSession(user_id: string, role: Role) {
-    this.current_user_id = user_id;
-    this.storage.set(StorageKey.user_id, user_id);
-
-    setFullscreen(document.body);
-    return this.setRole(role);
-  }
-
-  setRole(role: Role) {
-    app.setRole(role);
-    this.current_user_role = role;
-    return this.storage.set(StorageKey.role, Role[role]);
-  }
-
-  stopSession() {
-    delete this.current_user_id;
-    delete this.current_user_role;
-
-    exitFullscreen();
-    return Promise.all([
-      this.storage.remove(StorageKey.user_id)
-      , this.storage.remove(StorageKey.role)
-    ]);
-  }
-
-  tryGetUserID(): string | void {
-    return this.current_user_id;
+  /**
+   * only for non native mobile users
+   * */
+  private async registerDeviceID(): Promise<string> {
+    const record = UserAnalytics.init("");
+    const res = await this.db.store(UserAnalytics, record).toPromise();
+    const device_id = "db_" + res.id;
+    const update: UserAnalytics = <any>{};
+    update.id = res.id;
+    update.device_id = device_id;
+    const p1 = this.db.update(UserAnalytics, update).toPromise();
+    const p2 = this.storage.set(StorageKey.device_id, device_id);
+    await Promise.all([p1, p2]);
+    return device_id;
   }
 
 }

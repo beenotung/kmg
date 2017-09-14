@@ -1,8 +1,8 @@
-import {createAsyncLazy} from "@beenotung/tslib/src/lazy";
-import {createDefer} from "@beenotung/tslib/src/async";
-import {setProp} from "@beenotung/tslib/src/functional";
-import {bindFunction} from "@beenotung/tslib/src/lang";
-import {externalAPI} from "@beenotung/tslib/src/externAPI";
+import {createAsyncLazy} from "@beenotung/tslib/lazy";
+import {createDefer} from "@beenotung/tslib/async";
+import {setProp} from "@beenotung/tslib/functional";
+import {bindFunction} from "@beenotung/tslib/lang";
+import {externalAPI} from "@beenotung/tslib/externAPI";
 
 export namespace DBConfig {
   export const db_version = "0.4.0";
@@ -11,7 +11,8 @@ export namespace DBConfig {
   export const mode: "dev" | "test" | "prod" = "dev";
   // export const mode: 'dev' | 'test' | 'prod' = 'test';
 
-  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : "td-tmp";
+  const app_name = "peer-coin-exchange";
+  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : app_name;
 
   class Delayed {
     serverIp: string;
@@ -46,7 +47,7 @@ export namespace DBConfig {
 
     const realSend = RealWebSocket.prototype.send;
     RealWebSocket.prototype.send = function () {
-      console.debug("[ws] send:", arguments);
+      // console.debug("[ws] send:", arguments);
       realSend.apply(this, arguments);
     };
 
@@ -56,19 +57,19 @@ export namespace DBConfig {
 
 
     /* resolve backend url */
-    if (server_name != "STUB") {
-      if (location.hostname === "127.0.0.1") {
-        /* it wont work without CORS ... */
+    if (server_name == "STUB" || location.hostname == "localhost") {
+      delayed.serverIp = location.hostname;
+      delayed.serverPort = 8181;
+    } else {
+      /* it wont work without CORS ... */
+      try {
         const host = await externalAPI.getHostByName(server_name);
         delayed.serverIp = host.ip;
         delayed.serverPort = host.port;
-      } else {
+      } catch (e) {
         delayed.serverIp = location.hostname;
         delayed.serverPort = +location.port;
       }
-    } else {
-      delayed.serverIp = location.hostname;
-      delayed.serverPort = 8181;
     }
 
     defer.resolve(delayed);

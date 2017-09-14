@@ -1,13 +1,14 @@
 import {Injectable} from "@angular/core";
 import {Storage} from "@ionic/storage";
 import "rxjs/add/operator/map";
-import {enum_only_string} from "@beenotung/tslib/src/enum";
+import {enum_only_string} from "@beenotung/tslib/enum";
+import {isDefined} from "@beenotung/tslib/lang";
 
 export enum StorageKey {
   lang
-    , role
-    , user_id
-    , notices
+  , role
+  , notices
+  , device_id
 }
 
 enum_only_string(StorageKey);
@@ -21,6 +22,10 @@ enum_only_string(StorageKey);
 @Injectable()
 export class StorageService {
   constructor(public storage: Storage) {
+  }
+
+  async has(key: StorageKey) {
+    return isDefined(await this.get(key));
   }
 
   async set(key: StorageKey, value: any) {
@@ -40,4 +45,9 @@ export class StorageService {
     xs.push(x);
     return this.set(key, xs);
   }
+
+  async clear() {
+    return this.storage.clear();
+  }
+
 }

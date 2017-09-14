@@ -1,17 +1,22 @@
 import {Injectable} from "@angular/core";
-import {BaseDBObject} from "../../model/api/base-db-object";
+import {BaseDBObject} from "../../model/api/base/base-db-object";
 import {TranslateService} from "@ngx-translate/core";
-import {toTable} from "./tables";
 import {Platform} from "ionic-angular";
-import {autoRetryAsync, createDefer} from "@beenotung/tslib/src/async";
-import {tryWithDefault, Type} from "@beenotung/tslib/src/lang";
-import {getHorizon, horizon_api_size} from "@beenotung/tslib/src/horizon";
-import {Horizon, TableObject} from "typestub-horizon-client";
-import {Config} from "../../model/api/config";
-import {getSemverDiffType, SemverDiffType, to_semver} from "@beenotung/tslib/src/semver";
-import {ProgressService} from "ioniclib/src/providers/progress-service/progress-service";
-import {HorizonService} from "ioniclib/src/providers/horizon-service/horizon-service";
+import {autoRetryAsync, createDefer} from "@beenotung/tslib/async";
+import {tryWithDefault} from "@beenotung/tslib/lang";
+import {getHorizon, horizon_api_size, toHorizonData} from "@beenotung/tslib/horizon";
+import {CreatedObject, FindQuery, Horizon, OldRecord, oneOrList, TableQuery} from "typestub-horizon-client";
+import {Config} from "../../model/api/custom/config";
+import {getSemverDiffType, SemverDiffType, to_semver} from "@beenotung/tslib/semver";
 import {DBConfig} from "./database-service.config";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/fromPromise";
+import "rxjs/add/operator/toPromise";
+import "rxjs/add/operator/mergeMap";
+import {HorizonService, ProgressService} from "angularlib";
+import {TableType} from "../../model/api/tables";
+import {CustomHorizon, toCustomHorizon} from "./database";
+import {BaseSearchObject} from "../../model/api/base/base-search-object";
 
 export module databaseService.hooks {
   export let checkClientVersion: (db: DatabaseService, config: Config) => Promise<any>;
@@ -25,14 +30,68 @@ export class DBCache {
 
 let dbCache = new DBCache();
 
-export type CustomHorizon = <A extends BaseDBObject>(type: Type<A>) => TableObject<A>;
+function toData<A extends BaseDBObject>(x: A): A & OldRecord {
+  return <any>toHorizonData(<any>x, false);
+}
 
-/*
-  Generated class for the DatabaseProvider provider.
+export function toDataF<A extends BaseDBObject>(table: TableType<A>): (x: A) => A & OldRecord {
+  return table.toData || toData;
+}
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+export interface QueryChain<Data extends BaseDBObject, Index extends BaseSearchObject> {
+  /**@deprecated*/
+  use(f: (a: Index) => any): QueryChain<Data, Index>;
+
+  find(): FindQuery<Data>;
+
+  findAll(): TableQuery<Data>;
+}
+
+export function createQueryChain<Data extends BaseDBObject
+  , Index extends BaseSearchObject>(hz: Horizon, tableType: TableType<Data & Index>, acc: Index, ...extra: Index[]): QueryChain<Data, Index> {
+  const table = toCustomHorizon(hz)<Data, Index>(tableType);
+  const res = {
+    use: f => {
+      f(acc);
+      return res;
+    }
+    , find: () => table.find(acc, ...extra)
+    , findAll: () => table.findAll(acc, ...extra)
+  };
+  return res;
+}
+
+export interface UpdateQueryChain<A extends BaseDBObject> {
+  use(f: (a: A) => any): UpdateQueryChain<A>;
+
+  store(): Observable<CreatedObject>;
+
+  update(): Observable<oneOrList<A>>;
+}
+
+export function createUpdateQueryChain<A extends BaseDBObject>(hz: Horizon, tableType: TableType<A>
+  , id: string
+  , editorID?: string
+  , editTime = Date.now()): UpdateQueryChain<A> {
+  const f = tableType.toData || toData;
+  const table = hz<A>(tableType.tableName);
+  const x: A = <any>{};
+  x.id = id;
+  if (editorID) {
+    x.editor_id = editorID;
+  }
+  x.edit_time = editTime;
+  const res = {
+    use: f => {
+      f(x);
+      return res;
+    }
+    , store: () => table.store(f(x))
+    , update: () => table.update(f(x))
+  };
+  return res;
+}
+
 @Injectable()
 export class DatabaseService {
 
@@ -63,7 +122,7 @@ export class DatabaseService {
     };
 
     (async () => {
-      const sub = this.httpProgress.downloadProgress.subscribe((event: any) => {
+      const sub = this.httpProgress.downloadProgress.asObservable().subscribe((event) => {
         console.log(event.loaded, event.loaded / horizon_api_size * 100 + "%");
       });
       const url = (await DBConfig.initialize()).serverUrlBase() + "horizon/horizon.js";
@@ -90,17 +149,35 @@ export class DatabaseService {
   }
 
   logout() {
-    databaseService.hooks.logout();
+    if (typeof databaseService.hooks.logout === "function") {
+      databaseService.hooks.logout();
+    }
+  }
+
+  getRawHz(): Promise<Horizon> {
+    return dbCache.hzDefer.promise;
+  }
+
+  observeRawHz(): Observable<Horizon> {
+    return Observable.fromPromise(dbCache.hzDefer.promise);
   }
 
   getHz(): Promise<CustomHorizon> {
     return dbCache.hzDefer.promise
-      .then(hz => type => toTable(hz, type));
+      .then(hz => toCustomHorizon(hz));
   }
 
-  getTable<A extends BaseDBObject>(type: Type<A>): Promise<TableObject<A>> {
-    return this.getHz().then(hz => hz(type));
+  observeHz(): Observable<CustomHorizon> {
+    return Observable.fromPromise(this.getHz());
   }
+
+  // getTable<A extends BaseDBObject>(table: TableType<A>): Promise<CustomTableObject<A, any>> {
+  //   return this.getHz().then(hz => hz(table));
+  // }
+  //
+  // observeTable<A extends BaseDBObject>(table: TableType<A>): Observable<CustomTableObject<A, any>> {
+  //   return Observable.fromPromise(this.getTable(table));
+  // }
 
   clearCache() {
     dbCache = new DBCache();
@@ -110,10 +187,10 @@ export class DatabaseService {
    * return [db_semver_diff, Config]
    * */
   async checkDBVersion(): Promise<[SemverDiffType, Config]> {
-    const table = await this.getTable(Config);
+    const table = (await this.getRawHz())<Config>(Config.tableName);
     const configs = await table.order(BaseDBObject._create_time, "descending").fetch().toPromise();
     if (configs.length === 0) {
-      const o = new Config();
+      const o = Config.init();
       o.db_version = DBConfig.db_version;
       o.id = "singleton";
       await table.store(o).toPromise();
@@ -131,7 +208,7 @@ export class DatabaseService {
       case SemverDiffType.same:
         break;
       case SemverDiffType.newer:
-        const config = new Config();
+        const config = Config.init();
         config.id = "singleton";
         config.db_version = DBConfig.db_version;
         await table.store(config).toPromise();
@@ -147,4 +224,38 @@ export class DatabaseService {
     return [res, remote_config];
   }
 
+  store<A extends BaseDBObject>(table: TableType<A>, x: A) {
+    return this.observeHz()
+      .mergeMap(hz => hz(table).store(x));
+  }
+
+  insert<A extends BaseDBObject>(table: TableType<A>, x: A) {
+    return this.observeHz()
+      .mergeMap(hz => hz(table).insert(x));
+  }
+
+  update<A extends BaseDBObject>(table: TableType<A>, x: A) {
+    return this.observeHz()
+      .mergeMap(hz => hz(table).update((table.toData || toData)(x)));
+  }
+
+  updateAll<A extends BaseDBObject>(table: TableType<A>, xs: A[]) {
+    const f = table.toData || toData;
+    return this.observeHz()
+      .mergeMap(hz => hz(table).update(xs.map(x => f(x))));
+  }
+
+  async findByID<A extends BaseDBObject>(table: TableType<A>, id: string): Promise<A | null> {
+    return (await this.getRawHz())<A>(table.tableName).find(id).fetch().defaultIfEmpty().toPromise();
+  }
+
+  watchByID<A extends BaseDBObject>(table: TableType<A>, id: string) {
+    return this.observeRawHz()
+      .mergeMap(hz => hz<A>(table.tableName).find(id).watch());
+  }
+
+  query<Data extends BaseDBObject, Index extends BaseSearchObject>(table: TableType<Data & Index>, query: Index) {
+    return this.observeRawHz()
+      .map(hz => createQueryChain<Data, Index>(hz, table, query));
+  }
 }

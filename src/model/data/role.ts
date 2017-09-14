@@ -1,4 +1,4 @@
-import {enum_set_string} from "@beenotung/tslib/src/enum";
+import {enum_set_string} from "@beenotung/tslib/enum";
 
 export enum Role {
   Admin, General, Guest

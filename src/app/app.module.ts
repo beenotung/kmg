@@ -17,18 +17,15 @@ import {MenuSelectorButtonComponent} from "../components/menu-selector-button/me
 import {SearchSelectListPage} from "../pages/search-select-list/search-select-list";
 import {SettingPage} from "../pages/setting/setting";
 import {UserSession} from "../providers/user-session/user-session";
-import {BugReportAPI} from "../providers/debug-report-api/bug-report-api";
+import {BugReportAPI} from "../providers/debug-report-service/bug-report-service";
 import {LoadingDivComponent} from "../components/loading-div/loading-div";
 import {ShortIdPipe} from "../pipes/short-id/short-id";
 import {NoticeService} from "../providers/notice-service/notice-service";
 import {WelcomePage} from "../pages/welcome/welcome";
-import {ProgressService} from "ioniclib/src/providers/progress-service/progress-service";
-import {CustomBrowserXhr} from "ioniclib/src/providers/custom-browser-xhr/custom-browser-xhr";
-import {HorizonService} from "ioniclib/src/providers/horizon-service/horizon-service";
 import {DatabaseService} from "../providers/database-service/database-service";
 import {StorageService} from "../providers/storage-service/storage-service";
-import {HLineComponent} from "ioniclib/src/components/h-line/h-line";
-import {LoadingComponent} from "ioniclib/src/components/loading/loading";
+import {HLineModule} from "ioniclib";
+import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
 
 export function provideStorage() {
   return new Storage({
@@ -42,6 +39,9 @@ export function HttpLoaderFactory(http: Http) {
 
 @NgModule({
   declarations: [
+    /* lib components */
+
+    /* main */
     MyApp,
 
     /* sign up and login pages */
@@ -53,17 +53,16 @@ export function HttpLoaderFactory(http: Http) {
     SearchSelectListPage,
     SettingPage,
 
-    /* main four tabs */
+    /* main tabs */
 
-    /* other components */
+    /* components */
     TabHeaderComponent,
     MenuSelectorButtonComponent,
     LoadingDivComponent,
+
+    /* pipes */
     ShortIdPipe,
 
-    /* lib components */
-    HLineComponent,
-    LoadingComponent,
   ],
   imports: [
     BrowserModule
@@ -76,35 +75,34 @@ export function HttpLoaderFactory(http: Http) {
         deps: [Http],
       }
     })
+    , HLineModule
+    , LoadingModule
+    , HorizonModule
+    , ProgressModule
   ],
   bootstrap: [IonicApp],
-  entryComponents:
-    [
+  entryComponents: [
+    /* sign up and login pages */
+    LoginPage,
+    WelcomePage,
 
-      /* sign up and login pages */
-      LoginPage,
-      WelcomePage,
+    /* utils pages */
+    TabsPage,
+    SearchSelectListPage,
+    SettingPage,
 
-      /* utils pages */
-      TabsPage,
-      SearchSelectListPage,
-      SettingPage,
+    /* main four tabs */
 
-      /* main four tabs */
-
-      /* other components */
-      LoadingDivComponent,
-
-    ],
+    /* other components */
+    LoadingDivComponent,
+  ],
   providers: [
     /* lib services */
-    HorizonService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: BrowserXhr, useClass: CustomBrowserXhr},
+    {provide: BrowserXhr, useClass: ProgressBrowserXhr},
     {provide: Storage, useFactory: provideStorage},
-    ProgressService,
     /* custom services */
     DatabaseService,
     StorageService,

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams, ViewController} from "ionic-angular";
-import {str_like} from "@beenotung/tslib/src/string";
+import {str_like} from "@beenotung/tslib/string";
 
 interface SearchSelectOption<A> {
   text: string;

@@ -5,7 +5,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {StorageKey, StorageService} from "../../providers/storage-service/storage-service";
 import {CommonService} from "../../providers/common-service/common-service";
 import {config} from "../../app/app.config";
-import {is_hk_mobile_phone} from "@beenotung/tslib/src/validate";
+import {is_hk_mobile_phone} from "@beenotung/tslib/validate";
 
 /**
  * Generated class for the LoginPage page.

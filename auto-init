@@ -4,3 +4,7 @@ set -e
 if [ ! -d node_modules ]; then
   ./init
 fi
+
+if ! hash npm-run 2>/dev/null; then
+  ./install-dev
+fi

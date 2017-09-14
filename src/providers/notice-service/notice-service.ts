@@ -6,30 +6,51 @@ import {Toast, ToastController, ToastOptions} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
 import {config} from "../../app/app.config";
 import {StorageKey, StorageService} from "../storage-service/storage-service";
-import {SMSType} from "../../model/api/sms-notice";
+import {enum_only_string} from "@beenotung/tslib/enum";
+import {takeAll} from "@beenotung/tslib/array";
 
-/* only for in-app notification */
-export enum HintType {
-  client_update
+/**
+ * remote events
+ * trigger by other user
+ * */
+export enum RemoteNotice {
 }
 
-function genToastOptions(message: string, position: "top" | "bottom"): ToastOptions {
+enum_only_string(RemoteNotice);
+
+/**
+ * local events
+ * trigger by local system, e.g. UI hint
+ * */
+export enum LocalNotice {
+  client_update, success
+}
+
+enum_only_string(LocalNotice);
+
+function getToastDuration(type: RemoteNotice | LocalNotice): number {
+  return RemoteNotice[type]
+    ? config.Toast_Duration_Normal
+    : config.Toast_Duration_Short;
+}
+
+function genToastOptions(type: RemoteNotice | LocalNotice, message: string): ToastOptions {
   return {
     message: message
-    , duration: position === "top" ? config.Toast_Duration_Normal : config.Toast_Duration_Short
-    , position: position
+    , duration: getToastDuration(type)
+    , position: RemoteNotice[type] ? "top" : "bottom"
     , showCloseButton: true
     , dismissOnPageChange: true
   };
 }
 
-interface RemoteMessage {
-  msg: string;
-  needTranslate: boolean;
+const lastTime: { [type: string]: number } = {};
+
+function toKey(type: RemoteNotice | LocalNotice, id: string): StorageKey {
+  return <any>(type + "-" + id);
 }
 
-const lastRemoteTime: { [smsType: string]: number } = {};
-const lastLocalTime: { [hintType: string]: number } = {};
+const toast_list: Toast[] = [];
 
 /**
  * only manage local, in-app notifications
@@ -40,8 +61,6 @@ const lastLocalTime: { [hintType: string]: number } = {};
  * */
 @Injectable()
 export class NoticeService {
-  private local_toast_list: Toast[] = [];
-  private remote_toast_list: Toast[] = [];
 
   constructor(public http: Http
     , private translate: TranslateService
@@ -50,77 +69,26 @@ export class NoticeService {
     console.log("Hello NoticeService Provider");
   }
 
-  /**
-   * notice trigger by external party, e.g. other user
-   * */
-  async showRemoteNotice(type: SMSType, id: string, msg: string, needTranslate = true) {
-    if (!await this.isShouldShowRemote(type, id)) {
-      return;
-    }
-    const p1 = this.storage.append<RemoteMessage>(StorageKey.notices, {msg: msg, needTranslate: needTranslate});
-    if (needTranslate) {
-      msg = await this.translate.get(msg).toPromise();
-    }
-    const toast = this.toastCtrl.create(genToastOptions(msg, "top"));
-    try {
-      await Promise.all(this.remote_toast_list.map(x => x.dismiss()));
-    } catch (e) {
-      console.error(e);
-    }
-    this.remote_toast_list = [toast];
-    const p2 = toast.present();
-    return Promise.all([p1, p2]);
-  }
-
-  /**
-   * notice trigger by the local system, e.g. UI hints
-   * */
-  async showLocalNotice(type: HintType, msg: string, needTranslate = true) {
-    if (!this.isShouldShowLocal(type)) {
+  async showNotice(type: RemoteNotice | LocalNotice, msg: string, id?: string, needTranslate = true) {
+    if (id && !await this.isShouldShow(type, id)) {
       return;
     }
     if (needTranslate) {
       msg = await this.translate.get(msg).toPromise();
     }
-    const toast = this.toastCtrl.create(genToastOptions(msg, "bottom"));
-    try {
-      await Promise.all(this.local_toast_list.map(x => x.dismiss()));
-    } catch (e) {
-      console.error(e);
-    }
-    this.local_toast_list = [toast];
-    return toast.present();
+    const toast = this.toastCtrl.create(genToastOptions(type, msg));
+    lastTime[type] = Date.now();
+    await Promise.all(takeAll(toast_list).map(x => x.dismiss()));
+    toast_list.push(toast);
+    await toast.present();
+    await this.storage.set(toKey(type, id), true);
   }
 
-  /**
-   * return false if it already exist
-   * otherwise, store it and return true
-   * */
-  async isShouldShowRemote(type: SMSType, id: string) {
-    const key: StorageKey = <any> (type + "-" + id);
-    const res = await this.storage.get(key);
-    if (res) {
+  async isShouldShow(type: RemoteNotice | LocalNotice, id: string): Promise<boolean> {
+    if (await this.storage.has(toKey(type, id))) {
       return false;
-    } else {
-      await this.storage.set(key, true);
-      const last = lastRemoteTime[type];
-      const now = Date.now();
-      if (!last || last + config.Toast_Duration_Normal <= now) {
-        lastRemoteTime[type] = now;
-        return true;
-      } else {
-        return false;
-      }
     }
-  }
-
-  async isShouldShowLocal(type: HintType) {
-    const last = lastLocalTime[type];
-    const now = Date.now();
-    if (!last || last + config.Toast_Duration_Long <= now) {
-      lastLocalTime[type] = now;
-      return true;
-    }
-    return false;
+    const last = lastTime[type];
+    return !last || last + getToastDuration(type) <= Date.now();
   }
 }
