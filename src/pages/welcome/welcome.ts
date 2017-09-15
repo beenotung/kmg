@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, forwardRef, Inject} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
 import "rxjs/add/operator/toPromise";
@@ -23,7 +23,8 @@ export class WelcomePage {
 
   constructor(public navCtrl: NavController
     , private translate: TranslateService
-    , private comm: CommonService
+    // , private comm: CommonService
+    , @Inject(forwardRef(() => CommonService)) private common: CommonService
     , private db: DatabaseService
     , public navParams: NavParams) {
     translate.get("test").toPromise().then(s => this.text = s);

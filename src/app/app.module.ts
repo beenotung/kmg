@@ -26,6 +26,7 @@ import {DatabaseService} from "../providers/database-service/database-service";
 import {StorageService} from "../providers/storage-service/storage-service";
 import {HLineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
+import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 
 export function provideStorage() {
   return new Storage({
@@ -103,6 +104,8 @@ export function HttpLoaderFactory(http: Http) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: BrowserXhr, useClass: ProgressBrowserXhr},
     {provide: Storage, useFactory: provideStorage},
+    // Geolocation,
+    UniqueDeviceID,
     /* custom services */
     DatabaseService,
     StorageService,
