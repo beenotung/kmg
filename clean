@@ -1,2 +1,7 @@
 #!/bin/bash
-git status --ignored | grep src | grep -v modified | grep -v deleted  | grep -v 'new file' | grep -v renamed | xargs rm
+git status -s --ignored \
+  | grep -E "^(\?\?|!!) " \
+  | grep -v .idea \
+  | grep -v node_modules \
+  | awk '{print $2}' \
+  | xargs rm -r

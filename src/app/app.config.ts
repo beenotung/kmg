@@ -18,9 +18,9 @@ export namespace config {
 
 
   export const mode: "dev" | "test" | "prod" = "dev";
-  // export const mode: 'dev' | 'test' | 'prod' = 'test';
 
-  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : "seed";
+  const app_name = "seed";
+  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : app_name;
 
   class Delayed {
     serverIp: string;
