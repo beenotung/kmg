@@ -24,7 +24,7 @@ import {NoticeService} from "../providers/notice-service/notice-service";
 import {WelcomePage} from "../pages/welcome/welcome";
 import {DatabaseService} from "../providers/database-service/database-service";
 import {StorageService} from "../providers/storage-service/storage-service";
-import {HLineModule} from "ioniclib";
+import {LineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 
@@ -76,7 +76,7 @@ export function HttpLoaderFactory(http: Http) {
         deps: [Http],
       }
     })
-    , HLineModule
+    , LineModule
     , LoadingModule
     , HorizonModule
     , ProgressModule
