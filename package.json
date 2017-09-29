@@ -51,7 +51,7 @@
     "zone.js": "0.8.12"
   },
   "devDependencies": {
-    "@angular/tsc-wrapped": "^^4.0.0",
+    "@angular/tsc-wrapped": "^4.0.0",
     "@ionic/app-scripts": "^2.1.4",
     "@ionic/cli-plugin-proxy": "^1.4.11",
     "@types/isomorphic-fetch": "0.0.34",
