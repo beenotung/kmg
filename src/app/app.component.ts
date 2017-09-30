@@ -2,7 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
-import {CommonService} from "../providers/common-service/common-service";
+import {CommonService} from "../services/common/common-service";
 import {LoginPage} from "../pages/login/login";
 import {config} from "./app.config";
 import {Role} from "../model/data/role";
@@ -40,7 +40,7 @@ export class MyApp {
   }
 }
 
-export module app {
+export namespace app {
   export function setRole(role: Role) {
     document.querySelector("[data-role]")
       .setAttribute("data-role", Role[role]);

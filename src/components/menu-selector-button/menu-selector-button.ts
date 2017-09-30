@@ -1,11 +1,5 @@
 import {Component, Input} from "@angular/core";
 
-/**
- * Generated class for the MenuSelectorButtonComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
 @Component({
   selector: "menu-selector-button",
   templateUrl: "menu-selector-button.html"

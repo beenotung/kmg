@@ -1,0 +1,3 @@
+#!/bin/bash
+./npm_ run test:watch
+#npm run build --aot $@

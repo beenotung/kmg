@@ -5,8 +5,9 @@ import {Place} from "./location";
 import {CreatedObject} from "typestub-horizon-client";
 import {UserAnalytics} from "./user-analytics";
 import {SearchByDeviceID} from "./user-analytics.index";
-import {createUpdateQueryChain, DatabaseService} from "../../../providers/database-service/database-service";
+import {createUpdateQueryChain, DatabaseService} from "../../../services/database/database.service";
 import {registryTable} from "../tables";
+import {setProp} from "@beenotung/tslib";
 
 export declare class User {
   constructor(never: never) ;
@@ -34,15 +35,16 @@ export namespace User {
   export const _known_lang = "known_lang_";
 
   export function init(nickname: string): User {
-    const user = <User> BaseDBObject.init();
+    const user = BaseDBObject.init() as User;
     user.nickname = nickname;
     return user;
   }
 
   export async function create(db: DatabaseService, deviceID: string, nickname: string = "", firstLang: string): Promise<CreatedObject> {
-    const user = <User> BaseDBObject.init();
+    const user = BaseDBObject.init() as User;
     user.nickname = nickname;
-    user[User._known_lang + firstLang] = true;
+    // user[User._known_lang + firstLang] = true;
+    setProp(true, User._known_lang + firstLang, user);
     const hz = await db.getHz();
     const userRes = await hz(User).store(user).toPromise();
     const searchRes = await db.query(UserAnalytics, new SearchByDeviceID(deviceID))
@@ -64,4 +66,3 @@ export namespace User {
 }
 
 registryTable(User);
-

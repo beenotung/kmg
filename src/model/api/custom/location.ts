@@ -20,7 +20,7 @@ export namespace Place {
   export const tableName = "Place";
 
   export function init(lat: number, lng: number, name: string, region: string): Place {
-    const place = <Place> BaseDBObject.init();
+    const place = BaseDBObject.init() as Place;
     place.lat = lat;
     place.lng = lng;
     place.name = name;

@@ -20,7 +20,7 @@ export namespace UserAnalytics {
   export const tableName = "UserAnalytics";
 
   export function init(deviceID: string): UserAnalytics {
-    const userAnalytics = <UserAnalytics> BaseDBObject.init();
+    const userAnalytics = BaseDBObject.init() as UserAnalytics;
     userAnalytics.device_id = deviceID;
     const acc = userAnalytics.navigator = {};
     Object.keys(navigator.constructor.prototype)

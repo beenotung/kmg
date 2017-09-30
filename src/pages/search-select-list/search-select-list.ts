@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams, ViewController} from "ionic-angular";
+import {NavParams, ViewController} from "ionic-angular";
 import {str_like} from "@beenotung/tslib/string";
 
 interface SearchSelectOption<A> {
@@ -13,12 +13,11 @@ interface SearchSelectOption<A> {
 })
 export class SearchSelectListPage<A> {
 
-  option_list: SearchSelectOption<A>[] = []; // enum value and translate key
+  option_list: Array<SearchSelectOption<A>> = []; // enum value and translate key
 
   searchText: string = "";
 
-  constructor(public navCtrl: NavController
-    , private view: ViewController
+  constructor(private view: ViewController
     , public navParams: NavParams) {
     const param: SearchSelectList.Param<A> = this.navParams.data;
     this.option_list = param.option_list;
@@ -49,6 +48,6 @@ export namespace SearchSelectList {
   export type Option<A> = SearchSelectOption<A>;
 
   export interface Param<A> {
-    option_list: Option<A>[]
+    option_list: Array<Option<A>>
   }
 }

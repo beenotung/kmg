@@ -1,18 +1,11 @@
-import {Component, forwardRef, Inject} from "@angular/core";
+import {Component} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {TabsPage} from "../tabs/tabs";
 import {TranslateService} from "@ngx-translate/core";
-import {StorageKey, StorageService} from "../../providers/storage-service/storage-service";
-import {CommonService} from "../../providers/common-service/common-service";
 import {config} from "../../app/app.config";
 import {is_hk_mobile_phone} from "@beenotung/tslib/validate";
+import {StorageKey, StorageService} from "../../services/storage/storage.service";
 
-/**
- * Generated class for the LoginPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @Component({
   selector: "page-login",
   templateUrl: "login.html",
@@ -27,7 +20,6 @@ export class LoginPage {
   constructor(public navCtrl: NavController
     , private translate: TranslateService
     , private storage: StorageService
-    , @Inject(forwardRef(() => CommonService)) private common: CommonService
     , public navParams: NavParams) {
 
     this.storage.get(StorageKey.lang).then(x => {

@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {NavController, Tabs} from "ionic-angular";
-import {UserSession} from "../../providers/user-session/user-session";
 import {SettingPage} from "../setting/setting";
 import {WelcomePage} from "../welcome/welcome";
+import {UserSessionService} from "../../services/user-session/user-session.service";
 
 /**
  * Generated class for the TabsPage tabs.
@@ -26,7 +26,7 @@ export class TabsPage implements OnInit {
   tab4 = SettingPage;
 
   constructor(public navCtrl: NavController
-    , private userSession: UserSession) {
+    , private userSession: UserSessionService) {
     TabsPage.instant = this;
   }
 

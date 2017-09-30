@@ -30,15 +30,15 @@ export namespace BugReport {
 
   export function init(deviceID: string, error = new Error(), dataOrApiResponse?: APIResponseDB | DataType): BugReport {
     console.debug.bind(null, "creating bug report").apply(null, arguments);
-    const bugReport = <BugReport> BaseDBObject.init();
+    const bugReport = BaseDBObject.init() as BugReport;
     bugReport.device_id = deviceID;
     bugReport.error = error;
     if (isDefined(dataOrApiResponse)) {
-      const apiResponse: APIResponseDB = <any> dataOrApiResponse;
+      const apiResponse: APIResponseDB = dataOrApiResponse as any;
       if (isDefined(apiResponse.error_code)) {
         bugReport.api_response = apiResponse;
       } else {
-        bugReport.data = <DataType> dataOrApiResponse;
+        bugReport.data = dataOrApiResponse as DataType;
       }
     }
     return bugReport;

@@ -1,4 +1,2 @@
 #!/bin/bash
-## for validating the code
-
-npm run lint
+./npm_ run lint

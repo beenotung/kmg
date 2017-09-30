@@ -1,31 +1,26 @@
-import {Component, forwardRef, Inject} from "@angular/core";
+import {Component, forwardRef, Inject, OnInit} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
 import "rxjs/add/operator/toPromise";
-import {DatabaseService} from "../../providers/database-service/database-service";
-import {CommonService} from "../../providers/common-service/common-service";
+import {CommonService} from "../../services/common/common.service";
+import {DatabaseService} from "../../services/database/database.service";
+import {TabsPage} from "../tabs/tabs";
 
-/**
- * Generated class for the WelcomePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @Component({
   selector: "page-welcome",
   templateUrl: "welcome.html",
 })
-export class WelcomePage {
+export class WelcomePage implements OnInit {
 
   text = "loading";
 
   status = "loading";
 
   constructor(public navCtrl: NavController
-    , private translate: TranslateService
-    // , private comm: CommonService
+    , translate: TranslateService
     , @Inject(forwardRef(() => CommonService)) private common: CommonService
-    , private db: DatabaseService
+              // , private common: CommonService
+    , db: DatabaseService
     , public navParams: NavParams) {
     translate.get("test").toPromise().then(s => this.text = s);
     db.getHz().then(() => this.status = "Ready");
@@ -33,6 +28,16 @@ export class WelcomePage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad WelcomePage");
+  }
+
+  ngOnInit() {
+    if (this.navParams.data) {
+      this.common.showLoading();
+      setTimeout(() => {
+        this.common.dismissLoading();
+        this.navCtrl.setRoot(TabsPage);
+      }, 2000);
+    }
   }
 
 }

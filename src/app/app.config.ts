@@ -16,11 +16,10 @@ export namespace config {
   export const Toast_Duration_Normal = 4000;
   export const Toast_Duration_Long = 8000;
 
-
   export const mode: "dev" | "test" | "prod" = "dev";
 
   const app_name = "seed";
-  const server_name = <any>mode === "dev" && location.host == "localhost:8100" ? "STUB" : app_name;
+  const server_name = mode as any === "dev" && location.host == "localhost:8100" ? "STUB" : app_name;
 
   class Delayed {
     serverIp: string;
@@ -54,7 +53,6 @@ export namespace config {
 
     const defer = createDefer<Delayed, any>();
 
-
     /* redirect horizon websocket */
     const RealWebSocket = WebSocket;
 
@@ -83,7 +81,6 @@ export namespace config {
 
     setProp(bindFunction(WrappedWebSocket), "WebSocket", window);
 
-
     /* resolve backend url */
     if (server_name != "STUB") {
       const host = await externalAPI.getHostByName(server_name);
@@ -99,7 +96,6 @@ export namespace config {
     return defer.promise;
   });
 }
-
 
 config.initialize();
 

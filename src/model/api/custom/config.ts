@@ -22,7 +22,7 @@ export namespace Config {
   export const tableName = "Config";
 
   export function init(): Config {
-    return <Config>BaseDBObject.init();
+    return BaseDBObject.init() as Config;
   }
 }
 

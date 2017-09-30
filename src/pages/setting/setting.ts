@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
-import {StorageKey, StorageService} from "../../providers/storage-service/storage-service";
 import {config} from "../../app/app.config";
+import {StorageKey, StorageService} from "../../services/storage/storage.service";
+
+export type Lang = "en" | "zh";
 
 @Component({
   selector: "page-setting",
@@ -31,5 +33,3 @@ export class SettingPage {
   }
 
 }
-
-type Lang = "en" | "zh";
