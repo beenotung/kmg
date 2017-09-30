@@ -6,4 +6,3 @@ export * from "./pipes";
 export * from "./services";
 export * from "./test";
 export * from "./utils";
-export * from "./utils";

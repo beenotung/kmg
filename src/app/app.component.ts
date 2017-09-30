@@ -2,7 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
-import {CommonService} from "../services/common/common-service";
+import {CommonService} from "../services/common/common.service";
 import {LoginPage} from "../pages/login/login";
 import {config} from "./app.config";
 import {Role} from "../model/data/role";

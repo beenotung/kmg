@@ -7,7 +7,7 @@ import {Storage} from "@ionic/storage";
 import {BrowserXhr, Http, HttpModule} from "@angular/http";
 
 import {MyApp} from "./app.component";
-import {CommonService} from "../services/common/common-service";
+import {CommonService} from "../services/common/common.service";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LoginPage} from "../pages/login/login";
@@ -16,14 +16,14 @@ import {TabHeaderComponent} from "../components/tab-header/tab-header";
 import {MenuSelectorButtonComponent} from "../components/menu-selector-button/menu-selector-button";
 import {SearchSelectListPage} from "../pages/search-select-list/search-select-list";
 import {SettingPage} from "../pages/setting/setting";
-import {UserSession} from "../services/user-session/user-session";
-import {BugReportAPI} from "../services/bug-report/bug-report-service";
+import {UserSessionService} from "../services/user-session/user-session.service";
+import {BugReportService} from "../services/bug-report/bug-report.service";
 import {LoadingDivComponent} from "../components/loading-div/loading-div";
-import {ShortIdPipe} from "../pipes/short-id/short-id";
-import {NoticeService} from "../services/notice/notice-service";
+import {ShortIdPipe} from "../pipes/short-id/short-id.pipe";
+import {NoticeService} from "../services/notice/notice.service";
 import {WelcomePage} from "../pages/welcome/welcome";
-import {DatabaseService} from "../services/database/database-service";
-import {StorageService} from "../services/storage/storage-service";
+import {DatabaseService} from "../services/database/database.service";
+import {StorageService} from "../services/storage/storage.service";
 import {LineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
@@ -110,8 +110,8 @@ export function HttpLoaderFactory(http: Http) {
     DatabaseService,
     StorageService,
     CommonService,
-    UserSession,
-    BugReportAPI,
+    UserSessionService,
+    BugReportService,
     NoticeService,
   ]
 })
