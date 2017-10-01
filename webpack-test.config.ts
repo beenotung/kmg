@@ -13,7 +13,7 @@ export default {
           {
             loader: 'awesome-typescript-loader',
             options: {
-              configFileName: 'tsconfig.json'
+              configFileName: 'tsconfig-ng.json'
             }
           },
           {

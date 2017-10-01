@@ -3,10 +3,11 @@ import {createDefer} from "@beenotung/tslib/async";
 import {setProp} from "@beenotung/tslib/functional";
 import {bindFunction} from "@beenotung/tslib/lang";
 import {externalAPI} from "@beenotung/tslib/externAPI";
+import {config} from "../../app/app.config";
 
 export namespace DBConfig {
   export const db_version = "0.4.0";
-  export let network_retry_interval = 8000;
+  export let network_retry_interval = config.network_retry_interval;
 
   export const mode: "dev" | "test" | "prod" = "dev";
   // export const mode: 'dev' | 'test' | 'prod' = 'test';

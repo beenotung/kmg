@@ -2,6 +2,7 @@ import {BaseDBObject} from "../base/base-db-object";
 import {registryTable} from "../tables";
 import {JSONObject} from "typestub-horizon-client";
 import {isHorizonDataType} from "@beenotung/tslib/horizon";
+import {Obj} from "@beenotung/tslib";
 
 export declare class UserAnalytics {
   constructor(never: never)
@@ -22,7 +23,7 @@ export namespace UserAnalytics {
   export function init(deviceID: string): UserAnalytics {
     const userAnalytics = BaseDBObject.init() as UserAnalytics;
     userAnalytics.device_id = deviceID;
-    const acc = userAnalytics.navigator = {};
+    const acc: Obj<any> = userAnalytics.navigator = {};
     Object.keys(navigator.constructor.prototype)
       .forEach(x => {
         if (x.startsWith("requestMediaKeySystemAccess")
@@ -32,21 +33,22 @@ export namespace UserAnalytics {
           || x.startsWith("unregister")) {
           return;
         }
-        if (typeof navigator[x] === "function") {
+        const f_o = (navigator as any)[x];
+        if (typeof f_o === "function") {
           switch (x) {
             case "webkitGetUserMedia":
             case "vibrate":
               return;
           }
           try {
-            acc[x] = navigator[x]();
+            acc[x] = (f_o as () => any)();
           } catch (e) {
             console.error("failed when mapping navigator field:", x, e);
             debugger;
           }
         } else {
-          if (isHorizonDataType(x)) {
-            acc[x] = navigator[x];
+          if (isHorizonDataType(f_o)) {
+            acc[x] = f_o;
           } else {
             console.warn("skip navigator field:", x);
           }

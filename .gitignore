@@ -12,11 +12,6 @@ log.txt
 .vscode/
 npm-debug.log*
 
-
-$RECYCLE.BIN/
-
-UserInterfaceState.xcuserstate
-
 *.orig
 res/
 .sourcemaps/
@@ -40,6 +35,8 @@ Desktop.ini
 
 # Mac
 .DS_Store
+$RECYCLE.BIN/
+UserInterfaceState.xcuserstate
 
 # Temporary files
 docs/

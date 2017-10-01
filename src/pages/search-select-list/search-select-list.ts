@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {NavParams, ViewController} from "ionic-angular";
 import {str_like} from "@beenotung/tslib/string";
 
-interface SearchSelectOption<A> {
+export interface SearchSelectOption<A> {
   text: string;
   value: A;
 }
@@ -31,7 +31,7 @@ export class SearchSelectListPage<A> {
     this.view.dismiss();
   }
 
-  onInput(event) {
+  onInput(event: Event) {
     console.debug("onInput", event);
   }
 

@@ -61,7 +61,7 @@ export class BugReportService {
       await this.userSession.getDeviceID()
       , new Error()
       , {
-        error_code: res.result_enum[res.result_code]
+        error_code: (res.result_enum as { [code: number]: string })[res.result_code]
         , reason: res.reason
         , data: res.data
       } as APIResponseDB));
