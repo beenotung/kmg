@@ -1,10 +1,15 @@
 #!/bin/bash
 ## generate component
-for m in $@; do
-  ./ionic g component "$m"
-  ./ng g component "$m"
+tmp="gc.$RANDOM.tmp"
+for a in $@; do
+  ./ionic g component "$a"
+  ./ng g component "$a" | tee "$tmp"
+  m=$(cat "$tmp" | head -n 1 | awk '{print $2}' | awk -F '/' '{print $NF}' | sed 's/.component.scss$//')
+  classname=$(cat "src/app/$m/$m.component.ts" | grep class | awk '{print $3}')
   mv "src/app/$m/$m.component.spec.ts" "src/components/$m/$m.spec.ts"
   rm "src/app/$m" -rf
   mv "src/components/$m/$m.ts" "src/components/$m/$m.component.ts"
   sed -i '' src/app/app.
+  sed -i "/$classname/,+1 d" src/app/app.module.ts
 done
+rm "$tmp"
