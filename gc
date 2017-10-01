@@ -1,3 +1,10 @@
 #!/bin/bash
 ## generate component
-./ionic g component $@
+for m in $@; do
+  ./ionic g component "$m"
+  ./ng g component "$m"
+  mv "src/app/$m/$m.component.spec.ts" "src/components/$m/$m.spec.ts"
+  rm "src/app/$m" -rf
+  mv "src/components/$m/$m.ts" "src/components/$m/$m.component.ts"
+  sed -i '' src/app/app.
+done
