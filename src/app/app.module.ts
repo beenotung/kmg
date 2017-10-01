@@ -12,13 +12,10 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LoginPage} from "../pages/login/login";
 import {TabsPage} from "../pages/tabs/tabs";
-import {TabHeaderComponent} from "../components/tab-header/tab-header";
-import {MenuSelectorButtonComponent} from "../components/menu-selector-button/menu-selector-button";
 import {SearchSelectListPage} from "../pages/search-select-list/search-select-list";
 import {SettingPage} from "../pages/setting/setting";
 import {UserSessionService} from "../services/user-session/user-session.service";
 import {BugReportService} from "../services/bug-report/bug-report.service";
-import {LoadingDivComponent} from "../components/loading-div/loading-div";
 import {ShortIdPipe} from "../pipes/short-id/short-id.pipe";
 import {NoticeService} from "../services/notice/notice.service";
 import {WelcomePage} from "../pages/welcome/welcome";
@@ -27,6 +24,7 @@ import {StorageService} from "../services/storage/storage.service";
 import {LineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
+import {ComponentsModule} from "../components/components.module";
 
 export function provideStorage() {
   return new Storage({
@@ -57,9 +55,9 @@ export function HttpLoaderFactory(http: Http) {
     /* main tabs */
 
     /* components */
-    TabHeaderComponent,
-    MenuSelectorButtonComponent,
-    LoadingDivComponent,
+    // TabHeaderComponent,
+    // MenuSelectorButtonComponent,
+    // LoadingDivComponent,
 
     /* pipes */
     ShortIdPipe,
@@ -80,6 +78,7 @@ export function HttpLoaderFactory(http: Http) {
     , LoadingModule
     , HorizonModule
     , ProgressModule
+    , ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -95,7 +94,7 @@ export function HttpLoaderFactory(http: Http) {
     /* main four tabs */
 
     /* other components */
-    LoadingDivComponent,
+    // LoadingDivComponent,
   ],
   providers: [
     /* lib services */

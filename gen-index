@@ -7,6 +7,7 @@ function main {
   | grep -v '.html$' \
   | grep -v '.scss$' \
   | grep -v '.json$' \
+  | grep -v '.spec.ts' \
   | sed 's/\.ts//' \
   | awk '{print "export * from \"./" $1 "\";"}' \
   > index.ts
@@ -17,5 +18,10 @@ for f in $(find src -type d -not -empty -not -path "src/assets*"); do
   main "$f"
 done
 cd src
-cat index.ts | grep -v assets | grep -v theme > index.ts.tmp
+cat index.ts \
+  | grep -v assets \
+  | grep -v theme \
+  | grep -v service-worker.js \
+  | grep -v test \
+  > index.ts.tmp
 mv index.ts.tmp index.ts
