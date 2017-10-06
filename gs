@@ -5,7 +5,7 @@ set -e
 for m in $@; do
   echo "m=$m"
   ./npm_ run ng g service $m
-  mkdir "src/services/$m"
+  mkdir -p "src/services/$m"
   mv "src/app/$m.service.ts" "src/services/$m/"
   mv "src/app/$m.service.spec.ts" "src/services/$m/"
   echo "export * from \"./$m.service\";" >> "src/services/$m/index.ts"
