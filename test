@@ -1,2 +1,8 @@
 #!/bin/bash
-./npm_ run test:watch
+if [ "$1" == "ionic" ]; then
+  ./npm_ run test:ionic
+elif [ "$1" == "ng" ]; then
+  ./npm_ run test:ng
+else
+  ./npm_ test
+fi

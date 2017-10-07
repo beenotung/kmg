@@ -4,6 +4,8 @@ set -o pipefail
 
 ./auto-init
 
+./ionic cordova platform add browser || ./ionic cordova prepare
+
 #./build-web && ./publish-web && echo 'done dev-web.'
 
 ./build-web

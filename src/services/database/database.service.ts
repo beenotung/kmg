@@ -11,12 +11,14 @@ import {getSemverDiffType, SemverDiffType, to_semver} from "@beenotung/tslib/sem
 import {DBConfig} from "./database.service.config";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
+import "rxjs/add/observable/empty";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/mergeMap";
 import {HorizonService, ProgressService} from "angularlib";
 import {TableType} from "../../model/api/tables";
 import {CustomHorizon, toCustomHorizon} from "./database";
 import {BaseSearchObject} from "../../model/api/base/base-search-object";
+import {isDefined} from "@beenotung/tslib";
 
 export namespace databaseService.hooks {
   export let checkClientVersion: (db: DatabaseService, config: Config) => Promise<any>;
@@ -45,6 +47,12 @@ export interface QueryChain<Data extends BaseDBObject, Index extends BaseSearchO
   find(): FindQuery<Data>;
 
   findAll(): TableQuery<Data>;
+
+  /* once, not watch */
+  has(): Observable<boolean>;
+
+  /* once, not watch */
+  hasSome(): Observable<boolean>;
 }
 
 export function createQueryChain<Data extends BaseDBObject
@@ -58,6 +66,8 @@ export function createQueryChain<Data extends BaseDBObject
     }
     , find: () => table.find(acc, ...extra)
     , findAll: () => table.findAll(acc, ...extra)
+    , has: () => res.find().fetch().defaultIfEmpty().map(x => isDefined(x))
+    , hasSome: () => res.findAll().fetch().map(xs => xs.length > 0)
   };
   return res;
 }
@@ -195,7 +205,7 @@ export class DatabaseService {
       o.db_version = DBConfig.db_version;
       o.id = "singleton";
       await table.store(o).toPromise();
-      return [SemverDiffType.newer, void 0];
+      return [SemverDiffType.newer, o];
     }
     const remote_config = configs[0];
     if (DBConfig.db_version === remote_config.db_version) {
@@ -227,23 +237,47 @@ export class DatabaseService {
 
   store<A extends BaseDBObject>(table: TableType<A>, x: A) {
     return this.observeHz()
-      .mergeMap(hz => hz(table).store(x));
+      .mergeMap(hz => hz<A, any>(table).store(x));
   }
 
   insert<A extends BaseDBObject>(table: TableType<A>, x: A) {
     return this.observeHz()
-      .mergeMap(hz => hz(table).insert(x));
+      .mergeMap(hz => hz<A, any>(table).insert(x));
   }
 
   update<A extends BaseDBObject>(table: TableType<A>, x: A) {
     return this.observeHz()
-      .mergeMap(hz => hz(table).update((table.toData || toData)(x)));
+      .mergeMap(hz => hz<A, any>(table).update((table.toData || toData)(x)));
   }
 
   updateAll<A extends BaseDBObject>(table: TableType<A>, xs: A[]) {
     const f = table.toData || toData;
     return this.observeHz()
-      .mergeMap(hz => hz(table).update(xs.map(x => f(x))));
+      .mergeMap(hz => hz<A, any>(table).update(xs.map(x => f(x))));
+  }
+
+  find<Data extends BaseDBObject
+    , Index extends BaseSearchObject>(table: TableType<Data & Index>, xs: Index[]): Observable<FindQuery<Data>> {
+    if (xs.length == 0) {
+      return Observable.empty();
+    }
+    const f = table.toData || toData;
+    const y = f(xs.pop() as Index as any as Data);
+    const ys = xs.map(x => f(x as Index as any as Data));
+    return this.observeRawHz()
+      .map(hz => hz<Data>(table.tableName).find(y, ...ys));
+  }
+
+  findAll<Data extends BaseDBObject
+    , Index extends BaseSearchObject>(table: TableType<Data & Index>, xs: Index[]): Observable<TableQuery<Data>> {
+    if (xs.length == 0) {
+      return Observable.empty();
+    }
+    const f = table.toData || toData;
+    const y = f(xs.pop() as Index as any as Data);
+    const ys = xs.map(x => f(x as Index as any as Data));
+    return this.observeRawHz()
+      .map(hz => hz<Data>(table.tableName).findAll(y, ...ys));
   }
 
   async findByID<A extends BaseDBObject>(table: TableType<A>, id: string): Promise<A | null> {
@@ -255,8 +289,13 @@ export class DatabaseService {
       .mergeMap(hz => hz<A>(table.tableName).find(id).watch());
   }
 
-  query<Data extends BaseDBObject, Index extends BaseSearchObject>(table: TableType<Data & Index>, query: Index) {
+  createUpdate<A extends BaseDBObject>(table: TableType<A>, id: string, editorID: string) {
     return this.observeRawHz()
-      .map(hz => createQueryChain<Data, Index>(hz, table, query));
+      .map(hz => createUpdateQueryChain(hz, table, id, editorID));
+  }
+
+  query<Data extends BaseDBObject, Index extends BaseSearchObject>(table: TableType<Data & Index>, query: Index, ...extra: Index[]) {
+    return this.observeRawHz()
+      .map(hz => createQueryChain<Data, Index>(hz, table, query, ...extra));
   }
 }

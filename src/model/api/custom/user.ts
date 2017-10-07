@@ -50,6 +50,9 @@ export namespace User {
     const searchRes = await db.query(UserAnalytics, new SearchByDeviceID(deviceID))
       .mergeMap(q => q.find().fetch().defaultIfEmpty())
       .toPromise();
+    if (!searchRes) {
+      throw new Error("UserAnalytics not found by Device ID");
+    }
     await createUpdateQueryChain<UserAnalytics>(await db.getRawHz(), UserAnalytics, searchRes.id)
       .use(x => x.user_id = userRes.id)
       .update().toPromise();

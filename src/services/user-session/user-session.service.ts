@@ -11,17 +11,12 @@ import {isDefined} from "@beenotung/tslib/lang";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 import {is_non_empty_string} from "@beenotung/tslib/string";
 import {SearchByDeviceID} from "../../model/api/custom/user-analytics.index";
+import {Observable} from "rxjs/Observable";
 
 export function isRealDeviceID(s: string) {
   return !s.startsWith("db_");
 }
 
-/*
-  Generated class for the UserSessionProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class UserSessionService {
 
@@ -32,7 +27,7 @@ export class UserSessionService {
   constructor(private storage: StorageService
     , private uniqueDeviceID: UniqueDeviceID
     , private db: DatabaseService) {
-    console.log("Hello UserSessionProvider Provider");
+    console.log("Hello UserSessionServiceProvider Provider");
 
     (async () => {
       const deviceID = await this.getDeviceID();
@@ -55,13 +50,21 @@ export class UserSessionService {
     }
     deviceID = await this.storage.get<string>(StorageKey.device_id);
     if (is_non_empty_string(deviceID)) {
-      return deviceID;
+      /* check if the record is deleted */
+      const res: boolean = await this.db.query(UserAnalytics, new SearchByDeviceID(deviceID)).mergeMap(q => q.has()).toPromise();
+      if (res) {
+        return deviceID;
+      }
     }
     return this.registerDeviceID();
   }
 
-  async getUserID() {
+  async getUserID(): Promise<string> {
     return this.userIDDefer.promise;
+  }
+
+  observeUserID() {
+    return Observable.fromPromise(this.getUserID());
   }
 
   tryGetUserID(): string | "" {
@@ -104,8 +107,7 @@ export class UserSessionService {
     } catch (e) {
       /* not supported, e.g. in web browser */
       console.warn(e);
-      const s = await this.storage.get<string>(StorageKey.device_id);
-      return is_non_empty_string(s) ? s : undefined;
+      return undefined;
     }
   }
 
