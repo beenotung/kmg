@@ -3,3 +3,7 @@
 Knowledge Management Game
 
 https://polyu-ikm.slack.com/files/U73P9U2BY/F7G1745L7/new_game_rule.docx[Latest version of game rules]
+
+== TODO
+- add official guide / requirement
+- add schedule
