@@ -1,0 +1,6 @@
+[submodule "kmg-ionic"]
+	path = kmg-ionic
+	url = https://bitbucket.org/polyu-kmg/kmg-ionic.git
+[submodule "kmg-horizon"]
+	path = kmg-horizon
+	url = https://bitbucket.org/polyu-kmg/kmg-horizon.git
