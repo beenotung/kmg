@@ -9,13 +9,21 @@
       "spaces"
     ],
     "object-literal-sort-keys": false,
-    "no-empty": false
+    "no-empty": false,
+    "quotemark": [
+      true,
+      "double"
+    ]
   },
   "rules": {
     "object-literal-sort-keys": false,
     "indent": [
       true,
       "spaces"
+    ],
+    "quotemark": [
+      true,
+      "double"
     ]
   },
   "rulesDirectory": []
