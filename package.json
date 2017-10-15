@@ -1,5 +1,5 @@
 {
-  "name": "ionic-horizon-seed",
+  "name": "kmg-ionic",
   "version": "0.0.1",
   "description": "A template Ionic project with Horizon and unit-test",
   "private": true,
@@ -75,11 +75,11 @@
     "ionic:test": "npm run ionic:build --aot && npm run ionic:lint"
   },
   "dependencies": {
-    "@angular/common": "4.4.3",
-    "@angular/core": "4.4.3",
-    "@angular/forms": "4.4.3",
-    "@angular/http": "4.4.3",
-    "@beenotung/tslib": "^6.2.0",
+    "@angular/common": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@beenotung/tslib": "^7.0.2",
     "@ionic-native/core": "^4.1.0",
     "@ionic-native/geolocation": "^4.1.0",
     "@ionic-native/splash-screen": "^4.1.0",
@@ -113,10 +113,10 @@
   "peerDependencies": {},
   "devDependencies": {
     "@angular/cli": "^1.4.3",
-    "@angular/compiler": "4.4.3",
-    "@angular/compiler-cli": "4.4.3",
-    "@angular/platform-browser": "4.4.3",
-    "@angular/platform-browser-dynamic": "4.4.3",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/tsc-wrapped": "^4.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.9",
     "@ionic/app-scripts": "^2.1.4",
