@@ -14,6 +14,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
@@ -22,6 +24,7 @@
     "browser-sync": "^2.18.13",
     "browser-sync-webpack-plugin": "^1.2.0",
     "clean-webpack-plugin": "^0.1.17",
+    "codelyzer": "^3.2.1",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
@@ -30,9 +33,13 @@
     "eslint-plugin-standard": "^3.0.1",
     "expose-loader": "^0.7.3",
     "html-webpack-plugin": "^2.30.1",
+    "rxjs": "^5.0.1",
     "tslint": "^5.7.0",
+    "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.5.3",
-    "webpack": "^3.4.1"
+    "typestub-horizon-client": "^0.1.7",
+    "webpack": "^3.4.1",
+    "zone.js": "^0.8.4"
   },
   "dependencies": {
     "@beenotung/tslib": "^7.0.3",
