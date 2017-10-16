@@ -19,7 +19,7 @@ export class GameMap {
   grids = new HashedArray<MapGrid>(x => x.id);
 
   constructor() {
-    //TODO init grids
+    // TODO init grids
   }
 
   canMove(src: MapGrid, dest: MapGrid): boolean {
