@@ -13,7 +13,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LoginPage} from "../pages/login/login";
 import {TabsPage} from "../pages/tabs/tabs";
 import {SearchSelectListPage} from "../pages/search-select-list/search-select-list";
-import {SettingPage} from "../pages/setting/setting";
+import {SettingsPage} from "../pages/settings/settings";
 import {UserSessionService} from "../services/user-session/user-session.service";
 import {BugReportService} from "../services/bug-report/bug-report.service";
 import {ShortIdPipe} from "../pipes/short-id/short-id.pipe";
@@ -24,6 +24,7 @@ import {StorageService} from "../services/storage/storage.service";
 import {LineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "angularlib";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
+import {HttpClient} from "@angular/common/http";
 import {ComponentsModule} from "../components/components.module";
 
 export function provideStorage() {
@@ -32,8 +33,11 @@ export function provideStorage() {
   });
 }
 
-export function HttpLoaderFactory(http: Http) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+// export function HttpLoaderFactory(http: Http) {
+//   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+// }
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }
 
 @NgModule({
@@ -50,7 +54,7 @@ export function HttpLoaderFactory(http: Http) {
     /* utils pages */
     TabsPage,
     SearchSelectListPage,
-    SettingPage,
+    SettingsPage,
 
     /* main tabs */
 
@@ -89,7 +93,7 @@ export function HttpLoaderFactory(http: Http) {
     /* utils pages */
     TabsPage,
     SearchSelectListPage,
-    SettingPage,
+    SettingsPage,
 
     /* main four tabs */
 

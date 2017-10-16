@@ -1,2 +1,4 @@
 #!/bin/bash
-./node_modules/.bin/ionic $@
+hash ionic 2>/dev/null || ./install-dev
+set -e
+ionic $@
