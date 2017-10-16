@@ -3,6 +3,7 @@ import {NavController, Tabs} from "ionic-angular";
 import {SettingsPage} from "../settings/settings";
 import {WelcomePage} from "../welcome/welcome";
 import {UserSessionService} from "../../services/user-session/user-session.service";
+import {GamePage} from "../game/game";
 
 /**
  * Generated class for the TabsPage tabs.
@@ -21,7 +22,7 @@ export class TabsPage implements OnInit {
   @ViewChild("tabs") tabs: Tabs;
 
   tab1 = SettingsPage;
-  tab2 = SettingsPage;
+  tab2 = GamePage;
   tab3 = SettingsPage;
   tab4 = SettingsPage;
 

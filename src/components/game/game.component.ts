@@ -7,16 +7,13 @@ import { Component } from "@angular/core";
  * Components.
  */
 @Component({
-  selector: "game",
+  selector: "game-cmp",
   templateUrl: "game.html"
 })
 export class GameComponent {
 
-  text: string;
-
   constructor() {
     console.log("Hello GameComponent Component");
-    this.text = "Hello World";
   }
 
 }

@@ -1,8 +1,10 @@
-game {
-      width: 1024px;
-      height: 768px;
-      border: 0;
-      outline: 1px red solid;
-      background-color: red;
-      position: absolute;
+game-cmp {
+  #gameRoot {
+    width: 1024px;
+    height: 768px;
+    border: 0;
+    outline: 1px red solid;
+    background-color: red;
+    //position: absolute;
+  }
 }

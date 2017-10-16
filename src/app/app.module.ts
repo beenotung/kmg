@@ -26,6 +26,7 @@ import {HorizonModule, LoadingModule, ProgressBrowserXhr, ProgressModule} from "
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 import {ComponentsModule} from "../components/components.module";
 import {LoadingService} from "../services/loading/loading.service";
+import {GamePage} from "../pages/game/game";
 
 export function provideStorage() {
   return new Storage({
@@ -57,9 +58,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     /* utils pages */
     TabsPage,
     SearchSelectListPage,
-    SettingsPage,
 
     /* main tabs */
+    GamePage,
+    SettingsPage,
 
     /* components */
     // TabHeaderComponent,
@@ -96,12 +98,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     /* utils pages */
     TabsPage,
     SearchSelectListPage,
-    SettingsPage,
 
     /* main four tabs */
+    GamePage,
+    SettingsPage,
 
     /* other components */
-    // LoadingDivComponent,
   ],
   providers: [
     /* lib services */
