@@ -29,11 +29,14 @@ update
 upload
 version
 
+## Source config
+.editorconfig
+
 ## Config
 ionic.config.json
 
 ## Typescript
-src
+src/
 tsconfig.json
 tsconfig-ng.json
 tsconfig-ionic.json
