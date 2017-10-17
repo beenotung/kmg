@@ -1,17 +1,34 @@
 import Phaser from "phaser";
 
+let url = "http://localhost:8100";
 export default class extends Phaser.State {
-  init() {
+  constructor() {
+    super();
+    this.onMessage = this.onMessage.bind(this);
+    this.sendMessage("constructor");
+    this.debug = {};
+  }
 
+  init() {
+    this.sendMessage("init");
+    window.addEventListener("message", this.onMessage, false);
+  }
+
+  shutdown() {
+    this.sendMessage("shutdown");
+    window.removeEventListener("message", this.onMessage, false);
   }
 
   preload() {
+    this.sendMessage("preload");
     this.load.image("logo", "./assets/images/polyu_comp_logo.jpg");
     this.load.image("polylogo", "./assets/images/polyu_logo.png");
     this.load.audio("bgMusic", "./assets/sounds/state1_bgm.mp3");
   }
 
   create() {
+    this.sendMessage("create");
+
     // Set Background color to white
     this.stage.backgroundColor = "#FFF";
 
@@ -35,5 +52,54 @@ export default class extends Phaser.State {
     // this.add.tween(logo2).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
     // this.add.tween(logo).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
     bgMsuic.fadeOut(2000);
+  }
+
+  update() {
+    if (this.debug.tps) {
+      this.lastTick = this.currentTick;
+      this.currentTick = Date.now();
+      const tps = 1000 / (this.currentTick - this.lastTick);
+      if (Number.isNaN(tps)) {
+        return;
+      }
+      // console.log('tps:', this.tps);
+      const msg = {tps};
+      this.sendMessage(msg);
+    }
+  }
+
+  render() {
+    if (this.debug.fps) {
+      this.lastFrame = this.currentFrame;
+      this.currentFrame = Date.now();
+      const fps = 1000 / (this.currentFrame - this.lastFrame);
+      if (Number.isNaN(fps)) {
+        return;
+      }
+      // console.log('fps:', this.fps);
+      const msg = {fps};
+      this.sendMessage(msg);
+    }
+  }
+
+  onMessage(event) {
+    if (event.origin !== url) {
+      return;
+    }
+    const data = event.data;
+    if (typeof data.debug === "object" && data.debug !== null) {
+      if (typeof data.debug.fps === "boolean") {
+        this.debug.fps = data.debug.fps;
+      }
+      if (typeof data.debug.tps === "boolean") {
+        this.debug.tps = data.debug.tps;
+      }
+      return;
+    }
+    console.debug("received from parent:", event.data);
+  }
+
+  sendMessage(msg) {
+    window.parent.postMessage(msg, url);
   }
 }
