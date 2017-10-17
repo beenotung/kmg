@@ -5,14 +5,14 @@ import {LoadingDivComponent} from "./loading-div/loading-div";
 import {IonicModule} from "ionic-angular";
 import {LineModule} from "ioniclib";
 import {HorizonModule, LoadingModule, ProgressModule} from "angularlib";
-import { GameComponent } from "./game/game.component";
+import {GameComponent} from "./game/game.component";
 
 @NgModule({
   declarations: [
-    TabHeaderComponent
-    , MenuSelectorButtonComponent
-    , LoadingDivComponent,
-    GameComponent
+    TabHeaderComponent,
+    MenuSelectorButtonComponent,
+    LoadingDivComponent,
+    GameComponent,
   ],
   imports: [
     IonicModule
@@ -22,10 +22,10 @@ import { GameComponent } from "./game/game.component";
     , ProgressModule
   ],
   exports: [
-    TabHeaderComponent
-    , MenuSelectorButtonComponent
-    , LoadingDivComponent,
-    GameComponent
+    TabHeaderComponent,
+    MenuSelectorButtonComponent,
+    LoadingDivComponent,
+    GameComponent,
   ]
 })
 export class ComponentsModule {
