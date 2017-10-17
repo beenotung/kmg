@@ -28,3 +28,6 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+## Modified from seed
+This part helps updating the seed.
+- gc
