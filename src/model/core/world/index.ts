@@ -1,2 +1,2 @@
-export * from "./world.type";
+export * from "./world.data";
 export * from "./world.type";
