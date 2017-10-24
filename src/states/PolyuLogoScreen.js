@@ -21,9 +21,6 @@ export default class extends Phaser.State {
 
   preload() {
     this.sendMessage("preload");
-    this.load.image("logo", "./assets/images/polyu_comp_logo.jpg");
-    this.load.image("polylogo", "./assets/images/polyu_logo.png");
-    this.load.audio("bgMusic", "./assets/sounds/state1_bgm.mp3");
   }
 
   create() {
@@ -51,7 +48,11 @@ export default class extends Phaser.State {
     this.game.add.tween(logo2).to({x: 400, y: 400, alpha: 1}, 1000, Phaser.Easing.Quadratic.InOut, true);
     // this.add.tween(logo2).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
     // this.add.tween(logo).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
-    bgMsuic.fadeOut(2000);
+    bgMsuic.fadeOut(2000)
+
+    this.time.events.add(Phaser.Timer.SECOND * 5, () => {
+      this.state.start('Menu')
+    }, this)
   }
 
   update() {
