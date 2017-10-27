@@ -3,6 +3,7 @@
  * */
 import {enum_only_string, HashedArray, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
 import {InitialMatrixMap} from "./world.data";
+import {checkExtend} from "../../../utils";
 
 export class Game {
   static MaxTime = 10 * MINUTE;
@@ -80,13 +81,52 @@ export enum ActionType {
 
 enum_only_string(ActionType);
 
+export namespace ActionType {
+  export function next(a: ActionType) {
+    switch (a) {
+      case ActionType.socialization:
+        return ActionType.externalization;
+      case ActionType.externalization:
+        return ActionType.combination;
+      case ActionType.combination:
+        return ActionType.internalization;
+      case ActionType.internalization:
+        return ActionType.socialization;
+      default:
+        throw new TypeError("undefined action type: " + a);
+    }
+  }
+
+  function getStep(a: ActionType, b: ActionType) {
+    let step = 0;
+    for (; ;) {
+      if (a === b) {
+        return step;
+      }
+      step++;
+      a = next(a);
+    }
+  }
+
+  /**
+   * return true if a is before b
+   * */
+  export function isBefore(a: ActionType, b: ActionType) {
+    const sa = getStep(a, b);
+    const sb = getStep(b, a);
+    return sa < sb;
+  }
+
+}
+
+export enum ProfitType {
+  portable_profit,
+  transient_profit,
+}
+
 export enum CardType {
-  socialization,
-  externalization,
-  combination,
-  internalization,
-  profit_portable,
-  profit_transient,
+  action,
+  profit,
   risk,
 }
 
@@ -114,7 +154,7 @@ export namespace CardEffect {
 }
 
 export class Card {
-  constructor(public type: CardType | ActionType
+  constructor(public type: ActionType | ProfitType | CardType.risk
     , public name: string
     , public effects: CardEffect[]) {
   }
@@ -149,18 +189,40 @@ export interface Matrix {
   capital: number;
 }
 
+export interface MatrixState extends Matrix {
+  stage: ActionType;
+  /* start from 0 */
+  numberOfCycle: number;
+}
+
 export class Player {
   name: string;
 
   companyType: CompanyType;
-  current: Matrix;
-  target: Matrix;
+  current: MatrixState;
+  target: MatrixState;
 
   constructor(type: CompanyType) {
     this.companyType = type;
-    const m = this.current = InitialMatrixMap.get(type);
+    const m = InitialMatrixMap.get(type);
     if (notDefined(m)) {
       throw new Error("unsupported company type: " + type);
+    }
+    this.current = Object.assign({
+      stage: Random.nextEnum(ActionType) as any as ActionType
+      , numberOfCycle: 0
+    }, m);
+  }
+
+  get hasReachTarget(): boolean {
+    if (this.current.numberOfCycle < this.target.numberOfCycle) {
+      return false;
+    }
+    if (this.current.numberOfCycle == this.target.numberOfCycle) {
+      return ActionType.isBefore(this.target.stage, this.current.stage);
+    } else {
+      /* current > target */
+      return true;
     }
   }
 }

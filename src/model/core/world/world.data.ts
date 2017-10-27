@@ -1,4 +1,4 @@
-import {ActionType, Card, CardType, CompanyType, Matrix, MatrixType} from "./world.type";
+import {ActionType, Card, CardType, CompanyType, Matrix, MatrixType, ProfitType} from "./world.type";
 
 export const Cards: Card[] = [
   new Card(ActionType.socialization, "Brain-storming", [
@@ -113,56 +113,56 @@ export const Cards: Card[] = [
     , {type: MatrixType.captial, amount: -5}
   ])
 
-  , new Card(CardType.profit_portable, "Knowledge Retention", [
+  , new Card(ProfitType.portable_profit, "Knowledge Retention", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
-  , new Card(CardType.profit_portable, "Low employee turnover", [
+  , new Card(ProfitType.portable_profit, "Low employee turnover", [
     {type: MatrixType.captial, amount: +3}
   ])
-  , new Card(CardType.profit_portable, "Research & Development", [
+  , new Card(ProfitType.portable_profit, "Research & Development", [
     {type: MatrixType.marketShare, amount: +3}
   ])
-  , new Card(CardType.profit_portable, "Good learning culture", [
+  , new Card(ProfitType.portable_profit, "Good learning culture", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
-  , new Card(CardType.profit_portable, "Confidentiality agreement", [
+  , new Card(ProfitType.portable_profit, "Confidentiality agreement", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
-  , new Card(CardType.profit_portable, "High external collaboration", [
+  , new Card(ProfitType.portable_profit, "High external collaboration", [
     {type: MatrixType.captial, amount: +3}
   ])
-  , new Card(CardType.profit_portable, "Proper IP handling", [
+  , new Card(ProfitType.portable_profit, "Proper IP handling", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
-  , new Card(CardType.profit_portable, "Good talent management", [
+  , new Card(ProfitType.portable_profit, "Good talent management", [
     {type: MatrixType.marketShare, amount: +3}
   ])
-  , new Card(CardType.profit_portable, "Adequate training", [
+  , new Card(ProfitType.portable_profit, "Adequate training", [
     {type: MatrixType.captial, amount: +3}
   ])
 
-  , new Card(CardType.profit_transient, "Revenue Increase", [
+  , new Card(ProfitType.transient_profit, "Revenue Increase", [
     {type: MatrixType.captial, amount: +2}
   ])
-  , new Card(CardType.profit_transient, "Innovation & Creative", [
+  , new Card(ProfitType.transient_profit, "Innovation & Creative", [
     {type: MatrixType.captial, amount: +2}
   ])
-  , new Card(CardType.profit_transient, "Increase Efficiency", [
+  , new Card(ProfitType.transient_profit, "Increase Efficiency", [
     {type: MatrixType.captial, amount: +2}
   ])
-  , new Card(CardType.profit_transient, "Better problem-solving skills", [
+  , new Card(ProfitType.transient_profit, "Better problem-solving skills", [
     {type: MatrixType.captial, amount: +1}
   ])
-  , new Card(CardType.profit_transient, "Increase Market Share", [
+  , new Card(ProfitType.transient_profit, "Increase Market Share", [
     {type: MatrixType.marketShare, amount: +3}
   ])
-  , new Card(CardType.profit_transient, "Better & faster decision making", [
+  , new Card(ProfitType.transient_profit, "Better & faster decision making", [
     {type: MatrixType.marketShare, amount: +3}
   ])
-  , new Card(CardType.profit_transient, "Quality Improved", [
+  , new Card(ProfitType.transient_profit, "Quality Improved", [
     {type: MatrixType.marketShare, amount: +2}
   ])
-  , new Card(CardType.profit_transient, "Avoid making the same mistakes", [
+  , new Card(ProfitType.transient_profit, "Avoid making the same mistakes", [
     {type: MatrixType.captial, amount: +3}
   ])
 
