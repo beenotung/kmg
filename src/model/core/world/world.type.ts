@@ -1,7 +1,7 @@
 /**
  * new instance for each game-play
  * */
-import {HashedArray, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
+import {enum_only_string, HashedArray, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
 import {InitialMatrixMap} from "./world.data";
 
 export class Game {
@@ -69,6 +69,8 @@ export enum GridType {
   random,
 }
 
+enum_only_string(GridType);
+
 export enum ActionType {
   socialization,
   externalization,
@@ -76,13 +78,43 @@ export enum ActionType {
   internalization,
 }
 
+enum_only_string(ActionType);
+
+export enum CardType {
+  socialization,
+  externalization,
+  combination,
+  internalization,
+  profit_portable,
+  profit_transient,
+  risk,
+}
+
+enum_only_string(CardType);
+
 export interface CardEffect {
   type: MatrixType;
+  /* + or - or * */
   amount: number;
 }
 
+export enum CardEffectType {
+  plus, minus, multiply
+}
+
+enum_only_string(CardEffectType);
+
+export namespace CardEffect {
+  export function getType(amount: number): CardEffectType {
+    return Math.round(amount) === amount
+      ? (amount > 0 ? CardEffectType.plus : CardEffectType.minus)
+      : CardEffectType.multiply
+      ;
+  }
+}
+
 export class Card {
-  constructor(public type: ActionType
+  constructor(public type: CardType | ActionType
     , public name: string
     , public effects: CardEffect[]) {
   }
@@ -95,12 +127,16 @@ export enum CompanyType {
   Education,
 }
 
+enum_only_string(CompanyType);
+
 export enum MatrixType {
   tacitKnowledge,
   explicitKnowledge,
   marketShare,
   captial,
 }
+
+enum_only_string(MatrixType);
 
 export interface Matrix {
   /* percentage to max (times 100) */
@@ -117,11 +153,13 @@ export class Player {
   name: string;
 
   companyType: CompanyType;
-  matrix: Matrix;
+  current: Matrix;
+  target: Matrix;
 
   constructor(type: CompanyType) {
-    this.matrix = InitialMatrixMap.get(type);
-    if (notDefined(this.matrix)) {
+    this.companyType = type;
+    const m = this.current = InitialMatrixMap.get(type);
+    if (notDefined(m)) {
       throw new Error("unsupported company type: " + type);
     }
   }
