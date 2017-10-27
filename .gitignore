@@ -1,13 +1,8 @@
 node_modules/
-<<<<<<< Updated upstream
 .idea/
 index.html
 dist/
 yarn.lock
-=======
-dist/
 .vscode/
 *.log
 package-lock.json
-/index.html
->>>>>>> Stashed changes
