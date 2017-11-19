@@ -7,6 +7,7 @@ import SplashState from './states/Splash'
 // import GameState from './states/Game'
 import PolyScreen from './states/PolyuLogoScreen'
 import Menu from './states/Menu'
+import Select from './states/Select'
 import config from './config'
 
 class Game extends Phaser.Game {
@@ -23,10 +24,27 @@ class Game extends Phaser.Game {
     this.state.add('Splash', SplashState, false)
     // this.state.add('Game', GameState, false)
     this.state.add('PolyScreen', PolyScreen, false)
-    this.state.add('Menu', Menu, false)    
+    this.state.add('Menu', Menu, false)   
+    this.state.add('Select', Select, false)        
     // this.state.start("PolyScreen")
     this.state.start('Boot')    
   }
 }
 
 window.game = new Game()
+window.game.global = {
+  player: [
+    {
+      'pic': -1
+    },
+    {
+      'pic': -1
+    },
+    {
+      'pic': -1
+    },
+    {
+      'pic': -1
+    }
+  ]
+}
