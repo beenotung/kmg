@@ -1,9 +1,8 @@
 /**
  * new instance for each game-play
  * */
-import {enum_only_string, HashedArray, isNumberType, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
-import {InitialMatrixMap} from "./world.data";
-import {assert} from "../../../utils";
+import {enum_only_string, MINUTE, notDefined, Random} from "@beenotung/tslib";
+import {Player} from "./player";
 
 export class Game {
   static MaxTime = 10 * MINUTE;
@@ -162,41 +161,4 @@ export interface MatrixState extends Matrix {
   stage: ActionType;
   /* start from 0 */
   numberOfCycle: number;
-}
-
-export class Player {
-  name: string;
-
-  companyType: CompanyType;
-  current: MatrixState;
-  target: MatrixState;
-
-  constructor(type: CompanyType) {
-    this.companyType = type;
-    const m = InitialMatrixMap.get(type);
-    if (notDefined(m)) {
-      throw new Error("unsupported company type: " + type);
-    }
-    this.current = Object.assign({
-      stage: Random.nextEnum(ActionType) as any as ActionType
-      , numberOfCycle: 0
-    }, m);
-  }
-
-  get hasReachTarget(): boolean {
-    if (this.current.numberOfCycle < this.target.numberOfCycle) {
-      return false;
-    }
-    if (this.current.numberOfCycle == this.target.numberOfCycle) {
-      return ActionType.isBefore(this.target.stage, this.current.stage);
-    } else {
-      /* current > target */
-      return true;
-    }
-  }
-
-  startRound(target: MatrixState) {
-    assert(target && target.stage && isNumberType(this.target.numberOfCycle), "argument target:MatrixState is required");
-    this.target = target;
-  }
 }

@@ -5,3 +5,4 @@ export * from "./pages";
 export * from "./pipes";
 export * from "./services";
 export * from "./utils";
+export * from "./utils-lib";

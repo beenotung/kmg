@@ -3,7 +3,7 @@ type MapConnection = [number, number[]];
 /**
  * only point to higher number, seed  for a mapping object
  * */
-const MapConnections: MapConnection[] = [
+export const MapConnections: MapConnection[] = [
   [1, [2, 12]]
   , [2, [3, 12, 13]]
   , [3, [4, 13]]
@@ -135,6 +135,6 @@ MapConnections.forEach(([from, tos]: MapConnection) => {
 });
 
 export function isConnected(a: number, b: number) {
-  let set = Connections.get(a);
+  const set = Connections.get(a);
   return set && set.has(b);
 }
