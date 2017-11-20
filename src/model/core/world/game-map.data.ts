@@ -116,3 +116,25 @@ const MapConnections: MapConnection[] = [
   , [110, [111]]
   , [111, [112]]
 ];
+const Connections = new Map<number, Set<number>>();
+MapConnections.forEach(([from, tos]: MapConnection) => {
+  let f = Connections.get(from);
+  if (!f) {
+    f = new Set();
+    Connections.set(from, f);
+  }
+  tos.forEach(to => {
+    let t = Connections.get(to);
+    if (!t) {
+      t = new Set<number>();
+      Connections.set(to, t);
+    }
+    f.add(to);
+    t.add(from);
+  });
+});
+
+export function isConnected(a: number, b: number) {
+  let set = Connections.get(a);
+  return set && set.has(b);
+}
