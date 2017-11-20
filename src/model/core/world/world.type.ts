@@ -1,9 +1,9 @@
 /**
  * new instance for each game-play
  * */
-import {enum_only_string, HashedArray, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
+import {enum_only_string, HashedArray, isNumberType, MINUTE, not_impl, notDefined, Random} from "@beenotung/tslib";
 import {InitialMatrixMap} from "./world.data";
-import {checkExtend} from "../../../utils";
+import {assert} from "../../../utils";
 
 export class Game {
   static MaxTime = 10 * MINUTE;
@@ -40,37 +40,6 @@ export class Game {
 export class Round {
   roundNum: number;
 }
-
-export class GameMap {
-  grids = new HashedArray<MapGrid>(x => x.id);
-
-  constructor() {
-    // TODO init grids
-  }
-
-  canMove(src: MapGrid, dest: MapGrid): boolean {
-    return not_impl();
-  }
-}
-
-export class MapGrid {
-  id: number;
-  connectedList = new HashedArray<MapGrid>(x => x.id);
-  type: GridType;
-
-  static connect(a: MapGrid, b: MapGrid) {
-    a.connectedList.upsert(b);
-    b.connectedList.upsert(a);
-  }
-}
-
-export enum GridType {
-  action,
-  coorperation,
-  random,
-}
-
-enum_only_string(GridType);
 
 export enum ActionType {
   socialization,
@@ -224,5 +193,10 @@ export class Player {
       /* current > target */
       return true;
     }
+  }
+
+  startRound(target: MatrixState) {
+    assert(target && target.stage && isNumberType(this.target.numberOfCycle), "argument target:MatrixState is required");
+    this.target = target;
   }
 }

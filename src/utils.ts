@@ -34,3 +34,13 @@ export type DBAuthPair = [Horizon, string];
 export function subDBAuthPair(db: DatabaseService, userSession: UserSessionService): Observable<DBAuthPair> {
   return Observable.fromPromise(Promise.all([db.getRawHz(), userSession.getUserID()]));
 }
+
+export function assert(ok: boolean, msg: string | Error) {
+  if (!ok) {
+    if (typeof msg === "string") {
+      throw new Error(msg);
+    } else {
+      throw msg;
+    }
+  }
+}
