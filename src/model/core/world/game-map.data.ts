@@ -1,4 +1,4 @@
-type MapConnection = [number, number[]];
+export type MapConnection = [number, number[]];
 
 /**
  * only point to higher number, seed  for a mapping object

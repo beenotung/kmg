@@ -1,4 +1,4 @@
-import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/tslib";
+import {compare_number, enum_only_string, HashedArray, not_impl, Random} from "@beenotung/tslib";
 import {isConnected, MapConnections} from "./game-map.data";
 import {ActionType} from "./world.type";
 import {Player} from "./player";
@@ -23,6 +23,10 @@ export class MapGrid {
   static connect(a: MapGrid, b: MapGrid) {
     a.connectedList.upsert(b);
     b.connectedList.upsert(a);
+  }
+
+  getMoveableGrids() {
+    return not_impl();
   }
 
   static genAll() {
