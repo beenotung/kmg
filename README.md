@@ -9,20 +9,18 @@ To use this template, either create a new ionic project using the ionic node.js 
 
 ## Guide for beginner developer / QA
 
-Install global packages:
+Install global packages (only for first time):
 
 ```bash
-$ sudo npm install -g ionic cordova
+$ ./install-dev
 ```
 
 Then, run:
 
 ```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
+$ yarn
+$ ./serve
 ```
-
-Substitute ios for android if not on a Mac.
 
 ## Modified from seed
 This part helps updating the seed.
@@ -44,6 +42,7 @@ This part helps updating the seed.
 3. small card on map
 4. middle card in backpack (how to open)
 5. large card (detail) (how to close, use)
+    - about 1/3 screen height
 6. when can player user a card?
     1. after pick up, immediate
     2. from backpack, anytime, when player's turn
@@ -51,3 +50,9 @@ This part helps updating the seed.
 7. how to end the turn?
     1. after user 1 card?
     2. click skip (if don't use card)
+    -> unlimited card use, unless use click 'finish turn'
+    -> can move 1 or 0 step
+### [Discuss] To ask Edie
+1. what is the target of each round?
+    1. how many Nonaka-Model cycle?
+    2. how many card for each Nonaka-stage (1/4 cycle)?
