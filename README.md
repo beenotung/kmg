@@ -29,7 +29,7 @@ This part helps updating the seed.
 - gc
 
 ## To-Do
-### Create Event for Client
+### [Lib] Create Event for Client
 - when four property of player change (per player)
     - emit player
 - when player change stage (4 model) (per player)
@@ -38,8 +38,7 @@ This part helps updating the seed.
     - emit card info (e.g. color)
 - when a card is taken
 - when a player step in a grid
-
-## To-Get (screen design)
+### [Design] To Discuss and Design
 1. center position of each grid
 2. transparent circle (for moving hint)
 3. small card on map
