@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/beenotung/ionic-horizon-seed/issues"
   },
-  "main": "./dist/index.umd.js",
+  "main": "lib/model/core/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "keywords": [
