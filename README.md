@@ -45,4 +45,6 @@ $ ./serve
 ### [Discuss] To ask Edie
 1. what is the target of each round?
     1. how many Nonaka-Model cycle?
+        -> not restrictly, as long as the target is need, next round can start
     2. how many card for each Nonaka-stage (1/4 cycle)?
+        -> one card of correct color is enough
