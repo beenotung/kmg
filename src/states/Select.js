@@ -6,6 +6,7 @@ export default class extends Phaser.State {
     this.game.global.player[1]["pic"] = -1;
     this.game.global.player[2]["pic"] = -1;
     this.game.global.player[3]["pic"] = -1;
+
   }
 
   shutdown() {}
@@ -48,6 +49,7 @@ export default class extends Phaser.State {
       "homebutton-select",
       function() {
         this.init();
+        this.game.global.bgm.stop();
         this.state.start("Menu");
       },
       this,
@@ -60,7 +62,10 @@ export default class extends Phaser.State {
       866,
       636,
       "finishbutton-select",
-      function() {},
+      function() {
+        this.game.global.bgm.stop();        
+        this.state.start("MainGame");        
+      },
       this,
       2,
       0,

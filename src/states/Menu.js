@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 export default class extends Phaser.State {
 
   init() {
+    console.log(this.game.global)
   }
 
   shutdown() {
@@ -40,8 +41,8 @@ export default class extends Phaser.State {
     this.add.tween(this.textGAME_E.position).to( {y: 450}, 2000, Phaser.Easing.Back.InOut, true, 100, 20, true).loop(true)
     
     
-    var bgMsuic = this.add.audio('menuMusic')
-    bgMsuic.play()    
+    this.game.global.bgm = this.add.audio('menuMusic')
+    this.game.global.bgm.play()    
     
   }
 
