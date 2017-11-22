@@ -1,6 +1,6 @@
-import "pixi";
-import "p2";
-import Phaser from "phaser";
+import 'pixi'
+import 'p2'
+import Phaser from 'phaser'
 
 import BootState from './states/Boot'
 import SplashState from './states/Splash'
@@ -25,11 +25,11 @@ class Game extends Phaser.Game {
     this.state.add('Splash', SplashState, false)
     // this.state.add('Game', GameState, false)
     this.state.add('PolyScreen', PolyScreen, false)
-    this.state.add('Menu', Menu, false)   
-    this.state.add('Select', Select, false) 
-    this.state.add('MainGame', MainGame, false) 
+    this.state.add('Menu', Menu, false)
+    this.state.add('Select', Select, false)
+    this.state.add('MainGame', MainGame, false)
     // this.state.start("PolyScreen")
-    this.state.start('Boot')    
+    this.state.start('Boot')
   }
 }
 

@@ -1,51 +1,51 @@
-import Phaser from "phaser";
+import Phaser from 'phaser'
 
-let url = "http://localhost:8100";
+let url = 'http://localhost:8100'
 export default class extends Phaser.State {
-  constructor() {
-    super();
-    this.onMessage = this.onMessage.bind(this);
-    this.sendMessage("constructor");
-    this.debug = {};
+  constructor () {
+    super()
+    this.onMessage = this.onMessage.bind(this)
+    this.sendMessage('constructor')
+    this.debug = {}
   }
 
-  init() {
-    this.sendMessage("init");
-    window.addEventListener("message", this.onMessage, false);
+  init () {
+    this.sendMessage('init')
+    window.addEventListener('message', this.onMessage, false)
   }
 
-  shutdown() {
-    this.sendMessage("shutdown");
-    window.removeEventListener("message", this.onMessage, false);
+  shutdown () {
+    this.sendMessage('shutdown')
+    window.removeEventListener('message', this.onMessage, false)
   }
 
-  preload() {
-    this.sendMessage("preload");
+  preload () {
+    this.sendMessage('preload')
   }
 
-  create() {
-    this.sendMessage("create");
+  create () {
+    this.sendMessage('create')
 
     // Set Background color to white
-    this.stage.backgroundColor = "#FFF";
+    this.stage.backgroundColor = '#FFF'
 
     // Load Polyu Comp logo image and BGMusic
-    var logo = this.add.sprite(this.world.centerX, this.world.centerY, "logo");
-    var logo2 = this.add.sprite(this.world.centerX, this.world.centerY, "polylogo");
-    var bgMsuic = this.add.audio("bgMusic");
+    var logo = this.add.sprite(this.world.centerX, this.world.centerY, 'logo')
+    var logo2 = this.add.sprite(this.world.centerX, this.world.centerY, 'polylogo')
+    var bgMsuic = this.add.audio('bgMusic')
 
     // Set Logo in center and its alpha to 0
-    logo.anchor.setTo(0.5, 0.5);
-    logo2.scale.setTo(0.4, 0.4);
-    logo2.anchor.setTo(0.5, 0.5);
-    logo.alpha = 0;
-    logo2.alpha = 0;
+    logo.anchor.setTo(0.5, 0.5)
+    logo2.scale.setTo(0.4, 0.4)
+    logo2.anchor.setTo(0.5, 0.5)
+    logo.alpha = 0
+    logo2.alpha = 0
 
     // Add animation to fade in logo
-    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    bgMsuic.play();
-    this.game.add.tween(logo).to({x: 400, y: 200, alpha: 1}, 1000, Phaser.Easing.Quadratic.InOut, true);
-    this.game.add.tween(logo2).to({x: 400, y: 400, alpha: 1}, 1000, Phaser.Easing.Quadratic.InOut, true);
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
+    bgMsuic.play()
+    this.game.add.tween(logo).to({x: 400, y: 200, alpha: 1}, 1000, Phaser.Easing.Quadratic.InOut, true)
+    this.game.add.tween(logo2).to({x: 400, y: 400, alpha: 1}, 1000, Phaser.Easing.Quadratic.InOut, true)
     // this.add.tween(logo2).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
     // this.add.tween(logo).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true)
     bgMsuic.fadeOut(2000)
@@ -55,52 +55,52 @@ export default class extends Phaser.State {
     }, this)
   }
 
-  update() {
+  update () {
     if (this.debug.tps) {
-      this.lastTick = this.currentTick;
-      this.currentTick = Date.now();
-      const tps = 1000 / (this.currentTick - this.lastTick);
+      this.lastTick = this.currentTick
+      this.currentTick = Date.now()
+      const tps = 1000 / (this.currentTick - this.lastTick)
       if (Number.isNaN(tps)) {
-        return;
+        return
       }
       // console.log('tps:', this.tps);
-      const msg = {tps};
-      this.sendMessage(msg);
+      const msg = {tps}
+      this.sendMessage(msg)
     }
   }
 
-  render() {
+  render () {
     if (this.debug.fps) {
-      this.lastFrame = this.currentFrame;
-      this.currentFrame = Date.now();
-      const fps = 1000 / (this.currentFrame - this.lastFrame);
+      this.lastFrame = this.currentFrame
+      this.currentFrame = Date.now()
+      const fps = 1000 / (this.currentFrame - this.lastFrame)
       if (Number.isNaN(fps)) {
-        return;
+        return
       }
       // console.log('fps:', this.fps);
-      const msg = {fps};
-      this.sendMessage(msg);
+      const msg = {fps}
+      this.sendMessage(msg)
     }
   }
 
-  onMessage(event) {
+  onMessage (event) {
     if (event.origin !== url) {
-      return;
+      return
     }
-    const data = event.data;
-    if (typeof data.debug === "object" && data.debug !== null) {
-      if (typeof data.debug.fps === "boolean") {
-        this.debug.fps = data.debug.fps;
+    const data = event.data
+    if (typeof data.debug === 'object' && data.debug !== null) {
+      if (typeof data.debug.fps === 'boolean') {
+        this.debug.fps = data.debug.fps
       }
-      if (typeof data.debug.tps === "boolean") {
-        this.debug.tps = data.debug.tps;
+      if (typeof data.debug.tps === 'boolean') {
+        this.debug.tps = data.debug.tps
       }
-      return;
+      return
     }
-    console.debug("received from parent:", event.data);
+    console.debug('received from parent:', event.data)
   }
 
-  sendMessage(msg) {
-    window.parent.postMessage(msg, url);
+  sendMessage (msg) {
+    window.parent.postMessage(msg, url)
   }
 }

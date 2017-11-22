@@ -1,44 +1,44 @@
-import Phaser from "phaser";
+import Phaser from 'phaser'
 
 export default class extends Phaser.State {
-  init() {
-    
+  init () {
+
   }
 
-  shutdown() {}
+  shutdown () {}
 
-  preload() {
-    this.stage.backgroundColor = "#456";
+  preload () {
+    this.stage.backgroundColor = '#456'
   }
 
-  create() {
-    this.add.tileSprite(0, 0, 1024, 768, "background-map");
-    this.add.tileSprite(0, 0, 1024, 768, 'transparent-white-home');    
-    this.add.sprite(14, 24, "map_profile_question");  
-    this.add.sprite(934, 24, "map_profile_question");    
-    this.add.sprite(12, 524, "map_profile_question");    
-    this.add.sprite(938, 524, "map_profile_question"); 
-    this.add.sprite(938, 524, "map_profile_question");    
-    this.add.sprite(14, 108, "status01");    
-    this.add.sprite(938, 108, "status02");    
-    this.add.sprite(14, 440, "status03");    
-    this.add.sprite(938, 440, "status04");    
-    this.add.sprite(96, 18, "board_map");   
+  create () {
+    this.add.tileSprite(0, 0, 1024, 768, 'background-map')
+    this.add.tileSprite(0, 0, 1024, 768, 'transparent-white-home')
+    this.add.sprite(14, 24, 'map_profile_question')
+    this.add.sprite(934, 24, 'map_profile_question')
+    this.add.sprite(12, 524, 'map_profile_question')
+    this.add.sprite(938, 524, 'map_profile_question')
+    this.add.sprite(938, 524, 'map_profile_question')
+    this.add.sprite(14, 108, 'status01')
+    this.add.sprite(938, 108, 'status02')
+    this.add.sprite(14, 440, 'status03')
+    this.add.sprite(938, 440, 'status04')
+    this.add.sprite(96, 18, 'board_map')
     // this.block_central = this.add.sprite(371, 237, "block_central");        
-    this.add.sprite(162, 636, "cardsection-map");        
-    this.add.sprite(106, 678, "leftbutton-map");
-    this.add.sprite(878, 678, "rightbutton-map");
-    this.homebtn = this.add.sprite(0, 628, "homebutton-map");
-    this.homebtn.inputEnabled = true;
-    this.homebtn.events.onInputDown.add(function() {
-      this.state.start("Menu");
-    }, this);    
+    this.add.sprite(162, 636, 'cardsection-map')
+    this.add.sprite(106, 678, 'leftbutton-map')
+    this.add.sprite(878, 678, 'rightbutton-map')
+    this.homebtn = this.add.sprite(0, 628, 'homebutton-map')
+    this.homebtn.inputEnabled = true
+    this.homebtn.events.onInputDown.add(function () {
+      this.state.start('Menu')
+    }, this)
 
     // this.block_central.inputEnabled = true;
     // this.block_central.events.onInputDown.add(function() {
     //   console.log("click central block!")
     // }, this);   
-    
+
     var blockInputLocation = {
       '1': {'x': 106, 'y': 26},
       '2': {'x': 105, 'y': 73},
@@ -49,7 +49,7 @@ export default class extends Phaser.State {
       '7': {'x': 105, 'y': 379},
       '8': {'x': 105, 'y': 414},
       '9': {'x': 105, 'y': 462},
-      '10': {'x': 105, 'y': 493},   
+      '10': {'x': 105, 'y': 493},
       '11': {'x': 105, 'y': 547},
       '12': {'x': 0, 'y': 0},
       '13': {'x': 0, 'y': 0},
@@ -149,21 +149,21 @@ export default class extends Phaser.State {
       '107': {'x': 0, 'y': 0},
       '108': {'x': 0, 'y': 0},
       '109': {'x': 0, 'y': 0},
-      '110': {'x': 0, 'y': 0},   
-      '111': {'x': 0, 'y': 0},   
-      '112': {'x': 0, 'y': 0}      
+      '110': {'x': 0, 'y': 0},
+      '111': {'x': 0, 'y': 0},
+      '112': {'x': 0, 'y': 0}
     }
     for (var i = 1; i <= 112; i++) {
       console.log('block ' + i + ' inital!')
-      this['block_' + i] = this.add.sprite(blockInputLocation[i]['x'], blockInputLocation[i]['y'], 'block_' + i);
-      this['block_' + i].inputEnabled = true;
-      this['block_' + i].events.onInputDown.add(function() {
+      this['block_' + i] = this.add.sprite(blockInputLocation[i]['x'], blockInputLocation[i]['y'], 'block_' + i)
+      this['block_' + i].inputEnabled = true
+      this['block_' + i].events.onInputDown.add(function () {
         console.log('click block' + i + '!')
-      }, this);   
+      }, this)
     }
   }
 
-  update() {}
+  update () {}
 
-  render() {}
+  render () {}
 }
