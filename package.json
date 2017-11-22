@@ -22,15 +22,17 @@
   ],
   "homepage": "https://bitbucket.org/polyu-kmg/kmg-game#readme",
   "scripts": {
-    "build": "exit 0",
+    "build": "webpack --config webpack.config.js",
     "dev": "npm run build && webpack",
-    "deploy": "npm run build && webpack --config webpack.production.config.js",
+    "deploy": "webpack --config webpack.production.config.js",
     "lint": "find src -name '*.js' -exec eslint {} \\;",
     "fix": "find src -name '*.js' -exec eslint --fix {} \\;",
     "test": "npm run lint && npm run deploy"
   },
   "dependencies": {
+    "kmg-ionic": "../kmg-ionic",
     "phaser-ce": "^2.8.3",
+    "typestub-horizon-client": "^0.1.8",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -50,8 +52,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "expose-loader": "^0.7.3",
     "html-webpack-plugin": "^2.30.1",
-    "rxjs": "^5.0.1",
-    "webpack": "^3.4.1",
-    "zone.js": "^0.8.4"
+    "webpack": "^3.4.1"
   }
 }

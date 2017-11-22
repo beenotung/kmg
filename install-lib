@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+cd ../kmg-ionic
+./build-lib
+cd ../kmg-game
+yarn add ../kmg-ionic

@@ -1,6 +1,7 @@
 import 'pixi'
 import 'p2'
 import Phaser from 'phaser'
+import core from 'kmg-ionic'
 
 import BootState from './states/Boot'
 import SplashState from './states/Splash'
@@ -35,7 +36,7 @@ class Game extends Phaser.Game {
 
 window.game = new Game()
 window.game.global = {
-  api: require('./lib/kmg-ionic/src/model/core/index'),
+  api: core,
   player: [
     {
       'pic': -1,
