@@ -8,6 +8,8 @@
     "build": "exit 0",
     "dev": "npm run build && webpack",
     "deploy": "npm run build && webpack --config webpack.production.config.js",
+    "lint": "find src -name '*.js' -exec eslint {} \\;",
+    "fix": "find src -name '*.js' -exec eslint --fix {} \\;",
     "test": "npm run lint && npm run deploy"
   },
   "license": "MIT",
