@@ -20,7 +20,7 @@ export default class extends Phaser.State {
     this.load.image('left-home', './assets/images/left-home.png')
     this.load.image('startbutton-home_clicked', './assets/images/startbutton-home_clicked.png')
     this.load.image('startbutton-home_hover', './assets/images/startbutton-home_hover.png')
-    // this.load.image('startbutton-home', './assets/images/startbutton-home.png')    
+    // this.load.image('startbutton-home', './assets/images/startbutton-home.png')
     this.load.atlas('startbutton-home', './assets/images/startbtn_home`.png', './assets/images/startbtn_home`.json')
     this.load.image('title_bg', './assets/images/title_bg.png')
     this.load.image('backboard-select', './assets/images/backboard-select.jpg')

@@ -24,7 +24,7 @@ export default class extends Phaser.State {
     this.add.sprite(14, 440, 'status03')
     this.add.sprite(938, 440, 'status04')
     this.add.sprite(96, 18, 'board_map')
-    // this.block_central = this.add.sprite(371, 237, "block_central");        
+    // this.block_central = this.add.sprite(371, 237, "block_central");
     this.add.sprite(162, 636, 'cardsection-map')
     this.add.sprite(106, 678, 'leftbutton-map')
     this.add.sprite(878, 678, 'rightbutton-map')
@@ -37,7 +37,7 @@ export default class extends Phaser.State {
     // this.block_central.inputEnabled = true;
     // this.block_central.events.onInputDown.add(function() {
     //   console.log("click central block!")
-    // }, this);   
+    // }, this);
 
     var blockInputLocation = {
       '1': {'x': 106, 'y': 26},
