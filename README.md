@@ -16,6 +16,21 @@ $ yarn
 $ ./serve
 ```
 
+## When used as Library
+### Build
+```bash
+$ ./build-lib
+```
+### Path for peer submodule kmg-game
+```javascript
+var core = require('../kmg-ionic/lib/model/core');
+```
+### Required polyfill
+1. Promise
+2. Map
+3. Set
+4. Object.assign
+
 ## To-Do
 ### [Lib] Create Event for Client
 - when four property of player change (per player)

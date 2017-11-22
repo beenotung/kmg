@@ -56,3 +56,4 @@ www/
 
 # Build files
 dist.list
+lib/

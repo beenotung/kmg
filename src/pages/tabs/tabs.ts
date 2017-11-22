@@ -17,7 +17,7 @@ import {GamePage} from "../game/game";
 })
 export class TabsPage implements OnInit {
 
-  static instant: TabsPage;
+  static instant: TabsPage = undefined;
 
   @ViewChild("tabs") tabs: Tabs;
 
