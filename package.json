@@ -1,9 +1,26 @@
 {
-  "name": "PhaserES6Webpack",
+  "name": "kmg-phaser",
   "version": "1.0.0",
-  "description": "",
-  "author": "leandro cabrera <leandcabrera@gmail.com>",
-  "main": "index.js",
+  "description": "kmg - Knowledge Management Game (Phaser module)",
+  "author": "Janus Lin <januslinhc@hotmail.com>",
+  "contributors": [
+    "Beeno Tung <aabbcc1241@yahoo.com.hk>",
+    "Simi Zhou <briiiskiiiday@gmail.com>",
+    "Edie Yang <0426edie@gmail.com>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/polyu-kmg/kmg-game.git"
+  },
+  "keywords": [
+    "Knowledge",
+    "Management",
+    "Game",
+    "Phaser",
+    "webpack"
+  ],
+  "homepage": "https://bitbucket.org/polyu-kmg/kmg-game#readme",
   "scripts": {
     "build": "exit 0",
     "dev": "npm run build && webpack",
@@ -12,7 +29,10 @@
     "fix": "find src -name '*.js' -exec eslint --fix {} \\;",
     "test": "npm run lint && npm run deploy"
   },
-  "license": "MIT",
+  "dependencies": {
+    "phaser-ce": "^2.8.3",
+    "webfontloader": "^1.6.28"
+  },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
@@ -33,9 +53,5 @@
     "rxjs": "^5.0.1",
     "webpack": "^3.4.1",
     "zone.js": "^0.8.4"
-  },
-  "dependencies": {
-    "phaser-ce": "^2.8.3",
-    "webfontloader": "^1.6.28"
   }
 }
