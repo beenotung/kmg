@@ -1,8 +1,10 @@
 import {MINUTE} from "@beenotung/tslib/time";
-import {Player} from "./player";
+import {Player} from "./player.type";
 import {Random} from "@beenotung/tslib/random";
 import {notDefined} from "@beenotung/tslib/lang";
 import {Card} from "./card.type";
+import {Subject} from "rxjs/Subject";
+import {targets} from "./player.data";
 
 /**
  * new instance for each game-play
@@ -14,10 +16,30 @@ export class Game {
   players: Player[] = [];
   currentPlayer: Player;
 
+  /**
+   * when
+   *         win -> winning player
+   *   otherwise -> null
+   *
+   * otherwise examples:
+   *   excess time limit
+   *   someone give up ?
+   * */
+  gameOverSubject = new Subject<Player>();
+
   private startTime: number;
 
   addPlayer(player: Player) {
     this.players.push(player);
+    player.roundSubject.subscribe(
+      x => {
+        if (x == targets.length) {
+          this.gameOverSubject.next(player);
+        }
+      },
+      e => this.gameOverSubject.error(e),
+      () => this.gameOverSubject.complete()
+    );
   }
 
   start() {
@@ -38,11 +60,4 @@ export class Game {
   get currentBackpackCardList(): Card[] {
     return this.currentPlayer.backpack.array;
   }
-}
-
-/**
- * each game has three rounds
- * */
-export class Round {
-  roundNum: number;
 }

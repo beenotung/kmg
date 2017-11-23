@@ -60,29 +60,29 @@ export interface Matrix {
 }
 
 export class MatrixState {
-  private readonly _matrix: Matrix;
   matrix: Matrix;
-  private _stage: CycleType;
   /* start from 0, increase when finish a whole cycle */
   numberOfCycle: number = 0;
 
   changeSubject = new Subject<MatrixState>();
 
+  private _stage: CycleType;
+
   constructor(initStage: CycleType, initMatrix: Matrix) {
     this.stage = initStage;
-    this._matrix = Object.assign({}, initMatrix);
+    const _matrix = Object.assign({}, initMatrix);
     this.matrix = {
       get tacitKnowledge() {
-        return this._matrix.tacitKnowledge;
+        return _matrix.tacitKnowledge;
       },
       get explicitKnowledge() {
-        return this._matrix.explicitKnowledge;
+        return _matrix.explicitKnowledge;
       },
       get marketShare() {
-        return this._matrix.marketShare;
+        return _matrix.marketShare;
       },
       get capital() {
-        return this._matrix.capital;
+        return _matrix.capital;
       },
 
       set tacitKnowledge(x: number) {
