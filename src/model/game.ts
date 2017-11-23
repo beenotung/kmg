@@ -6,6 +6,7 @@ import {Card} from "./card.type";
 import {Subject} from "rxjs/Subject";
 import {Targets} from "./player.data";
 import {GameMap} from "./game-map.type";
+import {zipArray} from "../utils-lib";
 
 /**
  * new instance for each game-play
@@ -55,7 +56,8 @@ export class Game {
     }
     this.currentPlayer = Random.element(this.players);
     this.gameMap.initCards();
-    /* TODO send players to the corner of the map */
+    zipArray(this.players, this.gameMap.getCorners())
+      .forEach(([p, g]) => p.grid = g);
     return this.currentPlayer;
   }
 

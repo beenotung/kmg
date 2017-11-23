@@ -54,3 +54,12 @@ export function randomOrderInplace<A>(xs: A[]): A[] {
   xs.sort((a, b) => compare_number(orders.get(a), orders.get(b)));
   return xs;
 }
+
+export function zipArray<A, B>(as: A[], bs: B[]): Array<[A, B]> {
+  const n = Math.min(as.length, bs.length);
+  const res = new Array(n);
+  for (let i = 0; i < n; i++) {
+    res[i] = [as[i], bs[i]];
+  }
+  return res;
+}

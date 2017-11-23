@@ -82,6 +82,15 @@ export class GameMap {
     this.grids = MapGrid.genAll();
   }
 
+  getCorners(): MapGrid[] {
+    return [
+      this.grids.get(1),
+      this.grids.get(11),
+      this.grids.get(101),
+      this.grids.get(112),
+    ];
+  }
+
   canMove(src: MapGrid, dest: MapGrid): boolean {
     return isConnected(src.id, dest.id);
   }
