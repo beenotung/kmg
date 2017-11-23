@@ -1,11 +1,14 @@
 import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/tslib";
 import {isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
-import {assert, new_even_random_enum} from "../utils-lib";
+import {assert, new_even_random_enum, randomOrder} from "../utils-lib";
 import {ActionType, Card, CardType} from "./card.type";
 import {Cards} from "./card.data";
 import {Subject} from "rxjs/Subject";
 
+/**
+ * it is not responsible to represent if a player is stepping on it
+ * */
 export enum GridType {
   empty,
   coorperation,
@@ -172,13 +175,29 @@ export class GameMap {
   /**
    * e.g. move card from map to player's backpack
    * */
-  takeCardFromMap(card: Card) {
-    this.onMapCards.remove(card);
-    this.holdingCards.insert(card);
-    const grid = this.cardLocations.get(card);
-    this.cardLocations.delete(card);
-    delete grid.card;
-    this.cardEventSubject.next({type: "disappear", card, grid});
-    /* TODO pick a new card to put else where */
+  takeCardFromMap(currentCard: Card) {
+    this.onMapCards.remove(currentCard);
+    this.holdingCards.insert(currentCard);
+    const currentGrid = this.cardLocations.get(currentCard);
+    this.cardLocations.delete(currentCard);
+    delete currentGrid.card;
+    currentGrid.type = GridType.empty;
+    this.cardEventSubject.next({type: "disappear", card: currentCard, grid: currentGrid});
+    let grids = randomOrder(this.grids.array);
+    for (; ;) {
+      let grid = Random.element(grids);
+      if (grid == currentGrid || grid.players.length != 0 || grid.type !== GridType.empty) {
+        continue;
+      }
+      let cards = this.newCards.length > 0 ? this.newCards : this.usedCards;
+      let sameTypeCards = cards.array.filter(x => x.type = currentCard.type);
+      for (; ;) {
+        let card = Random.element(cards.array);
+        if (sameTypeCards.length > 0 && card.type != currentCard.type) {
+          continue;
+        }
+        return this.placeCardOnMap(card, grid);
+      }
+    }
   }
 }
