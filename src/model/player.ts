@@ -55,4 +55,8 @@ export class Player {
     this.current.moveToNextStage();
     this.backpack.remove(card);
   }
+
+  getMovableGrids(): MapGrid[] {
+    return this.grid.connectedList.array.filter((x: MapGrid) => x.players.array.length == 0);
+  }
 }
