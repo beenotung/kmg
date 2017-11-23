@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kmg-ionic.iml" filepath="$PROJECT_DIR$/.idea/kmg-ionic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kmg-core.iml" filepath="$PROJECT_DIR$/.idea/kmg-core.iml" />
     </modules>
   </component>
 </project>

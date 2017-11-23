@@ -1,3 +1,0 @@
-#!/bin/bash
-./auto-init
-./npm_ run lint

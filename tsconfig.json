@@ -1,37 +1,30 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noEmit": false,
     "sourceMap": true,
     "declaration": false,
-    "noImplicitAny": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
+      "es2017",
       "es2015",
       "dom"
     ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "jasmine",
-      "karma",
-      "node",
-      "webpack",
-      "webpack-env"
-    ]
+    "allowSyntheticDefaultImports": true,
+    "module": "es2015"
   },
   "include": [
     "src/**/*.ts"
   ],
   "exclude": [
-    "src/**/*.spec.ts",
-    "node_modules",
-    "demo",
-    "dist"
-  ]
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }

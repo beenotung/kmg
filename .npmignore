@@ -33,7 +33,6 @@ version
 .editorconfig
 
 ## Config
-ionic.config.json
 
 ## Typescript
 src/

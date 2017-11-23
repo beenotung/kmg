@@ -1,6 +1,0 @@
-#!/bin/bash
-## bump version
-o=$(cat config.xml | grep android-versionCode | awk -F 'android-versionCode' '{print $2}' | awk -F '"' '{print $2}')
-v=$(($o + 1))
-echo "set android version code $o -> $v"
-sed -i "s/android-versionCode=\"$o\" /android-versionCode=\"$v\" /" config.xml

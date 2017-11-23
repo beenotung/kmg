@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-if [ ! -f dist.list ]; then
-  echo "Warning: File dist.list not found, skip" >&2
-  exit 0
-fi
-cat dist.list | sed 's,^,dist/,' | xargs rm -rf
-cat dist.list | xargs -I {} mv {} dist/
-rm dist.list

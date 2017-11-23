@@ -11,7 +11,7 @@ fi
 
 ## build
 ./gen-index
-npm run build:lib
+npm run build
 
 ## clean up devDep
 rm -rf node_modules

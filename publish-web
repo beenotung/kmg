@@ -1,8 +1,0 @@
-#!/bin/bash
-set -e
-set -o pipefail
-
-cd ./platforms/browser/
-tar czf www.tar.gz www
-aipfs www.tar.gz
-exit $?
