@@ -1,5 +1,5 @@
 import {Counter, isNumberType, notDefined, Random} from "@beenotung/tslib";
-import {assert} from "../../utils-lib";
+import {assert} from "../utils-lib";
 import {MapGrid} from "./game-map.type";
 import {HashedArray} from "@beenotung/tslib/hashed-array";
 import {ActionType, Card} from "./card.type";

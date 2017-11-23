@@ -1,5 +1,7 @@
-# kmg-ionic
-KMG - Knowledge Management Game (Ionic module)
+# kmg-core
+Knowledge Management Game - core module
+
+The logic and data structure, regardless of the UI layout and rendering
 
 ## Guide for beginner developer / QA
 

@@ -1,4 +1,4 @@
-import {isConnected} from "../src/model/core/game-map.data";
+import {isConnected} from "./model/game-map.data";
 import {assert} from "../src/utils-lib";
 
 assert(isConnected(49, 53), "should be connected");

@@ -17,8 +17,8 @@
   "bugs": {
     "url": "https://github.com/beenotung/ionic-horizon-seed/issues"
   },
-  "main": "lib/model/core/index.js",
-  "typings": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "angular",
     "angular4",
@@ -33,10 +33,11 @@
   ],
   "scripts": {
     "prebuild": "rimraf lib || rm -rf lib",
-    "build": "tsc src/model/core/index.ts --lib es2015,dom --target es5 --outDir lib",
-    "lint": "tslint --type-check --project tsconfig.json -c tslint.json",
-    "lint:watch": "chokidar webpack.config.* src/**/*.ts buildScripts/**/*.ts -c \"npm run lint\" --initial --verbose",
-    "fix": "tslint --fix -p ."
+    "build": "tsc",
+    "lint": "tslint --project tsconfig.json -c tslint.json",
+    "lint:watch": "chokidar src/**/*.ts -c \"npm run lint\" --initial --verbose",
+    "fix": "tslint --fix -p .",
+    "test": "run-p build lint"
   },
   "dependencies": {
     "@beenotung/tslib": "^8.7.0",
@@ -54,6 +55,7 @@
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
     "codelyzer": "^3.0.1",
+    "npm-run-all": "^4.1.2",
     "rimraf": "2.6.1",
     "ts-node": "^3.0.4",
     "tslint": "^5.2.0",
