@@ -34,9 +34,9 @@ export default class extends Phaser.State {
     this.load.image('homebutton-select', './assets/images/homebutton-select.png')
     this.load.image('transparent-white-home', './assets/images/transparent-white-home.png')
     this.load.image('status01', './assets/images/status01.png')
-    this.load.image('status02', './assets/images/status01.png')
-    this.load.image('status03', './assets/images/status01.png')
-    this.load.image('status04', './assets/images/status01.png')
+    this.load.image('status02', './assets/images/status02.png')
+    this.load.image('status03', './assets/images/status03.png')
+    this.load.image('status04', './assets/images/status04.png')
     this.load.image('A', './assets/images/A.png')
     this.load.image('C', './assets/images/C.png')
     this.load.image('I', './assets/images/I.png')
@@ -104,7 +104,12 @@ export default class extends Phaser.State {
     for (var i = 1; i < 113; i++) {
       this.load.image('block_' + i, './assets/images/block_' + i + '.png')
     }
+    this.load.image('circle', './assets/images/circle.png')    
+    this.load.image('cross_button', './assets/images/cross_button.png')    
+    this.load.image('end_turn_button', './assets/images/end_turn_button.png')    
+    this.load.image('use_button', './assets/images/use_button.png')    
     this.load.image('map_profile_question', './assets/images/map_profile_question.png')
+    this.load.image('player_turn_mask', './assets/images/player_turn_mask.png')    
     this.load.audio('bgMusic', './assets/sounds/state1_bgm.mp3')
     this.load.audio('menuMusic', './assets/sounds/mega_super_arcade_cup.mp3')
   }
