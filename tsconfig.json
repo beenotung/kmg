@@ -16,7 +16,7 @@
     ],
     "allowSyntheticDefaultImports": true,
     "module": "es2015",
-    "outDir": "lib"
+    "outDir": "dist"
   },
   "include": [
     "src/**/*.ts",
