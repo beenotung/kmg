@@ -1,3 +1,0 @@
-== core
-
-the logic and data structure, regardless of the UI layout and rendering

@@ -1,7 +1,7 @@
 {
   "name": "kmg-ionic",
   "version": "0.0.1",
-  "description": "A template Ionic project with Horizon and unit-test",
+  "description": "Knowledge Management Game - Ionic module",
   "private": true,
   "author": {
     "name": "Beeno Tung",
@@ -42,7 +42,6 @@
     "build:umd:watch": "npm run build:umd -- --watch",
     "build:watch": "run-p build:umd:watch build:esm:watch",
     "build:ionic": "npm run ionic:build",
-    "build:lib": "tsc src/model/core/index.ts --lib es2015,dom --target es5 --outDir lib",
     "ci": "npm run lint && npm run test && npm run build && npm run docs",
     "clean": "npm run clean:tmp && rimraf node_modules && npm run ionic:clean",
     "clean:tmp": "npm run dist:unmove && rimraf coverage dist tmp docs www",
@@ -60,7 +59,6 @@
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist tmp",
     "prebuild:watch": "rimraf dist tmp",
-    "prebuild:lib": "rimraf lib || rm -rf lib",
     "prepublishOnly": "run-s ci dist:move",
     "preversion": "npm run ci",
     "predist:move": "npm run dist:unmove",
