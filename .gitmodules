@@ -4,6 +4,9 @@
 [submodule "kmg-horizon"]
 	path = kmg-horizon
 	url = https://bitbucket.org/polyu-kmg/kmg-horizon.git
-[submodule "kmg-game"]
-	path = kmg-game
-	url = https://bitbucket.org/polyu-kmg/kmg-game
+[submodule "kmg-phaser"]
+	path = kmg-phaser
+	url = https://bitbucket.org/polyu-kmg/kmg-phaser
+[submodule "kmg-core"]
+	path = kmg-core
+	url = https://bitbucket.org/polyu-kmg/kmg-core
