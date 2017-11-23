@@ -30,9 +30,9 @@ export default class extends Phaser.State {
     this.stage.backgroundColor = '#FFF'
 
     // Load Polyu Comp logo image and BGMusic
-    var logo = this.add.sprite(this.world.centerX, this.world.centerY, 'logo')
-    var logo2 = this.add.sprite(this.world.centerX, this.world.centerY, 'polylogo')
-    var bgMsuic = this.add.audio('bgMusic')
+    let logo = this.add.sprite(this.world.centerX, this.world.centerY, 'logo')
+    let logo2 = this.add.sprite(this.world.centerX, this.world.centerY, 'polylogo')
+    let bgMsuic = this.add.audio('bgMusic')
 
     // Set Logo in center and its alpha to 0
     logo.anchor.setTo(0.5, 0.5)

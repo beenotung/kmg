@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org/polyu-kmg/kmg-game.git"
+    "url": "git+https://bitbucket.org/polyu-kmg/kmg-phaser.git"
   },
   "keywords": [
     "Knowledge",
@@ -20,7 +20,7 @@
     "Phaser",
     "webpack"
   ],
-  "homepage": "https://bitbucket.org/polyu-kmg/kmg-game#readme",
+  "homepage": "https://bitbucket.org/polyu-kmg/kmg-phaser#readme",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "dev": "npm run build && webpack",

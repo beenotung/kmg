@@ -94,7 +94,7 @@ export default class extends Phaser.State {
     this.load.image('yellow6', './assets/images/yellow6.jpg')
     this.load.image('yellow7', './assets/images/yellow7.jpg')
     this.load.image('yellow8', './assets/images/yellow8.jpg')
-    this.load.image('empty_card', './assets/images/empty_card.png')    
+    this.load.image('empty_card', './assets/images/empty_card.png')
     this.load.image('board_map', './assets/images/board_map.png')
     this.load.image('block_central', './assets/images/block_central.png')
     this.load.image('cardsection-map', './assets/images/cardsection-map.png')
@@ -102,17 +102,17 @@ export default class extends Phaser.State {
     this.load.image('leftbutton-map', './assets/images/leftbutton-map.png')
     this.load.image('rightbutton-map', './assets/images/rightbutton-map.png')
     this.load.image('background-map', './assets/images/background-map.png')
-    for (var i = 1; i < 113; i++) {
+    for (let i = 1; i < 113; i++) {
       this.load.image('block_' + i, './assets/images/block_' + i + '.png')
     }
-    this.load.image('circle', './assets/images/circle.png')    
-    this.load.image('cross_button', './assets/images/cross_button.png')    
-    this.load.image('end_turn_button', './assets/images/end_turn_button.png')    
+    this.load.image('circle', './assets/images/circle.png')
+    this.load.image('cross_button', './assets/images/cross_button.png')
+    this.load.image('end_turn_button', './assets/images/end_turn_button.png')
     this.load.image('use_button', './assets/images/use_button.png')
-    this.load.image('open_card_mask', './assets/images/open_card_mask.png')    
-    this.load.image('open_card_close', './assets/images/open_card_close.png')        
+    this.load.image('open_card_mask', './assets/images/open_card_mask.png')
+    this.load.image('open_card_close', './assets/images/open_card_close.png')
     this.load.image('map_profile_question', './assets/images/map_profile_question.png')
-    this.load.image('player_turn_mask', './assets/images/player_turn_mask.png')    
+    this.load.image('player_turn_mask', './assets/images/player_turn_mask.png')
     this.load.audio('bgMusic', './assets/sounds/state1_bgm.mp3')
     this.load.audio('menuMusic', './assets/sounds/mega_super_arcade_cup.mp3')
   }

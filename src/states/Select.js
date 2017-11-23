@@ -20,7 +20,7 @@ export default class extends Phaser.State {
     this.player2 = this.add.sprite(336, 154, 'select')
     this.player3 = this.add.sprite(544, 154, 'select')
     this.player4 = this.add.sprite(750, 154, 'select')
-    var that = this
+    let that = this
     this.player1.inputEnabled = true
     this.player2.inputEnabled = true
     this.player3.inputEnabled = true
@@ -74,7 +74,7 @@ export default class extends Phaser.State {
   }
 
   changeProfile (obj, playerId) {
-    var playerData
+    let playerData
 
     switch (playerId) {
       case '1':

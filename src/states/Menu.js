@@ -21,7 +21,7 @@ export default class extends Phaser.State {
       this.state.start('Select')
     }, this, 2, 0, 1, 0)
     this.add.button(0, 648, 'exitbtn-home', null, this, 2, 0, 1, 0)
-    var style = { font: '120px Arial', fill: '#fff', wordWrap: true, stroke: '#000000', strokeThickness: 10 }
+    let style = { font: '120px Arial', fill: '#fff', wordWrap: true, stroke: '#000000', strokeThickness: 10 }
     this.textIKM_I = this.add.text(380, 470, 'I', style)
     this.textIKM_K = this.add.text(440, 470, 'K', style)
     this.textIKM_M = this.add.text(530, 470, 'M', style)
