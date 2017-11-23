@@ -17,10 +17,12 @@ enum_only_string(GridType);
 export class MapGrid {
   id: number;
   connectedList = new HashedArray<MapGrid>(x => x.id);
+  /**@deprecated*/
   type: GridType;
   /* only if this.type === GridType.action */
   actionType?: ActionType;
   players = new HashedArray<Player>(x => x.id);
+  cards = new HashedArray<Card>(x => x.id);
 
   static connect(a: MapGrid, b: MapGrid) {
     a.connectedList.upsert(b);
@@ -90,6 +92,10 @@ export class GameMap {
     player.grid.players.remove(player);
     player.grid = dest;
     dest.players.upsert(player);
+    dest.cards.array.forEach(card => {
+      this.takeCardFromMap(card);
+      player.backpack.insert(card);
+    });
   }
 
   initCards() {
@@ -107,15 +113,15 @@ export class GameMap {
 
       for (; ;) {
         /* random to pick card type */
-        let cardType = Random.nextEnum<CardType>(CardType as any);
+        const cardType = Random.nextEnum<CardType>(CardType as any);
 
         /* random to pick card content */
-        let matchedCards = this.newCards.array.filter((card: Card) => card.type == cardType);
+        const matchedCards = this.newCards.array.filter((card: Card) => card.type == cardType);
         if (matchedCards.length == 0) {
           /* try another card type */
           continue;
         }
-        let card = Random.element(matchedCards);
+        const card = Random.element(matchedCards);
         this.newCards.remove(card);
         this.placeCardOnMap(card, grid);
       }
@@ -125,17 +131,19 @@ export class GameMap {
   placeCardOnMap(card: Card, grid: MapGrid) {
     this.onMapCards.insert(card);
     this.cardLocations.set(card, grid);
+    grid.cards.insert(card);
     this.cardEventSubject.next({type: "appear", card, grid});
   }
 
   /**
-   * move card from map to player's backpack
+   * e.g. move card from map to player's backpack
    * */
   takeCardFromMap(card: Card) {
     this.onMapCards.remove(card);
     this.holdingCards.insert(card);
-    let grid = this.cardLocations.get(card);
+    const grid = this.cardLocations.get(card);
     this.cardLocations.delete(card);
+    grid.cards.remove(card);
     this.cardEventSubject.next({type: "disappear", card, grid});
     /* TODO pick a new card to put else where */
   }
