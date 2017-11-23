@@ -7,8 +7,11 @@ import {Cards} from "./card.data";
 import {Subject} from "rxjs/Subject";
 
 export enum GridType {
-  action,
+  empty,
   coorperation,
+  /* has card */
+  action,
+  /* also has card */
   random,
 }
 
@@ -17,12 +20,13 @@ enum_only_string(GridType);
 export class MapGrid {
   id: number;
   connectedList = new HashedArray<MapGrid>(x => x.id);
-  /**@deprecated*/
-  type: GridType;
-  /* only if this.type === GridType.action */
-  actionType?: ActionType;
   players = new HashedArray<Player>(x => x.id);
-  cards = new HashedArray<Card>(x => x.id);
+  card?: Card;
+
+  typeSubject = new Subject<GridType>();
+  private _type: GridType;
+  // /* only if this.type === GridType.action */
+  // actionType?: ActionType;
 
   static connect(a: MapGrid, b: MapGrid) {
     a.connectedList.upsert(b);
@@ -45,15 +49,24 @@ export class MapGrid {
     orders.forEach(([id]) => {
       const x = res.get(id);
       x.type = genGridType.next();
-      if (x.type === GridType.action) {
-        x.actionType = genActionType.next();
-      }
+      // if (x.type === GridType.action) {
+      //   x.actionType = genActionType.next();
+      // }
     });
     MapConnections.forEach(([selfID, peerIDs]) => {
       const self = res.get(selfID);
       peerIDs.forEach(peerID => MapGrid.connect(self, res.get(peerID)));
     });
     return res;
+  }
+
+  get type() {
+    return this._type;
+  }
+
+  set type(x: GridType) {
+    this._type = x;
+    this.typeSubject.next(x);
   }
 
 }
@@ -101,10 +114,11 @@ export class GameMap {
     player.grid.players.remove(player);
     player.grid = dest;
     dest.players.upsert(player);
-    dest.cards.array.forEach(card => {
+    let card = dest.card;
+    if (card) {
       this.takeCardFromMap(card);
       player.backpack.insert(card);
-    });
+    }
   }
 
   initCards() {
@@ -121,6 +135,17 @@ export class GameMap {
       }
 
       for (; ;) {
+        /* random to pick grid type */
+        let gridType = Random.nextEnum<GridType>(GridType as any);
+        if (gridType == GridType.empty) {
+          continue;
+        }
+        grid.type = gridType;
+
+        if (gridType !== GridType.action) {
+          break;
+        }
+
         /* random to pick card type */
         const cardType = Random.nextEnum<CardType>(CardType as any);
 
@@ -140,7 +165,7 @@ export class GameMap {
   placeCardOnMap(card: Card, grid: MapGrid) {
     this.onMapCards.insert(card);
     this.cardLocations.set(card, grid);
-    grid.cards.insert(card);
+    grid.card = card;
     this.cardEventSubject.next({type: "appear", card, grid});
   }
 
@@ -152,7 +177,7 @@ export class GameMap {
     this.holdingCards.insert(card);
     const grid = this.cardLocations.get(card);
     this.cardLocations.delete(card);
-    grid.cards.remove(card);
+    delete grid.card;
     this.cardEventSubject.next({type: "disappear", card, grid});
     /* TODO pick a new card to put else where */
   }
