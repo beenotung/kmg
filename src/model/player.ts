@@ -5,7 +5,7 @@ import {HashedArray} from "@beenotung/tslib/hashed-array";
 import {ActionType, Card} from "./card.type";
 import {CompanyType} from "./company.type";
 import {InitialMatrixMap} from "./company.data";
-import {MatrixState} from "./shared.type";
+import {Cycle, CycleType, MatrixState} from "./shared.type";
 
 export class Player {
   id = Counter.next();
@@ -20,14 +20,11 @@ export class Player {
 
   constructor(type: CompanyType) {
     this.companyType = type;
-    const m = InitialMatrixMap.get(type);
-    if (notDefined(m)) {
+    const initialMatrix = InitialMatrixMap.get(type);
+    if (notDefined(initialMatrix)) {
       throw new Error("unsupported company type: " + type);
     }
-    this.current = Object.assign({
-      stage: Random.nextEnum(ActionType) as any as ActionType
-      , numberOfCycle: 0
-    }, m);
+    this.current = new MatrixState(Random.nextEnum(ActionType) as any as CycleType, initialMatrix);
   }
 
   get hasReachTarget(): boolean {
@@ -35,7 +32,7 @@ export class Player {
       return false;
     }
     if (this.current.numberOfCycle == this.target.numberOfCycle) {
-      return ActionType.isBefore(this.target.stage, this.current.stage);
+      return Cycle.isBefore(this.target.stage, this.current.stage);
     } else {
       /* current > target */
       return true;
@@ -51,7 +48,11 @@ export class Player {
     if (!this.backpack.has(card.id)) {
       throw new Error("player do not own this card");
     }
-    card.useOn(this.current);
+    if (card.type !== this.current.stage) {
+      throw new Error(`the card do not match player current stage, player: ${this.current.stage}, card: ${card.type}`);
+    }
+    card.useOn(this.current.matrix);
+    this.current.moveToNextStage();
     this.backpack.remove(card);
   }
 }

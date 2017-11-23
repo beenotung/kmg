@@ -2,6 +2,7 @@ import {MINUTE} from "@beenotung/tslib/time";
 import {Player} from "./player";
 import {Random} from "@beenotung/tslib/random";
 import {notDefined} from "@beenotung/tslib/lang";
+import {Card} from "./card.type";
 
 /**
  * new instance for each game-play
@@ -32,6 +33,10 @@ export class Game {
       throw new Error("game is not started");
     }
     return Game.MaxTime - this.startTime;
+  }
+
+  get currentBackpackCardList(): Card[] {
+    return this.currentPlayer.backpack.array;
   }
 }
 

@@ -1,6 +1,6 @@
 import {enum_only_string} from "@beenotung/tslib";
 import {Counter} from "@beenotung/tslib/uuid";
-import {Matrix} from "./shared.type";
+import {CycleType, Matrix} from "./shared.type";
 import * as util from "util";
 
 export enum CardType {
@@ -48,51 +48,8 @@ export namespace CardEffect {
   }
 }
 
-export enum ActionType {
-  socialization,
-  externalization,
-  combination,
-  internalization,
-}
-
-enum_only_string(ActionType);
-
-export namespace ActionType {
-  export function next(a: ActionType) {
-    switch (a) {
-      case ActionType.socialization:
-        return ActionType.externalization;
-      case ActionType.externalization:
-        return ActionType.combination;
-      case ActionType.combination:
-        return ActionType.internalization;
-      case ActionType.internalization:
-        return ActionType.socialization;
-      default:
-        throw new TypeError("undefined action type: " + a);
-    }
-  }
-
-  function getStep(a: ActionType, b: ActionType) {
-    let step = 0;
-    for (; ;) {
-      if (a === b) {
-        return step;
-      }
-      step++;
-      a = next(a);
-    }
-  }
-
-  /**
-   * return true if a is before b
-   * */
-  export function isBefore(a: ActionType, b: ActionType) {
-    const sa = getStep(a, b);
-    const sb = getStep(b, a);
-    return sa < sb;
-  }
-}
+export type ActionType = CycleType;
+export let ActionType = CycleType;
 
 export class Card {
   id = Counter.next();

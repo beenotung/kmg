@@ -21,12 +21,12 @@ export const Cards: Card[] = [
   , new Card(ActionType.externalization, "Documentation", [
     {type: MatrixType.explicitKnowledge, amount: +15}
     , {type: MatrixType.tacitKnowledge, amount: -5}
-    , {type: MatrixType.captial, amount: +1}
+    , {type: MatrixType.capital, amount: +1}
   ])
   , new Card(ActionType.externalization, "Archive", [
     {type: MatrixType.explicitKnowledge, amount: +10}
     , {type: MatrixType.tacitKnowledge, amount: -5}
-    , {type: MatrixType.captial, amount: +2}
+    , {type: MatrixType.capital, amount: +2}
   ])
   , new Card(ActionType.externalization, "Library", [
     {type: MatrixType.explicitKnowledge, amount: +10}
@@ -65,26 +65,26 @@ export const Cards: Card[] = [
   ])
   , new Card(ActionType.combination, "Cluster Data", [
     {type: MatrixType.explicitKnowledge, amount: +20}
-    , {type: MatrixType.captial, amount: +1}
+    , {type: MatrixType.capital, amount: +1}
   ])
   , new Card(ActionType.combination, "Sorting", [
     {type: MatrixType.explicitKnowledge, amount: +1}
     , {type: MatrixType.marketShare, amount: +1}
-    , {type: MatrixType.captial, amount: +1.2}
+    , {type: MatrixType.capital, amount: +1.2}
   ])
   , new Card(ActionType.combination, "Adding", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
   , new Card(ActionType.combination, "Categorizing", [
     {type: MatrixType.explicitKnowledge, amount: +5}
-    , {type: MatrixType.captial, amount: +1.1}
+    , {type: MatrixType.capital, amount: +1.1}
   ])
   , new Card(ActionType.combination, "Methodology", [
     {type: MatrixType.explicitKnowledge, amount: +5}
-    , {type: MatrixType.captial, amount: +1.5}
+    , {type: MatrixType.capital, amount: +1.5}
   ])
   , new Card(ActionType.combination, "Best practices", [
-    {type: MatrixType.captial, amount: +1.5}
+    {type: MatrixType.capital, amount: +1.5}
     , {type: MatrixType.marketShare, amount: +5}
   ])
 
@@ -105,19 +105,19 @@ export const Cards: Card[] = [
   , new Card(ActionType.internalization, "Access to codified knowledge", [
     {type: MatrixType.tacitKnowledge, amount: +2}
     , {type: MatrixType.marketShare, amount: +5}
-    , {type: MatrixType.captial, amount: +1.1}
+    , {type: MatrixType.capital, amount: +1.1}
   ])
   , new Card(ActionType.internalization, "Goal based training", [
     {type: MatrixType.tacitKnowledge, amount: +20}
     , {type: MatrixType.marketShare, amount: +5}
-    , {type: MatrixType.captial, amount: -5}
+    , {type: MatrixType.capital, amount: -5}
   ])
 
   , new Card(ProfitType.portable_profit, "Knowledge Retention", [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
   , new Card(ProfitType.portable_profit, "Low employee turnover", [
-    {type: MatrixType.captial, amount: +3}
+    {type: MatrixType.capital, amount: +3}
   ])
   , new Card(ProfitType.portable_profit, "Research & Development", [
     {type: MatrixType.marketShare, amount: +3}
@@ -129,7 +129,7 @@ export const Cards: Card[] = [
     {type: MatrixType.explicitKnowledge, amount: +5}
   ])
   , new Card(ProfitType.portable_profit, "High external collaboration", [
-    {type: MatrixType.captial, amount: +3}
+    {type: MatrixType.capital, amount: +3}
   ])
   , new Card(ProfitType.portable_profit, "Proper IP handling", [
     {type: MatrixType.explicitKnowledge, amount: +5}
@@ -138,20 +138,20 @@ export const Cards: Card[] = [
     {type: MatrixType.marketShare, amount: +3}
   ])
   , new Card(ProfitType.portable_profit, "Adequate training", [
-    {type: MatrixType.captial, amount: +3}
+    {type: MatrixType.capital, amount: +3}
   ])
 
   , new Card(ProfitType.transient_profit, "Revenue Increase", [
-    {type: MatrixType.captial, amount: +2}
+    {type: MatrixType.capital, amount: +2}
   ])
   , new Card(ProfitType.transient_profit, "Innovation & Creative", [
-    {type: MatrixType.captial, amount: +2}
+    {type: MatrixType.capital, amount: +2}
   ])
   , new Card(ProfitType.transient_profit, "Increase Efficiency", [
-    {type: MatrixType.captial, amount: +2}
+    {type: MatrixType.capital, amount: +2}
   ])
   , new Card(ProfitType.transient_profit, "Better problem-solving skills", [
-    {type: MatrixType.captial, amount: +1}
+    {type: MatrixType.capital, amount: +1}
   ])
   , new Card(ProfitType.transient_profit, "Increase Market Share", [
     {type: MatrixType.marketShare, amount: +3}
@@ -163,11 +163,11 @@ export const Cards: Card[] = [
     {type: MatrixType.marketShare, amount: +2}
   ])
   , new Card(ProfitType.transient_profit, "Avoid making the same mistakes", [
-    {type: MatrixType.captial, amount: +3}
+    {type: MatrixType.capital, amount: +3}
   ])
 
   , new Card(CardType.risk, "Knowledge Deficiency", [
-    {type: MatrixType.captial, amount: -3}
+    {type: MatrixType.capital, amount: -3}
   ])
   , new Card(CardType.risk, "Knowledge Loss", [
     {type: MatrixType.explicitKnowledge, amount: -5}

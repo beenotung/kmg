@@ -1,0 +1,3 @@
+= index
+
+for dev script to work

@@ -12,6 +12,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/app" />
       <excludeFolder url="file://$MODULE_DIR$/src/assets" />
       <excludeFolder url="file://$MODULE_DIR$/src/components" />
+      <excludeFolder url="file://$MODULE_DIR$/src/index" />
       <excludeFolder url="file://$MODULE_DIR$/src/model/api" />
       <excludeFolder url="file://$MODULE_DIR$/src/model/data" />
       <excludeFolder url="file://$MODULE_DIR$/src/pages" />
