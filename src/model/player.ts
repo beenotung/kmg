@@ -51,7 +51,7 @@ export class Player {
     if (!this.backpack.has(card.id)) {
       throw new Error("player do not own this card");
     }
-    card.type;
+    card.useOn(this.current);
     this.backpack.remove(card);
   }
 }

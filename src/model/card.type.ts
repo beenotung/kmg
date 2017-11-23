@@ -1,5 +1,7 @@
 import {enum_only_string} from "@beenotung/tslib";
 import {Counter} from "@beenotung/tslib/uuid";
+import {Matrix} from "./shared.type";
+import * as util from "util";
 
 export enum CardType {
   action,
@@ -9,23 +11,19 @@ export enum CardType {
 
 enum_only_string(CardType);
 
-export interface CardEffect {
-  type: MatrixType;
-  /* + or - or * */
-  amount: number;
-}
-
 export enum MatrixType {
   tacitKnowledge,
   explicitKnowledge,
   marketShare,
-  captial,
+  capital,
 }
 
 enum_only_string(MatrixType);
 
-export enum CardEffectType {
-  plus, minus, multiply
+export interface CardEffect {
+  type: MatrixType;
+  /* + or - or * */
+  amount: number;
 }
 
 export enum ProfitType {
@@ -34,6 +32,11 @@ export enum ProfitType {
 }
 
 enum_only_string(ProfitType);
+
+export enum CardEffectType {
+  plus, minus, multiply
+}
+
 enum_only_string(CardEffectType);
 
 export namespace CardEffect {
@@ -97,5 +100,21 @@ export class Card {
   constructor(public type: ActionType | ProfitType | CardType.risk
     , public name: string
     , public effects: CardEffect[]) {
+  }
+
+  useOn(matrix: Matrix) {
+    this.effects.forEach(effect => {
+      switch (CardEffect.getType(effect.amount)) {
+        case CardEffectType.plus:
+        case CardEffectType.minus:
+          matrix[effect.type] += effect.amount;
+          break;
+        case CardEffectType.multiply:
+          matrix[effect.type] *= effect.amount;
+          break;
+        default:
+          throw new TypeError("unsupported effect: " + util.format(effect));
+      }
+    });
   }
 }
