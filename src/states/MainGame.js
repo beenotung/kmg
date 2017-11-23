@@ -50,6 +50,7 @@ export default class extends Phaser.State {
     this.add.sprite(12, 524, 'map_profile_question')
     this.add.sprite(938, 524, 'map_profile_question')
     this.add.sprite(938, 524, 'map_profile_question')
+    that.endTurnBtn = that.add.sprite(890, 620, 'end_turn_button')
     that.player_1_status = that.add.sprite(14, 108, 'status01')
     that.player_2_status = that.add.sprite(938, 108, 'status02')
     that.player_3_status = that.add.sprite(14, 440, 'status03')
@@ -57,13 +58,24 @@ export default class extends Phaser.State {
     this.add.sprite(96, 18, 'board_map')
     // this.block_central = this.add.sprite(371, 237, "block_central");
     this.add.sprite(162, 636, 'cardsection-map')
-    this.add.sprite(106, 678, 'leftbutton-map')
-    this.add.sprite(878, 678, 'rightbutton-map')
+    that.bag_left = that.add.sprite(106, 678, 'leftbutton-map')
+    that.bag_right = that.add.sprite(878, 678, 'rightbutton-map')
     this.homebtn = this.add.sprite(0, 628, 'homebutton-map')
     this.homebtn.inputEnabled = true
     this.homebtn.events.onInputDown.add(function () {
       this.state.start('Menu')
     }, this)
+
+    that.endTurnBtn.inputEnabled = true
+    that.endTurnBtn.events.onInputDown.add(function () {
+      endTurnEvent()
+    }, this)
+
+    function endTurnEvent() {
+      console.log('end turn!')
+      clearAllCardView()
+      nextPlayer()
+    }
 
     // this.block_central.inputEnabled = true;
     // this.block_central.events.onInputDown.add(function() {
@@ -205,7 +217,6 @@ export default class extends Phaser.State {
     function blockClickEvent (i) {
       console.log('click block' + i + '!') 
       moveChessToBlock(currentPlayer, i)   
-      nextPlayer()   
     }
 
     function enableBlock (i, boolean) {
@@ -262,6 +273,137 @@ export default class extends Phaser.State {
     }
 
     updateStateValue(1, 'p', 12)
+
+    var bagPosition = {
+      '1': {'x': 176, 'y': 655},
+      '2': {'x': 292, 'y': 655},
+      '3': {'x': 411, 'y': 655},
+      '4': {'x': 525, 'y': 655},
+      '5': {'x': 643, 'y': 655},
+      '6': {'x': 760, 'y': 655},      
+    }
+
+    for (var x = 1; x < 7; x++) {
+      that['bag_card_' + x] = game.add.sprite(bagPosition[x]['x'],bagPosition[x]['y'], 'black3')
+      that['bag_card_' + x].scale.setTo(0.09,0.09)
+      that['bag_card_' + x].inputEnabled = true
+      const no = parseInt(x)      
+      that['bag_card_' + x].events.onInputDown.add(function () {
+        cardClickEvent(no)
+      }, that)
+    }
+
+    function cardClickEvent(i) {
+      console.log('click card index ' + i + "!")
+      console.log('click card ' + currentCardIndex[i-1] + "!")
+      openCardOpenEvent(currentCardIndex[i-1])
+    }
+
+    function clearAllCardView () {
+      for (var x = 1; x < 7; x++) {
+        that['bag_card_' + x].loadTexture('empty_card', 0)
+        that['bag_card_' + x].visible = false
+        that.bag_left.visible = false
+        that.bag_right.visible = false
+      }
+    }
+
+    var currentCardIndex = null
+
+    function setCardView(hasLeft, hasRight, ShowList) {
+      currentCardIndex = ShowList
+
+      if (hasLeft == true) {
+        that.bag_left.visible = true        
+      } else {
+        that.bag_left.visible = false        
+      }
+
+      if (hasRight == true) {
+        that.bag_right.visible = true        
+      } else {
+        that.bag_right.visible = false        
+      }
+
+      for(var x = 0; x < ShowList.length; x++) {
+        console.log(ShowList[x])
+        that['bag_card_' + (x+1)].loadTexture(ShowList[x], 0)
+        that['bag_card_' + (x+1)].visible = true                
+      }
+
+      if (ShowList.length < 6) {
+        for (var x = ShowList.length; x < 6; x++) {
+          that['bag_card_' + (x+1)].loadTexture('empty_card', 0)  
+          that['bag_card_' + (x+1)].visible = false      
+        }
+      }
+    }
+
+    clearAllCardView()
+    setCardView(true, true, ['red2', 'red3', 'red4'])
+
+    that.open_card_mask = that.add.sprite(139, 58, 'open_card_mask') 
+    that.open_card_close = that.add.sprite(774, 83, 'open_card_close') 
+    that.open_card = that.add.sprite(205, 88, 'red2')
+    that.open_card.scale.setTo(0.4,0.4)
+    that.open_card_use_btn = that.add.sprite(666, 356, 'use_button') 
+    that.open_card_use_btn.inputEnabled = true
+    that.open_card_use_btn.events.onInputDown.add(function () {
+      useEvent()
+    }, that)
+    that.open_card_close.inputEnabled = true
+    that.open_card_close.events.onInputDown.add(function () {
+      openCardCloseEvent()
+    }, that)
+
+    function useEvent() {
+      console.log("Use this card")
+    }
+
+    function openCardCloseEvent() {
+      that.open_card.loadTexture('empty_card', 0)      
+      that.open_card_mask.visible = false
+      that.open_card_close.visible = false
+      that.open_card.visible = false
+      that.open_card_use_btn.visible = false
+      enableMainControl()
+    }
+
+    function openCardOpenEvent(card) {
+      disableMainControl()
+      that.open_card.loadTexture(card, 0)
+      that.open_card_mask.visible = true
+      that.open_card_close.visible = true
+      that.open_card.visible = true
+      that.open_card_use_btn.visible = true
+    }
+
+    function disableMainControl() {
+      for (var x = 1; x < 7; x++) {
+        // that['bag_card_' + (x)].inputEnabled = false                       
+      }
+
+      for (var x = 1; x <= 112; x++) {
+        // that['block_' + i].inputEnabled = false  
+      }
+
+      that.endTurnBtn.inputEnabled = false
+    }
+
+    function enableMainControl() {
+      for (var x = 1; x < 7; x++) {
+       // that['bag_card_' + (x)].inputEnabled = true                       
+      }
+
+      for (var x = 1; x <= 112; x++) {
+        console.log('try ' + x)
+        // that['block_' + i].inputEnabled = true  
+      }
+
+      that.endTurnBtn.inputEnabled = true
+    }
+
+
   }
 
   update () {}
