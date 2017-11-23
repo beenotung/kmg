@@ -3,8 +3,6 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/observable/fromPromise";
 import {CommonResult} from "../api";
-import {StorageKey, StorageService} from "../storage";
-import {DatabaseService} from "../database";
 import {createDefer, Defer} from "@beenotung/tslib/async";
 import {UserAnalytics} from "../../model/api/custom/user-analytics";
 import {isDefined} from "@beenotung/tslib/lang";
@@ -12,6 +10,8 @@ import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 import {is_non_empty_string} from "@beenotung/tslib/string";
 import {SearchByDeviceID} from "../../model/api/custom/user-analytics.index";
 import {Observable} from "rxjs/Observable";
+import {StorageKey, StorageService} from "../storage/storage.service";
+import {DatabaseService} from "../database/database.service";
 
 export function isRealDeviceID(s: string) {
   return !s.startsWith("db_");
