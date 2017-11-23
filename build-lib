@@ -2,6 +2,8 @@
 hash yarn 2>/dev/null || npm i -g yarn
 set -e
 yarn install --dev
+./gen-index
 yarn build
+./rm-index
 yarn install --prod
 echo "done."
