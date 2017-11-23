@@ -1,8 +1,11 @@
 import {Counter, isNumberType, notDefined, Random} from "@beenotung/tslib";
 import {assert} from "../../../utils-lib";
-import {ActionType, CompanyType, MatrixState} from "./world.type";
-import {InitialMatrixMap} from "./world.data";
 import {MapGrid} from "./game-map.type";
+import {HashedArray} from "@beenotung/tslib/hashed-array";
+import {ActionType, Card} from "./card.type";
+import {CompanyType} from "./company.type";
+import {InitialMatrixMap} from "./company.data";
+import {MatrixState} from "./shared.type";
 
 export class Player {
   id = Counter.next();
@@ -12,6 +15,8 @@ export class Player {
   current: MatrixState;
   target: MatrixState;
   grid: MapGrid;
+
+  backpack = new HashedArray<Card>(x => x.id);
 
   constructor(type: CompanyType) {
     this.companyType = type;
@@ -40,5 +45,13 @@ export class Player {
   startRound(target: MatrixState) {
     assert(target && target.stage && isNumberType(this.target.numberOfCycle), "argument target:MatrixState is required");
     this.target = target;
+  }
+
+  useCard(card: Card) {
+    if (!this.backpack.has(card.id)) {
+      throw new Error("player do not own this card");
+    }
+    card.type;
+    this.backpack.remove(card);
   }
 }

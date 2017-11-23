@@ -1,4 +1,4 @@
-import {ActionType, Card, CardType, CompanyType, Matrix, MatrixType, ProfitType} from "./world.type";
+import {ActionType, Card, CardType, MatrixType, ProfitType} from "./card.type";
 
 export const Cards: Card[] = [
   new Card(ActionType.socialization, "Brain-storming", [
@@ -179,31 +179,3 @@ export const Cards: Card[] = [
     {type: MatrixType.marketShare, amount: -3}
   ])
 ];
-
-export const InitialMatrixMap = new Map<CompanyType, Matrix>();
-{
-  InitialMatrixMap.set(CompanyType.Publishing, {
-    tacitKnowledge: 25,
-    explicitKnowledge: 0,
-    marketShare: 0,
-    capital: 2.5
-  });
-  InitialMatrixMap.set(CompanyType.MediaFirm, {
-    tacitKnowledge: 40,
-    explicitKnowledge: 0,
-    marketShare: 0,
-    capital: 1.5
-  });
-  InitialMatrixMap.set(CompanyType.ITCompany, {
-    tacitKnowledge: 30,
-    explicitKnowledge: 0,
-    marketShare: 0,
-    capital: 2.0
-  });
-  InitialMatrixMap.set(CompanyType.Education, {
-    tacitKnowledge: 45,
-    explicitKnowledge: 0,
-    marketShare: 0,
-    capital: 1.0
-  });
-}

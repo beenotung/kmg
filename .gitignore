@@ -57,3 +57,5 @@ www/
 # Build files
 dist.list
 lib/
+
+index.ts

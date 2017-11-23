@@ -32,6 +32,17 @@ var core = require('../kmg-ionic/lib/model/core');
 4. Object.assign
 
 ## To-Do
+[ ] use card
+[ ] get backpack card list
+[ ] event when change 4 prop and current color (per player)
+[ ] get movable grid list (player method)
+[ ] event when target meet (whole game, not per user), content is the winning player
+[ ] event when new card appear/remove on map
+    - card
+    - position
+    - appear / remove
+
+## To-Do (old)
 ### [Lib] Create Event for Client
 - when four property of player change (per player)
     - emit player
