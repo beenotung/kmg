@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-cd ../kmg-ionic
+lib="../kmg-core"
+cd "$lib"
 ./build-lib
-cd ../kmg-game
-yarn add ../kmg-ionic
+cd -
+yarn add "$lib"

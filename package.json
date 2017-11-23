@@ -30,7 +30,7 @@
     "test": "npm run lint && npm run deploy"
   },
   "dependencies": {
-    "kmg-ionic": "../kmg-ionic",
+    "kmg-core": "../kmg-core",
     "phaser-ce": "^2.8.3",
     "typestub-horizon-client": "^0.1.8",
     "webfontloader": "^1.6.28"
