@@ -32,11 +32,11 @@
     "common"
   ],
   "scripts": {
-    "build": "tsc src/model/core/index.ts --lib es2015,dom --target es5 --outDir lib",
     "prebuild": "rimraf lib || rm -rf lib",
-    "fix-lint": "tslint --fix -p .",
-    "fix": "npm run fix-lint",
-    "lint": "tslint --type-check --project tsconfig.json -c tslint.json"
+    "build": "tsc src/model/core/index.ts --lib es2015,dom --target es5 --outDir lib",
+    "lint": "tslint --type-check --project tsconfig.json -c tslint.json",
+    "lint:watch": "chokidar webpack.config.* src/**/*.ts buildScripts/**/*.ts -c \"npm run lint\" --initial --verbose",
+    "fix": "tslint --fix -p ."
   },
   "dependencies": {
     "@beenotung/tslib": "^8.7.0",
@@ -51,6 +51,8 @@
     "@angular/core": "^2.3.1 || >=4.0.0-beta <5.0.0",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/node": "^8.0.34",
+    "chokidar": "^1.7.0",
+    "chokidar-cli": "^1.2.0",
     "codelyzer": "^3.0.1",
     "rimraf": "2.6.1",
     "ts-node": "^3.0.4",

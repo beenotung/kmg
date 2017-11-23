@@ -18,7 +18,8 @@
     "module": "es2015"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules"

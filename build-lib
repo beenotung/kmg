@@ -1,20 +1,7 @@
 #!/bin/bash
+hash yarn 2>/dev/null || npm i -g yarn
 set -e
-
-## install dep and devDep
-if [ ! -d node_modules ]; then
-  ./install-lib-dep
-fi
-if [ ! -d node_modules/typescript ]; then
-  npm i typescript
-fi
-
-## build
-./gen-index
-npm run build
-
-## clean up devDep
-rm -rf node_modules
-./install-lib-dep
-
+yarn install --dev
+yarn build
+yarn install --prod
 echo "done."

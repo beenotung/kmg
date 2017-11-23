@@ -49,7 +49,6 @@ hooks/
 platforms/
 plugins/
 www/
-config.xml
 
 # Node
 node_modules
