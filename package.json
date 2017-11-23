@@ -60,7 +60,7 @@
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist tmp",
     "prebuild:watch": "rimraf dist tmp",
-    "prebuild:lib": "rimraf lib",
+    "prebuild:lib": "rimraf lib || rm -rf lib",
     "prepublishOnly": "run-s ci dist:move",
     "preversion": "npm run ci",
     "predist:move": "npm run dist:unmove",
@@ -116,6 +116,7 @@
     "scsslib": "^1.1.0",
     "sw-toolbox": "^3.6.0",
     "sweetalert2": "^6.9.1",
+    "typestub-horizon-client": "^0.1.8",
     "zone.js": "0.8.18"
   },
   "peerDependencies": {

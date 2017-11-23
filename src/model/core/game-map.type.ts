@@ -1,7 +1,7 @@
 import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/tslib";
 import {isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player";
-import {assert, new_even_random_enum} from "../../../utils-lib";
+import {assert, new_even_random_enum} from "../../utils-lib";
 import {ActionType, Card} from "./card.type";
 
 export enum GridType {

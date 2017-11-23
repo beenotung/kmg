@@ -6,4 +6,4 @@ node ls-dep.js \
   | grep -v cordova \
   | grep -v ngx \
   | grep -v sw-toolbox \
-  | xargs npm i #| xargs echo yarn add --peer | source /dev/stdin
+  | xargs npm i
