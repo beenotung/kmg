@@ -2,7 +2,9 @@ import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/
 import {isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
 import {assert, new_even_random_enum} from "../utils-lib";
-import {ActionType, Card} from "./card.type";
+import {ActionType, Card, CardType} from "./card.type";
+import {Cards} from "./card.data";
+import {Subject} from "rxjs/Subject";
 
 export enum GridType {
   action,
@@ -19,11 +21,6 @@ export class MapGrid {
   /* only if this.type === GridType.action */
   actionType?: ActionType;
   players = new HashedArray<Player>(x => x.id);
-
-  newCards = new HashedArray<Card>(x => x.id);
-  onMapCards = new HashedArray<Card>(x => x.id);
-  holdingCards = new HashedArray<Card>(x => x.id);
-  usedCards = new HashedArray<Card>(x => x.id);
 
   static connect(a: MapGrid, b: MapGrid) {
     a.connectedList.upsert(b);
@@ -56,10 +53,28 @@ export class MapGrid {
     });
     return res;
   }
+
+}
+
+export type CardEventType = "appear" | "disappear";
+
+export interface CardEvent {
+  type: CardEventType;
+  card: Card;
+  grid: MapGrid;
 }
 
 export class GameMap {
   grids: HashedArray<MapGrid>;
+
+  newCards = new HashedArray<Card>(x => x.id);
+  onMapCards = new HashedArray<Card>(x => x.id);
+  holdingCards = new HashedArray<Card>(x => x.id);
+  usedCards = new HashedArray<Card>(x => x.id);
+
+  cardEventSubject = new Subject<CardEvent>();
+
+  private cardLocations = new Map<Card, MapGrid>();
 
   constructor() {
     this.grids = MapGrid.genAll();
@@ -75,5 +90,53 @@ export class GameMap {
     player.grid.players.remove(player);
     player.grid = dest;
     dest.players.upsert(player);
+  }
+
+  initCards() {
+    this.newCards.clear();
+    this.onMapCards.clear();
+    this.holdingCards.clear();
+    this.usedCards.clear();
+    Cards.forEach(card => this.newCards.insert(card));
+
+    this.grids.array.forEach((grid: MapGrid) => {
+      /* random to have card */
+      if (Random.nextBool()) {
+        return;
+      }
+
+      for (; ;) {
+        /* random to pick card type */
+        let cardType = Random.nextEnum<CardType>(CardType as any);
+
+        /* random to pick card content */
+        let matchedCards = this.newCards.array.filter((card: Card) => card.type == cardType);
+        if (matchedCards.length == 0) {
+          /* try another card type */
+          continue;
+        }
+        let card = Random.element(matchedCards);
+        this.newCards.remove(card);
+        this.placeCardOnMap(card, grid);
+      }
+    });
+  }
+
+  placeCardOnMap(card: Card, grid: MapGrid) {
+    this.onMapCards.insert(card);
+    this.cardLocations.set(card, grid);
+    this.cardEventSubject.next({type: "appear", card, grid});
+  }
+
+  /**
+   * move card from map to player's backpack
+   * */
+  takeCardFromMap(card: Card) {
+    this.onMapCards.remove(card);
+    this.holdingCards.insert(card);
+    let grid = this.cardLocations.get(card);
+    this.cardLocations.delete(card);
+    this.cardEventSubject.next({type: "disappear", card, grid});
+    /* TODO pick a new card to put else where */
   }
 }

@@ -6,7 +6,7 @@ import {CompanyType} from "./company.type";
 import {InitialMatrixMap} from "./company.data";
 import {CycleType, Matrix, MatrixState} from "./shared.type";
 import {Subject} from "rxjs/Subject";
-import {targets} from "./player.data";
+import {Targets} from "./player.data";
 
 /**
  * Angel Investment -> 0
@@ -56,7 +56,7 @@ export class Player {
   }
 
   get target(): Matrix {
-    return targets[this.round];
+    return Targets[this.round];
   }
 
   useCard(card: Card) {

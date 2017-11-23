@@ -4,7 +4,8 @@ import {Random} from "@beenotung/tslib/random";
 import {notDefined} from "@beenotung/tslib/lang";
 import {Card} from "./card.type";
 import {Subject} from "rxjs/Subject";
-import {targets} from "./player.data";
+import {Targets} from "./player.data";
+import {GameMap} from "./game-map.type";
 
 /**
  * new instance for each game-play
@@ -15,6 +16,8 @@ export class Game {
   /* 2 to 4 */
   players: Player[] = [];
   currentPlayer: Player;
+
+  gameMap = new GameMap();
 
   /**
    * when
@@ -33,7 +36,7 @@ export class Game {
     this.players.push(player);
     player.roundSubject.subscribe(
       x => {
-        if (x == targets.length) {
+        if (x == Targets.length) {
           this.gameOverSubject.next(player);
         }
       },
@@ -42,12 +45,18 @@ export class Game {
     );
   }
 
+  /**
+   * return first (current) player
+   * */
   start() {
     this.startTime = Date.now();
     if (this.players.length <= 0) {
       throw new Error("require at least one player");
     }
     this.currentPlayer = Random.element(this.players);
+    this.gameMap.initCards();
+    /* TODO send players to the corner of the map */
+    return this.currentPlayer;
   }
 
   get timeLeft(): number {

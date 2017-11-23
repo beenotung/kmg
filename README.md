@@ -40,7 +40,7 @@ var core = require('../kmg-ionic/lib/model/core');
 3. [x] event when change 4 prop and current color (per player)
 4. [x] get movable grid list (player method)
 5. [x] event when target meet (whole game, not per user), content is the winning player
-6. [ ] event when new card appear/remove on map
+6. [x] event when new card appear/remove on map
     - card
     - position
     - appear / remove

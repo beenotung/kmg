@@ -9,7 +9,7 @@ export type Target = Matrix;
  * Series B         -> 2
  * Series C         -> 3
  * */
-export const targets: Target[] = [
+export const Targets: Target[] = [
   {tacitKnowledge: 80, explicitKnowledge: 20, marketShare: 0, capital: 0},
   {tacitKnowledge: 70, explicitKnowledge: 50, marketShare: 10, capital: 10},
   {tacitKnowledge: 60, explicitKnowledge: 70, marketShare: 25, capital: 15},
