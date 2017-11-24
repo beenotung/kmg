@@ -40,7 +40,7 @@
     "test": "run-p build lint"
   },
   "dependencies": {
-    "@beenotung/tslib": "^8.7.0",
+    "@beenotung/tslib": "^8.7.1",
     "isomorphic-fetch": "^2.2.1",
     "rxjs": "^5.5.2"
   },

@@ -2,7 +2,7 @@ import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/
 import {CornerIds, isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
 import {assert, new_even_random_enum, randomOrder} from "../utils-lib";
-import {ActionType, Card, CardType, ProfitType} from "./card.type";
+import {ActionType, Card, CardType, DetailCardType, ProfitType} from "./card.type";
 import {Cards} from "./card.data";
 import {Subject} from "rxjs/Subject";
 import * as util from "util";
@@ -12,7 +12,7 @@ import * as util from "util";
  * */
 export enum GridType {
   empty,
-  coorperation,
+  cooperation,
   /* has card */
   action,
   /* also has card */
@@ -126,43 +126,61 @@ export class GameMap {
     this.usedCards.clear();
     Cards.forEach(card => this.newCards.insert(card));
 
-    this.grids.array.forEach((grid: MapGrid) => {
+    let randomGridType = new_even_random_enum<GridType>(GridType as any);
+    let randomCardType = new_even_random_enum<CardType>(CardType as any);
+
+    debugger;
+    randomOrder(this.grids.array).forEach(grid => {
       /* skip corners */
       if (CornerIds.indexOf(grid.id) != -1) {
         return;
       }
 
-      /* random to have card */
-      if (Random.nextBool()) {
-        return;
-      }
+      gridType:
+        for (; ;) {
+          /* random to pick grid type */
+          let gridType: GridType = randomGridType.next();
 
-      for (; ;) {
-        /* random to pick grid type */
-        const gridType = Random.nextEnum<GridType>(GridType as any);
-        if (gridType == GridType.empty) {
-          continue;
+          /* check if no card */
+          if (gridType === GridType.empty || gridType === GridType.cooperation) {
+            if (gridType === GridType.cooperation) {
+              /* skip for now TODO support cooperation later on */
+              continue;
+            }
+            grid.type = gridType;
+            return;
+          }
+
+          if (gridType !== GridType.action && gridType !== GridType.random) {
+            throw new Error("unexpected gridType: " + gridType);
+          }
+          if (this.newCards.array.length == 0) {
+            console.debug("try another grid type without card");
+            continue;
+          }
+          for (; ;) {
+            /* random to pick card type */
+            let cardType = gridType === GridType.action ? CardType.action : randomCardType.next();
+
+            /* random to pick card content */
+            const matchedCards: Card[] = this.newCards.array.filter((card: Card) => DetailCardType.isCardType(cardType, card.type));
+            if (matchedCards.length == 0) {
+              if (gridType === GridType.action) {
+                console.debug("try another grid type");
+                continue gridType;
+              }
+              /* try another card type */
+              console.debug("try another card type");
+              continue;
+            }
+            const card = Random.element<Card>(matchedCards);
+            this.newCards.remove(card);
+            this.placeCardOnMap(card, grid);
+            break;
+          }
         }
-        grid.type = gridType;
-
-        if (gridType !== GridType.action) {
-          break;
-        }
-
-        /* random to pick card type */
-        const cardType = Random.nextEnum<CardType>(CardType as any);
-
-        /* random to pick card content */
-        const matchedCards = this.newCards.array.filter((card: Card) => card.type == cardType);
-        if (matchedCards.length == 0) {
-          /* try another card type */
-          continue;
-        }
-        const card = Random.element(matchedCards);
-        this.newCards.remove(card);
-        this.placeCardOnMap(card, grid);
-      }
     });
+    console.log("finished init cards on map");
   }
 
   placeCardOnMap(card: Card, grid: MapGrid) {

@@ -51,7 +51,7 @@ var core = require('../kmg-ionic/lib/model/core');
 9. [x] event for player can move
     - content is movable grid
 10. [ ] make sure when init card, don't put multiple card on same grid
-11. [ ] fix grid type, now is empty when a new card is placed (in the event)
+11. [x] fix grid type, now is empty when a new card is placed (in the event)
 
 ## Discussion
 1. what is the target of each round?

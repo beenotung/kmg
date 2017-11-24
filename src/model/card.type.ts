@@ -51,6 +51,18 @@ export namespace CardEffect {
 export type ActionType = CycleType;
 export let ActionType = CycleType;
 export type DetailCardType = ActionType | ProfitType | CardType.risk;
+export namespace DetailCardType {
+  export function isCardType(cardType: CardType, detailCardType: DetailCardType): boolean {
+    return (cardType === CardType.action &&
+      (detailCardType === ActionType.socialization
+        || detailCardType === ActionType.externalization
+        || detailCardType === ActionType.combination
+        || detailCardType === ActionType.internalization))
+      || (cardType === CardType.profit && (detailCardType === ProfitType.transient_profit
+        || detailCardType === ProfitType.portable_profit))
+      || (cardType === CardType.risk && detailCardType === CardType.risk);
+  }
+}
 
 export class Card {
   id = Counter.next();
