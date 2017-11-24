@@ -341,8 +341,8 @@ export default class extends Phaser.State {
     }
 
     function cardClickEvent (i) {
-      console.log('click card index ' + i + '!')
-      console.log('click card ' + currentCardIndex[i - 1] + '!')
+      console.log('click card index ', i)
+      console.log('click card ', currentCardIndex[i - 1])
       openCardOpenEvent(currentCardIndex[i - 1])
     }
 
@@ -621,7 +621,7 @@ export default class extends Phaser.State {
     }
 
     function cardEventSubjectEvent (x) {
-      console.log(x)
+      // console.log(x)
       if (x.type === 'appear') {
         if (x.grid.type === 'random') {
           enableBlockCard(x.grid.id, 'random', true)
