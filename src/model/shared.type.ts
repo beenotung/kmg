@@ -64,13 +64,14 @@ export class MatrixState {
   /* start from 0, increase when finish a whole cycle */
   numberOfCycle: number = 0;
 
-  changeSubject = new Subject<MatrixState>();
+  readonly changeSubject = new Subject<MatrixState>();
 
   private _stage: CycleType;
 
   constructor(initStage: CycleType, initMatrix: Matrix) {
     this.stage = initStage;
     const _matrix = Object.assign({}, initMatrix);
+    let _this = this;
     this.matrix = {
       get tacitKnowledge() {
         return _matrix.tacitKnowledge;
@@ -86,20 +87,20 @@ export class MatrixState {
       },
 
       set tacitKnowledge(x: number) {
-        this._matrix.tacitKnowledge = x;
-        this.changeSubject.next(this);
+        _matrix.tacitKnowledge = x;
+        _this.changeSubject.next(_this);
       },
       set explicitKnowledge(x: number) {
-        this._matrix.explicitKnowledge = x;
-        this.changeSubject.next(this);
+        _matrix.explicitKnowledge = x;
+        _this.changeSubject.next(_this);
       },
       set marketShare(x: number) {
-        this._matrix.marketShare = x;
-        this.changeSubject.next(this);
+        _matrix.marketShare = x;
+        _this.changeSubject.next(_this);
       },
       set capital(x: number) {
-        this._matrix.capital = x;
-        this.changeSubject.next(this);
+        _matrix.capital = x;
+        _this.changeSubject.next(_this);
       },
     };
   }

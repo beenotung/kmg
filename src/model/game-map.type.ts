@@ -129,7 +129,6 @@ export class GameMap {
     let randomGridType = new_even_random_enum<GridType>(GridType as any);
     let randomCardType = new_even_random_enum<CardType>(CardType as any);
 
-    debugger;
     randomOrder(this.grids.array).forEach(grid => {
       /* skip corners */
       if (CornerIds.indexOf(grid.id) != -1) {
@@ -155,7 +154,7 @@ export class GameMap {
             throw new Error("unexpected gridType: " + gridType);
           }
           if (this.newCards.array.length == 0) {
-            console.debug("try another grid type without card");
+            // console.debug("try another grid type without card");
             continue;
           }
           for (; ;) {
@@ -166,11 +165,11 @@ export class GameMap {
             const matchedCards: Card[] = this.newCards.array.filter((card: Card) => DetailCardType.isCardType(cardType, card.type));
             if (matchedCards.length == 0) {
               if (gridType === GridType.action) {
-                console.debug("try another grid type");
+                // console.debug("try another grid type");
                 continue gridType;
               }
               /* try another card type */
-              console.debug("try another card type");
+              // console.debug("try another card type");
               continue;
             }
             const card = Random.element<Card>(matchedCards);
@@ -180,7 +179,7 @@ export class GameMap {
           }
         }
     });
-    console.log("finished init cards on map");
+    // console.log("finished init cards on map");
   }
 
   placeCardOnMap(card: Card, grid: MapGrid) {
@@ -224,6 +223,10 @@ export class GameMap {
         continue;
       }
       const cards = this.newCards.array.length > 0 ? this.newCards : this.usedCards;
+      if (cards.array.length == 0) {
+        /* no available cards */
+        return;
+      }
       const sameTypeCards = cards.array.filter(x => x.type = currentCard.type);
       for (; ;) {
         const card = Random.element(cards.array);
