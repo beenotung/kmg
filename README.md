@@ -44,6 +44,8 @@ var core = require('../kmg-ionic/lib/model/core');
     - card
     - position
     - appear / remove
+7. [ ] make sure when init card, don't put multiple card on same grid
+8. [ ] fix grid type, now is empty when a new card is placed (in the event)
 
 ## To-Do (old)
 ### [Lib] Create Event for Client
