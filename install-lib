@@ -1,4 +1,5 @@
 #!/bin/bash
+hash yarn 2>/dev/null || npm i -g yarn
 set -e
 lib="../kmg-core"
 cd "$lib"
