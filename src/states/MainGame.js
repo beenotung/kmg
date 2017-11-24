@@ -62,7 +62,7 @@ export default class extends Phaser.State {
     this.homebtn = this.add.sprite(0, 628, 'homebutton-map')
     this.homebtn.inputEnabled = true
     that.bag_left.inputEnabled = true
-    that.bag_right.inputEnabled = true    
+    that.bag_right.inputEnabled = true
     this.homebtn.events.onInputDown.add(function () {
       this.state.start('Menu')
     }, this)
@@ -220,7 +220,7 @@ export default class extends Phaser.State {
     }
 
     for (let i = 1; i <= 112; i++) {
-      console.log('block ' + i + ' inital!')
+      // console.log('block ' + i + ' inital!')
       that['block_' + i] = that.add.sprite(blockInputLocation[i]['x'] * scale, blockInputLocation[i]['y'] * scale, 'circle')
       that['block_' + i].inputEnabled = true
       const no = parseInt(i)
@@ -228,7 +228,7 @@ export default class extends Phaser.State {
         blockClickEvent(no)
       }, that)
       that['block_' + i].visible = false
-    } 
+    }
 
     function blockClickEvent (i) {
       console.log('click block' + i + '!')
@@ -240,27 +240,27 @@ export default class extends Phaser.State {
     }
 
     function enableBlockCard (i, type, boolean) {
-      switch(type) {
+      switch (type) {
         case 'random':
-        that['block_' + i + '_card'].loadTexture('blackpattern', 0)  
-        break
+          that['block_' + i + '_card'].loadTexture('blackpattern', 0)
+          break
 
         case 'socialization':
-        that['block_' + i + '_card'].loadTexture('redpattern', 0)          
-        break
+          that['block_' + i + '_card'].loadTexture('redpattern', 0)
+          break
 
         case 'externalization':
-        that['block_' + i + '_card'].loadTexture('yellowpattern', 0)          
-        break
+          that['block_' + i + '_card'].loadTexture('yellowpattern', 0)
+          break
 
         case 'combination':
-        that['block_' + i + '_card'].loadTexture('bluepattern', 0)        
-        break
+          that['block_' + i + '_card'].loadTexture('bluepattern', 0)
+          break
 
         case 'internalization':
-        that['block_' + i + '_card'].loadTexture('purplepattern', 0)        
-        break
-      }   
+          that['block_' + i + '_card'].loadTexture('purplepattern', 0)
+          break
+      }
       that['block_' + i + '_card'].visible = boolean
     }
 
@@ -286,14 +286,14 @@ export default class extends Phaser.State {
       redrawCardList()
     }
 
-    function disableAllBlock() {
+    function disableAllBlock () {
       for (let i = 1; i <= 112; i++) {
-        enableBlock(i, false)        
+        enableBlock(i, false)
       }
     }
 
     function getPlayerById (id) {
-      return that.game.global.game.players.filter(x => x.id == id)[0]
+      return that.game.global.game.players.filter(x => x.id === id)[0]
     }
 
     const fgridValueStyle = { font: '12px Arial', fill: '#000', wordWrap: true, align: 'right' }
@@ -376,176 +376,123 @@ export default class extends Phaser.State {
           that['bag_card_' + (x + 1)].visible = false
         }
       }
-
     }
 
-    function convertCardNameToCardImageId(name) {
+    function convertCardNameToCardImageId (name) {
       switch (name) {
-      case "Brain-storming":
-      return 'red3'
-      break
-      case "Communities of practice":
-      return 'red1'
-      break
-      case "Apprenticeship":
-      return 'red2'
-      break
-      case "Seminars":
-      return 'red5'
-      break
-      case "Interview":
-      return 'red6'
-      break
-      case "Storytelling":
-      return 'red4'
-      break
-      case "Observing":
-      return 'red7'
-      break
-      case "Imitating":
-      return 'red8'
-      break
-      case "Documentation":
-      return 'yellow1'
-      break
-      case "Archive":
-      return 'yellow2'
-      break
-      case "Library":
-      return 'yellow3'
-      break
-      case "Video Record":
-      return 'yellow4'
-      break
-      case "Hackathon":
-      return 'yellow5'
-      break
-      case "Modeling":
-      return 'yellow6'
-      break
-      case "Creating metaphors":
-      return 'yellow7'
-      break
-      case "Analogic":
-      return 'yellow8'
-      break
-      case "Text mining":
-      return 'blue1'
-      break
-      case "Intranet":
-      return 'blue2'
-      break
-      case "Database":
-      return 'blue3'
-      break
-      case "Cluster Data":
-      return 'blue4'
-      break
-      case "Sorting":
-      return 'blue5'
-      break
-      case "Adding":
-      return 'blue6'
-      break
-      case "Categorizing":
-      return 'blue7'
-      break
-      case "Methodology":
-      return 'blue8'
-      break
-      case "Best practices":
-      return 'blue9'
-      break
-      case "Lesson Learned":
-      return 'purple2'
-      break
-      case "E-Learning":
-      return 'purple1'
-      break
-      case "Article, Paper":
-      return 'purple3'
-      break
-      case "Data Visualization":
-      return 'purple4'
-      break
-      case "Access to codified knowledge":
-      return 'purple5'
-      break
-      case "Goal based training":
-      return 'purple6'
-      break
-      case "Knowledge Retention":
-      return 'darkgreen1'
-      break
-      case "Low employee turnover":
-      return 'darkgreen2'
-      break
-      case "Research & Development":
-      return 'darkgreen3'
-      break
-      case "Good learning culture":
-      return 'darkgreen4'
-      break
-      case "Confidentiality agreement":
-      return 'darkgreen5'
-      break
-      case "High external collaboration":
-      return 'darkgreen6'
-      break
-      case "Proper IP handling":
-      return 'darkgreen7'
-      break
-      case "Good talent management":
-      return 'darkgreen8'
-      break
-      case "Adequate training":
-      return 'darkgreen9'
-      break
-      case "Revenue Increase":
-      return 'lightgreen1'
-      break
-      case "Innovation & Creative":
-      return 'lightgreen2'
-      break
-      case "Increase Efficiency":
-      return 'lightgreen3'
-      break
-      case "Better problem-solving skills":
-      return 'lightgreen4'
-      break
-      case "Increase Market Share":
-      return 'lightgreen5'
-      break
-      case "Better & faster decision making":
-      return 'lightgreen6'
-      break
-      case "Quality Improved":
-      return 'lightgreen7'
-      break
-      case "Avoid making the same mistakes":
-      return 'lightgreen8'
-      break
-      case "Knowledge Deficiency":
-      return 'black2'
-      break
-      case "Knowledge Loss":
-      return 'black1'
-      break
-      case "Knowledge Leakage":
-      return 'black4'
-      break
-      case "Knowledge Obsolescence":
-      return 'black3'
-      break
+        case 'Brain-storming':
+          return 'red3'
+        case 'Communities of practice':
+          return 'red1'
+        case 'Apprenticeship':
+          return 'red2'
+        case 'Seminars':
+          return 'red5'
+        case 'Interview':
+          return 'red6'
+        case 'Storytelling':
+          return 'red4'
+        case 'Observing':
+          return 'red7'
+        case 'Imitating':
+          return 'red8'
+        case 'Documentation':
+          return 'yellow1'
+        case 'Archive':
+          return 'yellow2'
+        case 'Library':
+          return 'yellow3'
+        case 'Video Record':
+          return 'yellow4'
+        case 'Hackathon':
+          return 'yellow5'
+        case 'Modeling':
+          return 'yellow6'
+        case 'Creating metaphors':
+          return 'yellow7'
+        case 'Analogic':
+          return 'yellow8'
+        case 'Text mining':
+          return 'blue1'
+        case 'Intranet':
+          return 'blue2'
+        case 'Database':
+          return 'blue3'
+        case 'Cluster Data':
+          return 'blue4'
+        case 'Sorting':
+          return 'blue5'
+        case 'Adding':
+          return 'blue6'
+        case 'Categorizing':
+          return 'blue7'
+        case 'Methodology':
+          return 'blue8'
+        case 'Best practices':
+          return 'blue9'
+        case 'Lesson Learned':
+          return 'purple2'
+        case 'E-Learning':
+          return 'purple1'
+        case 'Article, Paper':
+          return 'purple3'
+        case 'Data Visualization':
+          return 'purple4'
+        case 'Access to codified knowledge':
+          return 'purple5'
+        case 'Goal based training':
+          return 'purple6'
+        case 'Knowledge Retention':
+          return 'darkgreen1'
+        case 'Low employee turnover':
+          return 'darkgreen2'
+        case 'Research & Development':
+          return 'darkgreen3'
+        case 'Good learning culture':
+          return 'darkgreen4'
+        case 'Confidentiality agreement':
+          return 'darkgreen5'
+        case 'High external collaboration':
+          return 'darkgreen6'
+        case 'Proper IP handling':
+          return 'darkgreen7'
+        case 'Good talent management':
+          return 'darkgreen8'
+        case 'Adequate training':
+          return 'darkgreen9'
+        case 'Revenue Increase':
+          return 'lightgreen1'
+        case 'Innovation & Creative':
+          return 'lightgreen2'
+        case 'Increase Efficiency':
+          return 'lightgreen3'
+        case 'Better problem-solving skills':
+          return 'lightgreen4'
+        case 'Increase Market Share':
+          return 'lightgreen5'
+        case 'Better & faster decision making':
+          return 'lightgreen6'
+        case 'Quality Improved':
+          return 'lightgreen7'
+        case 'Avoid making the same mistakes':
+          return 'lightgreen8'
+        case 'Knowledge Deficiency':
+          return 'black2'
+        case 'Knowledge Loss':
+          return 'black1'
+        case 'Knowledge Leakage':
+          return 'black4'
+        case 'Knowledge Obsolescence':
+          return 'black3'
       }
     }
 
     let currentCardsListFirstIndex = 0
 
-    function redrawCardList() {
+    function redrawCardList () {
       clearAllCardView()
       showCardsPage(0)
-      //openRiskCardOpenEvent
+      // openRiskCardOpenEvent
       if (getRiskCard().length > 0) {
         openRiskCardOpenEvent(getRiskCard()[0])
         that.game.global.game.currentPlayer.useCard(getRiskCard()[0])
@@ -553,24 +500,24 @@ export default class extends Phaser.State {
     }
 
     function getRiskCard () {
-      return that.game.global.game.currentBackpackCardList.filter(x => (x.type == "risk" || x.type == "transient_profit"))
+      return that.game.global.game.currentBackpackCardList.filter(x => (x.type === 'risk' || x.type === 'transient_profit'))
     }
 
-    function redrawCardListNextPage() {
-      clearAllCardView()      
-      showCardsPage(currentCardsListFirstIndex + 1)      
+    function redrawCardListNextPage () {
+      clearAllCardView()
+      showCardsPage(currentCardsListFirstIndex + 1)
     }
 
-    function redrawCardListPreviousPage() {
-      clearAllCardView()      
-      showCardsPage(currentCardsListFirstIndex - 1)      
+    function redrawCardListPreviousPage () {
+      clearAllCardView()
+      showCardsPage(currentCardsListFirstIndex - 1)
     }
 
-    function showCardsPage(page) {
+    function showCardsPage (page) {
       currentCardsListFirstIndex = page
       let select = that.game.global.game.currentBackpackCardList.slice(currentCardsListFirstIndex, that.game.global.game.currentBackpackCardList.length)
       let hasLeft = false
-      let hasRight = false      
+      let hasRight = false
       if (select.length > 7) {
         select = select.slice(0, 7)
         hasRight = true
@@ -619,8 +566,8 @@ export default class extends Phaser.State {
       that.open_card_mask.visible = true
       that.open_card_close.visible = true
       that.open_card.visible = true
-      if (openCard.type == that.game.global.game.currentPlayer.current.stage) {
-        that.open_card_use_btn.visible = true        
+      if (openCard.type === that.game.global.game.currentPlayer.current.stage) {
+        that.open_card_use_btn.visible = true
       }
     }
 
@@ -658,157 +605,143 @@ export default class extends Phaser.State {
       that.endTurnBtn.inputEnabled = true
     }
 
-    openCardCloseEvent()  
-    
+    openCardCloseEvent()
+
     that.game.global.event = []
 
-    function playerRoundSubjectEvent(x, id) {
+    function playerRoundSubjectEvent (x, id) {
       console.log(x)
     }
 
     for (let i = 0; i < 4; i++) {
-      that.game.global.event.push(window.game.global.game.players[i].roundSubject.subscribe(x=>{
-        const id = (i+1)
+      that.game.global.event.push(window.game.global.game.players[i].roundSubject.subscribe(x => {
+        const id = (i + 1)
         playerRoundSubjectEvent(x, id)
-      }, e=>{}, f=>{}))
+      }, e => {}, f => {}))
     }
 
-    function cardEventSubjectEvent(x) {
+    function cardEventSubjectEvent (x) {
       console.log(x)
-      if (x.type == 'appear') {
-        if (x.grid.type == 'random') {
+      if (x.type === 'appear') {
+        if (x.grid.type === 'random') {
           enableBlockCard(x.grid.id, 'random', true)
-        } else if (x.grid.type == 'action') {
+        } else if (x.grid.type === 'action') {
           enableBlockCard(x.grid.id, x.card.type, true)
         }
-      } else if (x.type == 'disappear') {
+      } else if (x.type === 'disappear') {
         enableBlockCard(x.grid.id, 'random', false)
       }
     }
-    that.game.global.event.push(that.game.global.game.gameMap.cardEventSubject.subscribe(x=>{
+    that.game.global.event.push(that.game.global.game.gameMap.cardEventSubject.subscribe(x => {
       cardEventSubjectEvent(x)
-    }, e=>{}, o=>{}))
-    that.game.global.game.start() 
-    
+    }, e => {}, o => {}))
+    that.game.global.game.start()
+
     that.game.global.players = {
-      0: {"companyType": null, "id": null},
-      1: {"companyType": null, "id": null},
-      2: {"companyType": null, "id": null},
-      3: {"companyType": null, "id": null}
+      0: {'companyType': null, 'id': null},
+      1: {'companyType': null, 'id': null},
+      2: {'companyType': null, 'id': null},
+      3: {'companyType': null, 'id': null}
     }
     for (let index = 0; index < that.game.global.game.players.length; index++) {
-      if (that.game.global.game.players[index].grid.id == 1) {
-        that.game.global.players[0]["companyType"] = that.game.global.game.players[index].companyType
-        that.game.global.players[0]["id"] = that.game.global.game.players[index].id        
-        that.player_1_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)     
-        that.player_1_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))        
+      if (that.game.global.game.players[index].grid.id === 1) {
+        that.game.global.players[0]['companyType'] = that.game.global.game.players[index].companyType
+        that.game.global.players[0]['id'] = that.game.global.game.players[index].id
+        that.player_1_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)
+        that.player_1_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))
         chessMove(1, 1)
-      } else if (that.game.global.game.players[index].grid.id == 101) {
-        that.game.global.players[1]["companyType"] = that.game.global.game.players[index].companyType
-        that.game.global.players[1]["id"] = that.game.global.game.players[index].id   
-        that.player_2_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)             
-        that.player_2_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))        
-        chessMove(2, 101)        
-      } else if (that.game.global.game.players[index].grid.id == 11) {
-        that.game.global.players[2]["companyType"] = that.game.global.game.players[index].companyType
-        that.game.global.players[2]["id"] = that.game.global.game.players[index].id 
-        that.player_3_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)             
-        that.player_3_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))        
-        chessMove(3, 11)        
-      } else if (that.game.global.game.players[index].grid.id == 112) {
-        that.game.global.players[3]["companyType"] = that.game.global.game.players[index].companyType
-        that.game.global.players[3]["id"] = that.game.global.game.players[index].id 
-        that.player_4_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)             
-        that.player_4_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))        
-        chessMove(4, 112)        
+      } else if (that.game.global.game.players[index].grid.id === 101) {
+        that.game.global.players[1]['companyType'] = that.game.global.game.players[index].companyType
+        that.game.global.players[1]['id'] = that.game.global.game.players[index].id
+        that.player_2_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)
+        that.player_2_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))
+        chessMove(2, 101)
+      } else if (that.game.global.game.players[index].grid.id === 11) {
+        that.game.global.players[2]['companyType'] = that.game.global.game.players[index].companyType
+        that.game.global.players[2]['id'] = that.game.global.game.players[index].id
+        that.player_3_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)
+        that.player_3_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))
+        chessMove(3, 11)
+      } else if (that.game.global.game.players[index].grid.id === 112) {
+        that.game.global.players[3]['companyType'] = that.game.global.game.players[index].companyType
+        that.game.global.players[3]['id'] = that.game.global.game.players[index].id
+        that.player_4_status.loadTexture(that.getStatusImgId(that.game.global.game.players[index].current.stage), 0)
+        that.player_4_chess.loadTexture(that.convertCompanyTypeToChessImage(that.game.global.game.players[index].companyType))
+        chessMove(4, 112)
       }
     }
-    that.player_1_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[0]["companyType"]), 0)
-    that.player_1_profile.scale.setTo(0.5, 0.5)    
-    that.player_2_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[1]["companyType"]), 0)
-    that.player_2_profile.scale.setTo(0.5, 0.5)        
-    that.player_3_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[2]["companyType"]), 0)
-    that.player_3_profile.scale.setTo(0.5, 0.5)        
-    that.player_4_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[3]["companyType"]), 0)
-    that.player_4_profile.scale.setTo(0.5, 0.5) 
+    that.player_1_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[0]['companyType']), 0)
+    that.player_1_profile.scale.setTo(0.5, 0.5)
+    that.player_2_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[1]['companyType']), 0)
+    that.player_2_profile.scale.setTo(0.5, 0.5)
+    that.player_3_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[2]['companyType']), 0)
+    that.player_3_profile.scale.setTo(0.5, 0.5)
+    that.player_4_profile.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.players[3]['companyType']), 0)
+    that.player_4_profile.scale.setTo(0.5, 0.5)
 
-    function playerIdtoThisId(id) {
+    function playerIdtoThisId (id) {
       for (let x = 0; x < 4; x++) {
-        if (that.game.global.players[x].id == id) {
-          return (x+1)
+        if (that.game.global.players[x].id === id) {
+          return (x + 1)
         }
       }
-      return null    
+      return null
     }
-    
-    function setCurrentRound() {
+
+    function setCurrentRound () {
       that.game.global.game.currentPlayer.getMovableGrids().forEach(element => {
         enableBlock(element.id, true)
       })
-      changePlayer(playerIdtoThisId(that.game.global.game.currentPlayer.id))    
+      changePlayer(playerIdtoThisId(that.game.global.game.currentPlayer.id))
       redrawCardList()
     }
 
     setCurrentRound()
-}
+  }
 
-  getStatusImgId(x) {
+  getStatusImgId (x) {
     switch (x) {
-      case "socialization":
-      return "status01"
-      break
+      case 'socialization':
+        return 'status01'
 
-      case "internalization":
-      return "status02"      
-      break
-      
-      case "externalization":
-      return "status03"      
-      break
-      
-      case "combination":
-      return "status04"      
-      break
+      case 'internalization':
+        return 'status02'
+
+      case 'externalization':
+        return 'status03'
+
+      case 'combination':
+        return 'status04'
     }
   }
 
-  convertCompanyTypeToPicImage(type) {
+  convertCompanyTypeToPicImage (type) {
     switch (type) {
       case 'Education':
-      return 'consulting'
-      break
+        return 'consulting'
       case 'ITCompany':
-      return 'IT'
-      break
+        return 'IT'
       case 'MediaFirm':
-      return 'media'
-      break
+        return 'media'
       case 'Publishing':
-      return 'publishing'
-      break
+        return 'publishing'
       case 'Auditing':
-      return 'audit'
-      break
+        return 'audit'
     }
   }
 
-  convertCompanyTypeToChessImage(type) {
+  convertCompanyTypeToChessImage (type) {
     switch (type) {
       case 'Education':
-      return 'C'
-      break
+        return 'C'
       case 'ITCompany':
-      return 'I'
-      break
+        return 'I'
       case 'MediaFirm':
-      return 'M'
-      break
+        return 'M'
       case 'Publishing':
-      return 'P'
-      break
+        return 'P'
       case 'Auditing':
-      return 'A'
-      break
+        return 'A'
     }
   }
 

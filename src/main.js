@@ -1,7 +1,6 @@
 import 'pixi'
 import 'p2'
 import Phaser from 'phaser'
-const core = require('kmg-core')
 
 import BootState from './states/Boot'
 import SplashState from './states/Splash'
@@ -11,6 +10,8 @@ import Menu from './states/Menu'
 import Select from './states/Select'
 import MainGame from './states/MainGame'
 import config from './config'
+
+const core = require('kmg-core')
 
 class Game extends Phaser.Game {
   constructor () {
