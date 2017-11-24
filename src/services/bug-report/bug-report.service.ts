@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/toPromise";
-import {UserSessionService} from "../user-session";
-import {DatabaseService} from "../database";
-import {StorageService} from "../storage";
+import {UserSessionService} from "../user-session/user-session.service";
+import {DatabaseService} from "../database/database.service";
+import {StorageService} from "../storage/storage.service";
 import {APIResponse} from "../api";
 import {APIResponseDB, BugReport} from "../../model/api/custom/bug-report";
 import {isDefined} from "@beenotung/tslib/lang";

@@ -4,7 +4,7 @@ import "rxjs/add/operator/toPromise";
 import {Toast, ToastController, ToastOptions} from "ionic-angular";
 import {TranslateService} from "@ngx-translate/core";
 import {config} from "../../app/app.config";
-import {StorageKey, StorageService} from "../storage";
+import {StorageKey, StorageService} from "../storage/storage.service";
 import {enum_only_string} from "@beenotung/tslib/enum";
 import {takeAll} from "@beenotung/tslib/array";
 

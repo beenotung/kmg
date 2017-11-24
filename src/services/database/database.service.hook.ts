@@ -4,7 +4,7 @@ import {tryWithDefault} from "@beenotung/tslib/lang";
 import {swal, SweetAlertOptions} from "@beenotung/tslib/typestub-sweetalert2";
 import {data} from "../../app/app.data";
 import {config} from "../../app/app.config";
-import {LocalNotice, NoticeService} from "../notice";
+import {LocalNotice, NoticeService} from "../notice/notice.service";
 import {databaseService, DatabaseService} from "./database.service";
 import {Config} from "../../model/api/custom/config";
 import {AppType, getAppType} from "ioniclib/utils/platform";
