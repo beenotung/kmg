@@ -44,6 +44,10 @@ var core = require('../kmg-ionic/lib/model/core');
     - card
     - position
     - appear / remove
+7. [ ] add company type audit
+8. [ ] add method at game to end turn
+9. [ ] event for player can move
+    - content is movable grid
 
 ## To-Do (old)
 ### [Lib] Create Event for Client
