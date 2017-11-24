@@ -106,6 +106,11 @@ export default class extends Phaser.State {
       this.load.image('block_' + i, './assets/images/block_' + i + '.png')
     }
     this.load.image('circle', './assets/images/circle.png')
+    this.load.image('blackpattern', './assets/images/blackpattern.png')
+    this.load.image('purplepattern', './assets/images/purplepattern.png')
+    this.load.image('bluepattern', './assets/images/bluepattern.png')
+    this.load.image('yellowpattern', './assets/images/yellowpattern.png')
+    this.load.image('redpattern', './assets/images/redpattern.png')
     this.load.image('cross_button', './assets/images/cross_button.png')
     this.load.image('end_turn_button', './assets/images/end_turn_button.png')
     this.load.image('use_button', './assets/images/use_button.png')
