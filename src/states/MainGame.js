@@ -545,6 +545,15 @@ export default class extends Phaser.State {
     function redrawCardList() {
       clearAllCardView()
       showCardsPage(0)
+      //openRiskCardOpenEvent
+      if (getRiskCard().length > 0) {
+        openRiskCardOpenEvent(getRiskCard()[0])
+        that.game.global.game.currentPlayer.useCard(getRiskCard()[0])
+      }
+    }
+
+    function getRiskCard () {
+      return that.game.global.game.currentBackpackCardList.filter(x => x.type == "risk")
     }
 
     function redrawCardListNextPage() {
@@ -588,7 +597,7 @@ export default class extends Phaser.State {
 
     function useEvent () {
       console.log('Use this card')
-      that.game.global.game.currentPlayer.useCard(openCardId)
+      that.game.global.game.currentPlayer.useCard(openCard)
       openCardCloseEvent()
       redrawCardList()
     }
@@ -599,18 +608,29 @@ export default class extends Phaser.State {
       that.open_card_close.visible = false
       that.open_card.visible = false
       that.open_card_use_btn.visible = false
-      openCardId = null
+      openCard = null
       enableMainControl()
     }
-    let openCardId = null
+    let openCard = null
     function openCardOpenEvent (card) {
       disableMainControl()
       that.open_card.loadTexture(convertCardNameToCardImageId(card.name), 0)
-      openCardId = card.id
+      openCard = card
       that.open_card_mask.visible = true
       that.open_card_close.visible = true
       that.open_card.visible = true
-      that.open_card_use_btn.visible = true
+      if (openCard.type == that.game.global.game.currentPlayer.current.stage) {
+        that.open_card_use_btn.visible = true        
+      }
+    }
+
+    function openRiskCardOpenEvent (card) {
+      disableMainControl()
+      that.open_card.loadTexture(convertCardNameToCardImageId(card.name), 0)
+      openCard = card
+      that.open_card_mask.visible = true
+      that.open_card_close.visible = true
+      that.open_card.visible = true
     }
 
     function disableMainControl () {
