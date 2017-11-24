@@ -2,16 +2,12 @@
 hash yarn 2>/dev/null || npm i -g yarn
 set -e
 yarn install --dev
-index=0
 if [ -d src/index ]; then
-  index=1
   mv src/index .
 fi
 ./gen-index
 yarn build
 ./rm-index
-if [ $index == 1 ]; then
-  mv index src/
-fi
+mv index src/ || echo ''
 yarn install --prod
 echo "done."
