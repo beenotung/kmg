@@ -19,6 +19,17 @@ export enum GridType {
 }
 
 enum_only_string(GridType);
+export namespace GridType {
+  export function fromCardType(cardType: CardType): GridType {
+    switch (cardType) {
+      case CardType.action:
+        return GridType.action;
+      case CardType.profit:
+      case CardType.risk:
+        return GridType.random;
+    }
+  }
+}
 
 export class MapGrid {
   id: number;
@@ -169,6 +180,7 @@ export class GameMap {
     this.onMapCards.insert(card);
     this.cardLocations.set(card, grid);
     grid.card = card;
+    grid.type = GridType.fromCardType(card.type);
     this.cardEventSubject.next({type: "appear", card, grid});
   }
 
