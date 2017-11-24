@@ -3,7 +3,7 @@
 name="kmg"
 run_ionic="npm run ionic:serve"
 run_horizon="hz serve --dev --bind 0.0.0.0 --token-secret 65a301e1484863cb50359f118e1972c0"
-run_game="./dev"
+run_phaser="./dev"
 hash "tmux" 2>/dev/null
 if [ $? == 0 ]; then
   ## has tmux installed
@@ -11,16 +11,16 @@ if [ $? == 0 ]; then
   tmux new -dP -s ionic "$run_ionic"
   cd "../$name-horizon"
   tmux new -dP -s hz "$run_horizon"
-  cd "../kmg-game"
-  tmux new -dP -s kmg-game "$run_game"
+  cd "../kmg-phaser"
+  tmux new -dP -s kmg-phaser "$run_phaser"
   cd "../$name-ionic"
   tmux attach -t ionic
 else
   ## do not has tmux installed
   cd "../$name-horizon"
   $run_horizon &
-  cd "../kmg-game"
-  $run_game &
+  cd "../kmg-phaser"
+  $run_phaser &
   cd "../$name-ionic"
   $run_ionic
 fi
