@@ -1,0 +1,30 @@
+#!/bin/bash
+## for gource video
+
+git checkout -b combine
+
+function step1 {
+  cd "$1"
+  git checkout -b "$1"
+  mkdir ".$1"
+  git mv -v * ".$1"
+  git mv -v ".$1" "$1"
+  git commit -m 'move for gource'
+  cd ..
+}
+
+step1 kmg-core
+step1 kmg-phaser
+step1 kmg-ionic
+
+function step2 {
+  git remote add "$1" "$1"
+  git pull --allow-unrelated "$1" "$1"
+  git-mediate
+  git mergetool
+  git commit -m "merged with $1"
+}
+
+step2 kmg-core
+step2 kmg-phaser
+step2 kmg-ionic
