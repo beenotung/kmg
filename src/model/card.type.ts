@@ -50,11 +50,12 @@ export namespace CardEffect {
 
 export type ActionType = CycleType;
 export let ActionType = CycleType;
+export type DetailCardType = ActionType | ProfitType | CardType.risk;
 
 export class Card {
   id = Counter.next();
 
-  constructor(public type: ActionType | ProfitType | CardType.risk
+  constructor(public type: DetailCardType
     , public name: string
     , public effects: CardEffect[]) {
   }

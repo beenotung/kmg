@@ -1,7 +1,7 @@
 import {Counter, notDefined, Random} from "@beenotung/tslib";
 import {MapGrid} from "./game-map.type";
 import {HashedArray} from "@beenotung/tslib/hashed-array";
-import {ActionType, Card} from "./card.type";
+import {ActionType, Card, CardType, DetailCardType, ProfitType} from "./card.type";
 import {CompanyType} from "./company.type";
 import {InitialMatrixMap} from "./company.data";
 import {CycleType, Matrix, MatrixState} from "./shared.type";
@@ -64,12 +64,24 @@ export class Player {
     if (!this.backpack.has(card.id)) {
       throw new Error("player do not own this card");
     }
-    if (card.type !== this.current.stage) {
+    if (!this.canUseCard(card.type)) {
       throw new Error(`the card do not match player current stage, player: ${this.current.stage}, card: ${card.type}`);
     }
     card.useOn(this.current.matrix);
     this.current.moveToNextStage();
     this.backpack.remove(card);
+  }
+
+  canUseCard(cardType: DetailCardType) {
+    switch (cardType) {
+      case CardType.risk:
+      case ProfitType.transient_profit:
+      case ProfitType.portable_profit:
+      case this.current.stage:
+        return true;
+      default:
+        return false;
+    }
   }
 
   getMovableGrids(): MapGrid[] {
