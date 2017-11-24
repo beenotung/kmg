@@ -139,3 +139,5 @@ export function isConnected(a: number, b: number) {
   const set = Connections.get(a);
   return set && set.has(b);
 }
+
+export const CornerIds = [1, 11, 101, 112];

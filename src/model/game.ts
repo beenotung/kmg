@@ -16,7 +16,6 @@ export class Game {
 
   /* 2 to 4 */
   players: Player[] = [];
-  currentPlayer: Player;
 
   gameMap = new GameMap();
 
@@ -31,8 +30,21 @@ export class Game {
    * */
   gameOverSubject = new Subject<Player>();
 
+  movableGridListSubject = new Subject();
+
   private startTime: number;
   private currentPlayerStartTime: number;
+
+  private _currentPlayer: Player;
+  get currentPlayer(): Player {
+    return this._currentPlayer;
+  }
+
+  set currentPlayer(x: Player) {
+    this._currentPlayer = x;
+    this.currentPlayerStartTime = Date.now();
+    this.movableGridListSubject.next(x.getMovableGrids());
+  }
 
   addPlayer(player: Player) {
     this.players.push(player);
@@ -55,11 +67,10 @@ export class Game {
     if (this.players.length <= 0) {
       throw new Error("require at least one player");
     }
-    this.currentPlayer = Random.element(this.players);
     this.gameMap.initCards();
     zipArray(this.players, this.gameMap.getCorners())
       .forEach(([p, g]) => p.grid = g);
-    this.currentPlayerStartTime = Date.now();
+    this.currentPlayer = Random.element(this.players);
     return this.currentPlayer;
   }
 
@@ -73,7 +84,7 @@ export class Game {
       throw new Error("game is not started");
     }
     // return Game.MaxTime - this.startTime;
-    let passed = Date.now() - this.currentPlayerStartTime;
+    const passed = Date.now() - this.currentPlayerStartTime;
     return 60 * SECOND - passed;
   }
 
@@ -85,9 +96,8 @@ export class Game {
    * return next player
    * */
   endTurn(): Player {
-    let currentIdx = this.players.indexOf(this.currentPlayer);
-    let nextIdx = (currentIdx + 1) % this.players.length;
-    this.currentPlayerStartTime = Date.now();
+    const currentIdx = this.players.indexOf(this.currentPlayer);
+    const nextIdx = (currentIdx + 1) % this.players.length;
     return this.currentPlayer = this.players[nextIdx];
   }
 }

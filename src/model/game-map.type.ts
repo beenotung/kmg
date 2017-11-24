@@ -1,5 +1,5 @@
 import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/tslib";
-import {isConnected, MapConnections} from "./game-map.data";
+import {CornerIds, isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
 import {assert, new_even_random_enum, randomOrder} from "../utils-lib";
 import {Card, CardType} from "./card.type";
@@ -126,6 +126,11 @@ export class GameMap {
     Cards.forEach(card => this.newCards.insert(card));
 
     this.grids.array.forEach((grid: MapGrid) => {
+      /* skip corners */
+      if (CornerIds.indexOf(grid.id) != -1) {
+        return;
+      }
+
       /* random to have card */
       if (Random.nextBool()) {
         return;

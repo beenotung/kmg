@@ -47,7 +47,7 @@ var core = require('../kmg-ionic/lib/model/core');
 7. [ ] add company type audit
     - waiting Edie
 8. [x] add method at game to end turn
-9. [ ] event for player can move
+9. [x] event for player can move
     - content is movable grid
 
 ## To-Do (old)
