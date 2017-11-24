@@ -6,7 +6,7 @@ import {CompanyType} from "./company.type";
 import {InitialMatrixMap} from "./company.data";
 import {CycleType, Matrix, MatrixState} from "./shared.type";
 import {Subject} from "rxjs/Subject";
-import {Targets} from "./player.data";
+import {TargetRewards, Targets} from "./player.data";
 
 /**
  * Angel Investment -> 0
@@ -27,7 +27,7 @@ export class Player {
 
   backpack = new HashedArray<Card>(x => x.id);
 
-  round: PlayerRound;
+  round: PlayerRound = 0;
   roundSubject = new Subject<PlayerRound>();
 
   constructor(type: CompanyType) {
@@ -46,6 +46,7 @@ export class Player {
           && m.marketShare >= t.marketShare
           && m.capital >= t.capital;
         if (passed) {
+          this.current.matrix.capital += TargetRewards[this.round];
           this.round++;
           this.roundSubject.next(this.round as PlayerRound);
         }

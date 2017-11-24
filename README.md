@@ -44,8 +44,14 @@ var core = require('../kmg-ionic/lib/model/core');
     - card
     - position
     - appear / remove
-7. [ ] make sure when init card, don't put multiple card on same grid
-8. [ ] fix grid type, now is empty when a new card is placed (in the event)
+7. [ ] add company type audit
+    - waiting Edie
+    - cancelled by Edie
+8. [x] add method at game to end turn
+9. [x] event for player can move
+    - content is movable grid
+10. [ ] make sure when init card, don't put multiple card on same grid
+11. [ ] fix grid type, now is empty when a new card is placed (in the event)
 
 ## Discussion
 1. what is the target of each round?

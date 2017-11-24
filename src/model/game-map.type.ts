@@ -1,10 +1,11 @@
 import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/tslib";
-import {isConnected, MapConnections} from "./game-map.data";
+import {CornerIds, isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
 import {assert, new_even_random_enum, randomOrder} from "../utils-lib";
-import {ActionType, Card, CardType} from "./card.type";
+import {ActionType, Card, CardType, ProfitType} from "./card.type";
 import {Cards} from "./card.data";
 import {Subject} from "rxjs/Subject";
+import * as util from "util";
 
 /**
  * it is not responsible to represent if a player is stepping on it
@@ -19,17 +20,6 @@ export enum GridType {
 }
 
 enum_only_string(GridType);
-export namespace GridType {
-  export function fromCardType(cardType: CardType): GridType {
-    switch (cardType) {
-      case CardType.action:
-        return GridType.action;
-      case CardType.profit:
-      case CardType.risk:
-        return GridType.random;
-    }
-  }
-}
 
 export class MapGrid {
   id: number;
@@ -39,8 +29,6 @@ export class MapGrid {
 
   typeSubject = new Subject<GridType>();
   private _type: GridType;
-  // /* only if this.type === GridType.action */
-  // actionType?: ActionType;
 
   static connect(a: MapGrid, b: MapGrid) {
     a.connectedList.upsert(b);
@@ -50,7 +38,6 @@ export class MapGrid {
   static genAll() {
     const res = new HashedArray<MapGrid>(x => x.id);
     const genGridType = new_even_random_enum<GridType>(GridType as any);
-    const genActionType = new_even_random_enum<ActionType>(ActionType as any);
     /* [id, random] */
     const orders: Array<[number, number]> = [];
     MapConnections.forEach(([id]) => {
@@ -63,9 +50,6 @@ export class MapGrid {
     orders.forEach(([id]) => {
       const x = res.get(id);
       x.type = genGridType.next();
-      // if (x.type === GridType.action) {
-      //   x.actionType = genActionType.next();
-      // }
     });
     MapConnections.forEach(([selfID, peerIDs]) => {
       const self = res.get(selfID);
@@ -128,7 +112,7 @@ export class GameMap {
     player.grid.players.remove(player);
     player.grid = dest;
     dest.players.upsert(player);
-    let card = dest.card;
+    const card = dest.card;
     if (card) {
       this.takeCardFromMap(card);
       player.backpack.insert(card);
@@ -143,6 +127,11 @@ export class GameMap {
     Cards.forEach(card => this.newCards.insert(card));
 
     this.grids.array.forEach((grid: MapGrid) => {
+      /* skip corners */
+      if (CornerIds.indexOf(grid.id) != -1) {
+        return;
+      }
+
       /* random to have card */
       if (Random.nextBool()) {
         return;
@@ -150,7 +139,7 @@ export class GameMap {
 
       for (; ;) {
         /* random to pick grid type */
-        let gridType = Random.nextEnum<GridType>(GridType as any);
+        const gridType = Random.nextEnum<GridType>(GridType as any);
         if (gridType == GridType.empty) {
           continue;
         }
@@ -180,7 +169,21 @@ export class GameMap {
     this.onMapCards.insert(card);
     this.cardLocations.set(card, grid);
     grid.card = card;
-    grid.type = GridType.fromCardType(card.type);
+    switch (card.type) {
+      case CardType.risk:
+      case ProfitType.transient_profit:
+      case ProfitType.portable_profit:
+        grid.type = GridType.random;
+        break;
+      case ActionType.socialization:
+      case ActionType.externalization:
+      case ActionType.combination:
+      case ActionType.internalization:
+        grid.type = GridType.action;
+        break;
+      default:
+        throw new TypeError("unknown grid type from card: " + util.format(card));
+    }
     this.cardEventSubject.next({type: "appear", card, grid});
   }
 
@@ -195,16 +198,17 @@ export class GameMap {
     delete currentGrid.card;
     currentGrid.type = GridType.empty;
     this.cardEventSubject.next({type: "disappear", card: currentCard, grid: currentGrid});
-    let grids = randomOrder(this.grids.array);
+    /* add new card to map */
+    const grids = randomOrder(this.grids.array);
     for (; ;) {
-      let grid = Random.element(grids);
-      if (grid == currentGrid || grid.players.length != 0 || grid.type !== GridType.empty) {
+      const grid = Random.element(grids);
+      if (grid == currentGrid || grid.players.array.length != 0 || grid.type !== GridType.empty) {
         continue;
       }
-      let cards = this.newCards.length > 0 ? this.newCards : this.usedCards;
-      let sameTypeCards = cards.array.filter(x => x.type = currentCard.type);
+      const cards = this.newCards.array.length > 0 ? this.newCards : this.usedCards;
+      const sameTypeCards = cards.array.filter(x => x.type = currentCard.type);
       for (; ;) {
-        let card = Random.element(cards.array);
+        const card = Random.element(cards.array);
         if (sameTypeCards.length > 0 && card.type != currentCard.type) {
           continue;
         }

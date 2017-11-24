@@ -115,6 +115,7 @@ export const MapConnections: MapConnection[] = [
   , [109, [110]]
   , [110, [111]]
   , [111, [112]]
+  , [112, []]
 ];
 const Connections = new Map<number, Set<number>>();
 MapConnections.forEach(([from, tos]: MapConnection) => {
@@ -138,3 +139,5 @@ export function isConnected(a: number, b: number) {
   const set = Connections.get(a);
   return set && set.has(b);
 }
+
+export const CornerIds = [1, 11, 101, 112];
