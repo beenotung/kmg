@@ -2,9 +2,10 @@ import {compare_number, enum_only_string, HashedArray, Random} from "@beenotung/
 import {CornerIds, isConnected, MapConnections} from "./game-map.data";
 import {Player} from "./player.type";
 import {assert, new_even_random_enum, randomOrder} from "../utils-lib";
-import {Card, CardType} from "./card.type";
+import {ActionType, Card, CardType, ProfitType} from "./card.type";
 import {Cards} from "./card.data";
 import {Subject} from "rxjs/Subject";
+import * as util from "util";
 
 /**
  * it is not responsible to represent if a player is stepping on it
@@ -168,6 +169,21 @@ export class GameMap {
     this.onMapCards.insert(card);
     this.cardLocations.set(card, grid);
     grid.card = card;
+    switch (card.type) {
+      case CardType.risk:
+      case ProfitType.transient_profit:
+      case ProfitType.portable_profit:
+        grid.type = GridType.random;
+        break;
+      case ActionType.socialization:
+      case ActionType.externalization:
+      case ActionType.combination:
+      case ActionType.internalization:
+        grid.type = GridType.action;
+        break;
+      default:
+        throw new TypeError("unknown grid type from card: " + util.format(card));
+    }
     this.cardEventSubject.next({type: "appear", card, grid});
   }
 
@@ -182,6 +198,7 @@ export class GameMap {
     delete currentGrid.card;
     currentGrid.type = GridType.empty;
     this.cardEventSubject.next({type: "disappear", card: currentCard, grid: currentGrid});
+    /* add new card to map */
     const grids = randomOrder(this.grids.array);
     for (; ;) {
       const grid = Random.element(grids);
