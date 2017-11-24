@@ -115,6 +115,7 @@ export const MapConnections: MapConnection[] = [
   , [109, [110]]
   , [110, [111]]
   , [111, [112]]
+  , [112, []]
 ];
 const Connections = new Map<number, Set<number>>();
 MapConnections.forEach(([from, tos]: MapConnection) => {
