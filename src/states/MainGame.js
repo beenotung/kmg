@@ -203,7 +203,7 @@ export default class extends Phaser.State {
 
     const scale = 28.5
     for (let i = 1; i <= 112; i++) {
-      console.log('block ' + i + ' inital!')
+      // console.log('block ' + i + ' inital!')
       that['block_' + i] = that.add.sprite(blockInputLocation[i]['x'] * scale, blockInputLocation[i]['y'] * scale, 'circle')
       that['block_' + i].inputEnabled = true
       const no = parseInt(i)
@@ -387,7 +387,7 @@ export default class extends Phaser.State {
       }
 
       for (let x = 1; x <= 112; x++) {
-        console.log('try ' + x)
+        // console.log('try ' + x)
         // that['block_' + i].inputEnabled = true
       }
 
