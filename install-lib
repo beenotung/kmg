@@ -5,4 +5,4 @@ lib="../kmg-core"
 cd "$lib"
 ./build-lib
 cd -
-yarn add "$lib"
+npm link "$lib"
