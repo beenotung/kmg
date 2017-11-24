@@ -631,7 +631,7 @@ export default class extends Phaser.State {
       }
 
       for (let x = 1; x <= 112; x++) {
-        console.log('try ' + x)
+        // console.log('try ' + x)
         // that['block_' + i].inputEnabled = true
       }
 

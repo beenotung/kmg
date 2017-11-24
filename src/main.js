@@ -1,7 +1,7 @@
 import 'pixi'
 import 'p2'
 import Phaser from 'phaser'
-import core from 'kmg-core'
+const core = require('kmg-core')
 
 import BootState from './states/Boot'
 import SplashState from './states/Splash'

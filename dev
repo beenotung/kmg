@@ -1,5 +1,5 @@
 #!/bin/bash
 hash yarn 2>/dev/null || npm i -g yarn
 set -e
-yarn
+./install-lib
 npm run dev
