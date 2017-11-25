@@ -44,13 +44,13 @@ var core = require('../kmg-ionic/lib/model/core');
     - card
     - position
     - appear / remove
-7. [ ] add company type audit
+7. [x] add company type audit
     - waiting Edie
     - cancelled by Edie
 8. [x] add method at game to end turn
 9. [x] event for player can move
     - content is movable grid
-10. [ ] make sure when init card, don't put multiple card on same grid
+10. [x] make sure when init card, don't put multiple card on same grid
 11. [x] fix grid type, now is empty when a new card is placed (in the event)
 12. [ ] fix bug: risk & profit card change status
 13. [ ] check if not meet target cannot move into investment grid
