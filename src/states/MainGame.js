@@ -625,7 +625,7 @@ export default class extends Phaser.State {
 
     for (let i = 0; i < 4; i++) {
       that.game.global.event.push(window.game.global.game.players[i].current.changeSubject.subscribe(x => {
-        const id = (i + 1)
+        const id = i
         playerChangeSubjectEvent(x, id)
       }, e => {}, f => {}))
     }
