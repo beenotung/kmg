@@ -620,7 +620,8 @@ export default class extends Phaser.State {
       console.log('playerChangeSubjectEvent')
       console.log(x)
       console.log(id)
-      that['player_' + (getPlayerById(oid)) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
+      console.log(oid)      
+      that['player_' + (playerIdtoThisId(oid)) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
     }
 
     that.game.global.event.push(that.game.global.game.players[0].current.changeSubject.subscribe(x => {
