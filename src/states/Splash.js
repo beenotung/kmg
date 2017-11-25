@@ -118,8 +118,13 @@ export default class extends Phaser.State {
     this.load.image('open_card_close', './assets/images/open_card_close.png')
     this.load.image('map_profile_question', './assets/images/map_profile_question.png')
     this.load.image('player_turn_mask', './assets/images/player_turn_mask.png')
+    this.load.image('investment center', './assets/images/investment center.png')    
+    this.load.image('NextTurn', './assets/images/NextTurn.png')        
     this.load.audio('bgMusic', './assets/sounds/state1_bgm.mp3')
     this.load.audio('menuMusic', './assets/sounds/mega_super_arcade_cup.mp3')
+    this.load.audio('Closer - Alex Arcoleo Martin Felix Kaczmarski', './assets/sounds/Closer - Alex Arcoleo Martin Felix Kaczmarski.mp3') 
+    this.load.audio('220212_4100837-lq', './assets/sounds/220212_4100837-lq.mp3')    
+    
   }
 
   create () {

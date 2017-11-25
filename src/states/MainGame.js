@@ -16,6 +16,9 @@ export default class extends Phaser.State {
     this.add.tileSprite(0, 0, 1024, 768, 'background-map')
     this.add.tileSprite(0, 0, 1024, 768, 'transparent-white-home')
 
+    this.game.global.bgm = this.add.audio('Closer - Alex Arcoleo Martin Felix Kaczmarski')
+    this.game.global.bgm.loopFull()
+
     let playerTurnMaskLocation = {
       '1': {'x': 4, 'y': 8},
       '2': {'x': 929, 'y': 9},
@@ -230,6 +233,8 @@ export default class extends Phaser.State {
       that['block_' + i].visible = false
     }
 
+    that.add.sprite(464, 268, 'investment center')    
+
     function blockClickEvent (i) {
       console.log('click block' + i + '!')
       moveChessToBlock(currentPlayer, i)
@@ -278,6 +283,8 @@ export default class extends Phaser.State {
     }
 
     function moveChessToBlock (playerNo, toBlock) {
+      that.block_click_sound = that.add.audio('220212_4100837-lq')    
+      that.block_click_sound.play()  
       chessMove(playerNo, toBlock)
       console.log(getPlayerById(that.game.global.players[playerNo - 1].id))
       console.log(window.game.global.game.gameMap.grids.get(toBlock))
@@ -500,7 +507,7 @@ export default class extends Phaser.State {
     }
 
     function getRiskCard () {
-      return that.game.global.game.currentBackpackCardList.filter(x => (x.type === 'risk' || x.type === 'transient_profit'))
+      return that.game.global.game.currentBackpackCardList.filter(x => (x.type === 'risk' || x.type === ' '))
     }
 
     function redrawCardListNextPage () {
@@ -557,6 +564,7 @@ export default class extends Phaser.State {
       that.open_card_use_btn.visible = false
       openCard = null
       enableMainControl()
+      redrawCardList()
     }
     let openCard = null
     function openCardOpenEvent (card) {
@@ -566,7 +574,7 @@ export default class extends Phaser.State {
       that.open_card_mask.visible = true
       that.open_card_close.visible = true
       that.open_card.visible = true
-      if (openCard.type === that.game.global.game.currentPlayer.current.stage) {
+      if (openCard.type === that.game.global.game.currentPlayer.current.stage || openCard.type === 'portable_profit') {
         that.open_card_use_btn.visible = true
       }
     }
@@ -605,8 +613,6 @@ export default class extends Phaser.State {
       that.endTurnBtn.inputEnabled = true
     }
 
-    openCardCloseEvent()
-
     that.game.global.event = []
 
     function playerRoundSubjectEvent (x, id) {
@@ -635,8 +641,46 @@ export default class extends Phaser.State {
     that.game.global.event.push(that.game.global.game.gameMap.cardEventSubject.subscribe(x => {
       cardEventSubjectEvent(x)
     }, e => {}, o => {}))
-    that.game.global.game.start()
+    that.next_turn_mask = that.add.sprite(154, 199, 'NextTurn')
+    that.next_turn_mask.alpha = 0          
+    that.next_turn_mask_icon = that.add.sprite(625, 265, 'media')   
+    that.next_turn_mask_icon.scale.setTo(0.6, 0.6)
+    that.next_turn_mask_icon.alpha = 0          
+    
+    function showNextTurnAnimate () {
+      that.next_turn_mask.alpha = 0      
+      that.next_turn_mask_icon.alpha = 0    
+      that.next_turn_mask_icon.loadTexture(that.convertCompanyTypeToPicImage(that.game.global.game.currentPlayer.companyType))        
+      that.game.add.tween(that.next_turn_mask).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false).onComplete.add(function () {
+        that.game.time.events.add(Phaser.Timer.SECOND * 1, function () {
+          that.game.add.tween(that.next_turn_mask).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false)          
+        }, that)
+      })
 
+      that.game.add.tween(that.next_turn_mask_icon).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false).onComplete.add(function () {
+        that.game.time.events.add(Phaser.Timer.SECOND * 1, function () {
+          that.game.add.tween(that.next_turn_mask_icon).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false)          
+        }, that)
+      })
+    }
+
+    const TimeValue = { font: '50px Arial', fill: '#000', wordWrap: true, align: 'right' }
+    that.time_valueText = that.game.add.text(32, 686, '0', TimeValue)
+    that.timer = that.game.time.create(false)
+    that.time_value = 60
+    that.timer.loop(1000, function () {
+      that.time_value = that.time_value - 1
+      if (that.time_value < 0) {
+        endTurnEvent()
+      } else {
+        that.time_valueText.setText(that.time_value)
+      }
+    }, this)
+    that.game.global.game.start()
+    that.timer.start()
+    showNextTurnAnimate()
+    openCardCloseEvent()
+    
     that.game.global.players = {
       0: {'companyType': null, 'id': null},
       1: {'companyType': null, 'id': null},
@@ -694,6 +738,8 @@ export default class extends Phaser.State {
       })
       changePlayer(playerIdtoThisId(that.game.global.game.currentPlayer.id))
       redrawCardList()
+      showNextTurnAnimate()
+      that.time_value = 60      
     }
 
     setCurrentRound()
