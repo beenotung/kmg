@@ -714,8 +714,8 @@ export default class extends Phaser.State {
     that.detail_close.visible = false
     that.detail_mask.visible = false
     
-    const fgridValueStyle = { font: '40px Arial', fill: '#FFF', wordWrap: true, align: 'right' }
-    const fgridValueStyle2 = { font: '20px Arial', fill: '#FFF', wordWrap: true, align: 'right' }
+    const fgridValueStyle = { font: '40px Arial', fill: '#FFF', wordWrap: true, align: 'left' }
+    const fgridValueStyle2 = { font: '20px Arial', fill: '#FFF', wordWrap: false, align: 'left' }
     
     that.player_4_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
     that.player_4_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
@@ -753,7 +753,7 @@ export default class extends Phaser.State {
     that.player_1_e_stateValue.visible = false
     that.player_1_c_stateValue.visible = false
 
-    that.target = that.game.add.text(196, 633, 'Target:', fgridValueStyle2)
+    that.target = that.game.add.text(196, 633, 'Target:----------------------------------------------------------------------', fgridValueStyle2)
     that.target.visible = false
     
 
