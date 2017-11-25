@@ -38,6 +38,7 @@ class Game extends Phaser.Game {
 window.game = new Game()
 window.game.global = {
   api: core,
+  hasSound: true,
   player: [
     {
       'pic': -1,

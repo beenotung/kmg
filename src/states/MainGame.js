@@ -17,8 +17,10 @@ export default class extends Phaser.State {
     this.add.tileSprite(0, 0, 1024, 768, 'background-map')
     this.add.tileSprite(0, 0, 1024, 768, 'transparent-white-home')
 
-    this.game.global.bgm = this.add.audio('Closer - Alex Arcoleo Martin Felix Kaczmarski')
-    this.game.global.bgm.loopFull()
+    if (that.game.global.hasSound == true) {
+      that.game.global.bgm = that.add.audio('Closer - Alex Arcoleo Martin Felix Kaczmarski')      
+      that.game.global.bgm.loopFull()      
+    }
 
     let playerTurnMaskLocation = {
       '1': {'x': 4, 'y': 8},
@@ -290,8 +292,11 @@ export default class extends Phaser.State {
     }
 
     function moveChessToBlock (playerNo, toBlock) {
-      that.block_click_sound = that.add.audio('220212_4100837-lq')    
-      that.block_click_sound.play()  
+      if (that.game.global.hasSound == true) {
+        that.block_click_sound = that.add.audio('220212_4100837-lq')    
+        that.block_click_sound.play()  
+      }        
+      
       chessMove(playerNo, toBlock)
       console.log(getPlayerById(that.game.global.players[playerNo - 1].id))
       console.log(window.game.global.game.gameMap.grids.get(toBlock))
