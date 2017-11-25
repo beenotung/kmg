@@ -68,7 +68,9 @@ export class Player {
       throw new Error(`the card do not match player current stage, player: ${this.current.stage}, card: ${card.type}`);
     }
     card.useOn(this.current.matrix);
-    this.current.moveToNextStage();
+    if (card.type === this.current.stage) {
+      this.current.moveToNextStage();
+    }
     this.backpack.remove(card);
   }
 
