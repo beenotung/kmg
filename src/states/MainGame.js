@@ -57,9 +57,28 @@ export default class extends Phaser.State {
     that.player_4_profile = this.add.sprite(938, 524, 'map_profile_question')
     that.endTurnBtn = that.add.sprite(890, 620, 'end_turn_button')
     that.player_1_status = that.add.sprite(14, 108, 'status01')
+    that.player_1_status.inputEnabled = true
+    that.player_1_status.events.onInputDown.add(function () {
+      openDetail(1)
+    }, that)
     that.player_2_status = that.add.sprite(938, 108, 'status02')
     that.player_3_status = that.add.sprite(14, 440, 'status03')
     that.player_4_status = that.add.sprite(938, 440, 'status04')
+
+    that.player_2_status.inputEnabled = true
+    that.player_2_status.events.onInputDown.add(function () {
+      openDetail(2)
+    }, that)
+
+    that.player_3_status.inputEnabled = true
+    that.player_3_status.events.onInputDown.add(function () {
+      openDetail(3)
+    }, that)
+
+    that.player_4_status.inputEnabled = true
+    that.player_4_status.events.onInputDown.add(function () {
+      openDetail(4)
+    }, that)
     this.add.sprite(96, 18, 'board_map')
     // this.block_central = this.add.sprite(371, 237, "block_central");
     this.add.sprite(162, 636, 'cardsection-map')
@@ -315,26 +334,7 @@ export default class extends Phaser.State {
       return that.game.global.game.players.filter(x => x.id === id)[0]
     }
 
-    const fgridValueStyle = { font: '12px Arial', fill: '#000', wordWrap: true, align: 'right' }
-    that.player_4_p_stateValue = that.game.add.text(952, 462, '0', fgridValueStyle)
-    that.player_4_y_stateValue = that.game.add.text(979, 462, '0', fgridValueStyle)
-    that.player_4_p_stateValue = that.game.add.text(952, 489, '0', fgridValueStyle)
-    that.player_4_b_stateValue = that.game.add.text(979, 489, '0', fgridValueStyle)
-
-    that.player_3_p_stateValue = that.game.add.text(33, 462, '0', fgridValueStyle)
-    that.player_3_y_stateValue = that.game.add.text(60, 462, '0', fgridValueStyle)
-    that.player_3_p_stateValue = that.game.add.text(33, 489, '0', fgridValueStyle)
-    that.player_3_b_stateValue = that.game.add.text(60, 489, '0', fgridValueStyle)
-
-    that.player_1_p_stateValue = that.game.add.text(33, 132, '0', fgridValueStyle)
-    that.player_1_y_stateValue = that.game.add.text(60, 132, '0', fgridValueStyle)
-    that.player_1_p_stateValue = that.game.add.text(33, 163, '0', fgridValueStyle)
-    that.player_1_b_stateValue = that.game.add.text(60, 163, '0', fgridValueStyle)
-
-    that.player_2_p_stateValue = that.game.add.text(950, 132, '0', fgridValueStyle)
-    that.player_2_y_stateValue = that.game.add.text(980, 132, '0', fgridValueStyle)
-    that.player_2_p_stateValue = that.game.add.text(950, 163, '0', fgridValueStyle)
-    that.player_2_b_stateValue = that.game.add.text(980, 163, '0', fgridValueStyle)
+    
 
     function updateStateValue (p, c, value) {
       that['player_' + p + '_' + c + '_stateValue'].setText(value.toString())
@@ -701,6 +701,97 @@ export default class extends Phaser.State {
         that.time_valueText.setText(that.time_value)
       }
     }, this)
+
+    that.detail_mask = that.add.sprite(160, 80, 'detail screen')
+    that.detail_close = that.add.sprite(806, 88, 'open_card_close') 
+    that.detail_cicle = that.add.sprite(310, 112, 'status01b') 
+    that.detail_cicle.scale.setTo(0.7, 0.7)   
+    that.detail_close.inputEnabled = true
+    that.detail_close.events.onInputDown.add(function () {
+      closeDetail()
+    }, that)
+    that.detail_cicle.visible = false
+    that.detail_close.visible = false
+    that.detail_mask.visible = false
+    
+    const fgridValueStyle = { font: '40px Arial', fill: '#FFF', wordWrap: true, align: 'right' }
+
+    that.player_4_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
+    that.player_4_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
+    that.player_4_e_stateValue = that.game.add.text(486, 568, '0', fgridValueStyle)
+    that.player_4_c_stateValue = that.game.add.text(694, 570, '0', fgridValueStyle)
+    that.player_4_t_stateValue.visible = false
+    that.player_4_m_stateValue.visible = false
+    that.player_4_e_stateValue.visible = false
+    that.player_4_c_stateValue.visible = false
+    
+    that.player_3_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
+    that.player_3_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
+    that.player_3_e_stateValue = that.game.add.text(486, 568, '0', fgridValueStyle)
+    that.player_3_c_stateValue = that.game.add.text(694, 570, '0', fgridValueStyle)
+    that.player_3_t_stateValue.visible = false
+    that.player_3_m_stateValue.visible = false
+    that.player_3_e_stateValue.visible = false
+    that.player_3_c_stateValue.visible = false
+
+    that.player_2_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
+    that.player_2_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
+    that.player_2_e_stateValue = that.game.add.text(486, 568, '0', fgridValueStyle)
+    that.player_2_c_stateValue = that.game.add.text(694, 570, '0', fgridValueStyle)
+    that.player_2_t_stateValue.visible = false
+    that.player_2_m_stateValue.visible = false
+    that.player_2_e_stateValue.visible = false
+    that.player_2_c_stateValue.visible = false
+  
+    that.player_1_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
+    that.player_1_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
+    that.player_1_e_stateValue = that.game.add.text(486, 568, '0', fgridValueStyle)
+    that.player_1_c_stateValue = that.game.add.text(694, 570, '0', fgridValueStyle)
+    that.player_1_t_stateValue.visible = false
+    that.player_1_m_stateValue.visible = false
+    that.player_1_e_stateValue.visible = false
+    that.player_1_c_stateValue.visible = false
+
+    function openDetail(playerId) {
+      that.detail_cicle.visible = true
+      that.detail_close.visible = true
+      that.detail_mask.visible = true
+      that['player_'+playerId+'_t_stateValue'].visible = true
+      that['player_'+playerId+'_m_stateValue'].visible = true
+      that['player_'+playerId+'_e_stateValue'].visible = true
+      that['player_'+playerId+'_c_stateValue'].visible = true
+      const player =getPlayerById(that.game.global.players[playerId-1].id)
+      that.detail_cicle.loadTexture(that.getStatusImgId(player.current.stage)+'b', 0)
+      that['player_'+playerId+'_t_stateValue'].setText(player.current.matrix.tacitKnowledge)
+      that['player_'+playerId+'_m_stateValue'].setText(player.current.matrix.marketShare)
+      that['player_'+playerId+'_e_stateValue'].setText(player.current.matrix.explicitKnowledge)
+      that['player_'+playerId+'_c_stateValue'].setText(player.current.matrix.capital)
+      disableMainControl()      
+    }
+
+    function closeDetail() {
+      that.detail_cicle.visible = false
+      that.detail_close.visible = false
+      that.detail_mask.visible = false
+      that.player_4_t_stateValue.visible = false
+      that.player_4_m_stateValue.visible = false
+      that.player_4_e_stateValue.visible = false
+      that.player_4_c_stateValue.visible = false
+      that.player_3_t_stateValue.visible = false
+      that.player_3_m_stateValue.visible = false
+      that.player_3_e_stateValue.visible = false
+      that.player_3_c_stateValue.visible = false
+      that.player_2_t_stateValue.visible = false
+      that.player_2_m_stateValue.visible = false
+      that.player_2_e_stateValue.visible = false
+      that.player_2_c_stateValue.visible = false
+      that.player_1_t_stateValue.visible = false
+      that.player_1_m_stateValue.visible = false
+      that.player_1_e_stateValue.visible = false
+      that.player_1_c_stateValue.visible = false
+      enableMainControl()
+    }
+  
     that.game.global.game.start()
     that.timer.start()
     showNextTurnAnimate()
@@ -766,7 +857,7 @@ export default class extends Phaser.State {
       showNextTurnAnimate()
       that.time_value = 60      
     }
-
+    closeDetail()
     setCurrentRound()
   }
 
