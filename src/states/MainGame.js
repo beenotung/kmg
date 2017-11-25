@@ -715,7 +715,8 @@ export default class extends Phaser.State {
     that.detail_mask.visible = false
     
     const fgridValueStyle = { font: '40px Arial', fill: '#FFF', wordWrap: true, align: 'right' }
-
+    const fgridValueStyle2 = { font: '20px Arial', fill: '#FFF', wordWrap: true, align: 'right' }
+    
     that.player_4_t_stateValue = that.game.add.text(466, 516, '0', fgridValueStyle)
     that.player_4_m_stateValue = that.game.add.text(758, 518, '0', fgridValueStyle)
     that.player_4_e_stateValue = that.game.add.text(486, 568, '0', fgridValueStyle)
@@ -752,10 +753,15 @@ export default class extends Phaser.State {
     that.player_1_e_stateValue.visible = false
     that.player_1_c_stateValue.visible = false
 
+    that.target = that.game.add.text(196, 633, 'Target:', fgridValueStyle2)
+    that.target.visible = false
+    
+
     function openDetail(playerId) {
       that.detail_cicle.visible = true
       that.detail_close.visible = true
       that.detail_mask.visible = true
+      that.target.visible = true      
       that['player_'+playerId+'_t_stateValue'].visible = true
       that['player_'+playerId+'_m_stateValue'].visible = true
       that['player_'+playerId+'_e_stateValue'].visible = true
@@ -766,6 +772,7 @@ export default class extends Phaser.State {
       that['player_'+playerId+'_m_stateValue'].setText(player.current.matrix.marketShare)
       that['player_'+playerId+'_e_stateValue'].setText(player.current.matrix.explicitKnowledge)
       that['player_'+playerId+'_c_stateValue'].setText(player.current.matrix.capital)
+      that.target.setText("Target: Tacit:"+player.target.tacitKnowledge+" Explicit:"+player.target.explicitKnowledge+" Market:"+player.target.marketShare+" Capital:"+player.target.capital)      
       disableMainControl()      
     }
 
@@ -789,6 +796,7 @@ export default class extends Phaser.State {
       that.player_1_m_stateValue.visible = false
       that.player_1_e_stateValue.visible = false
       that.player_1_c_stateValue.visible = false
+      that.target.visible = false      
       enableMainControl()
     }
   
