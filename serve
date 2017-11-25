@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+./gu
+cd kmg-ionic
+./serve
