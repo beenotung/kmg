@@ -7,6 +7,7 @@ import {InitialMatrixMap} from "./company.data";
 import {CycleType, Matrix, MatrixState} from "./shared.type";
 import {Subject} from "rxjs/Subject";
 import {TargetRewards, Targets} from "./player.data";
+import {InvestmentGridID} from "./game-map.data";
 
 /**
  * Angel Investment -> 0
@@ -39,13 +40,7 @@ export class Player {
     this.current = new MatrixState(Random.nextEnum(ActionType) as any as CycleType, initialMatrix);
     this.current.changeSubject.subscribe(
       x => {
-        const m = this.current.matrix;
-        const t = this.target;
-        const passed = m.tacitKnowledge >= t.tacitKnowledge
-          && m.explicitKnowledge >= t.explicitKnowledge
-          && m.marketShare >= t.marketShare
-          && m.capital >= t.capital;
-        if (passed) {
+        if (this.hasMetTarget() && this.grid.id == InvestmentGridID) {
           this.current.matrix.capital += TargetRewards[this.round];
           this.round++;
           this.roundSubject.next(this.round as PlayerRound);
@@ -54,6 +49,15 @@ export class Player {
       e => this.roundSubject.error(e),
       () => this.roundSubject.complete()
     );
+  }
+
+  hasMetTarget(): boolean {
+    const m = this.current.matrix;
+    const t = this.target;
+    return m.tacitKnowledge >= t.tacitKnowledge
+      && m.explicitKnowledge >= t.explicitKnowledge
+      && m.marketShare >= t.marketShare
+      && m.capital >= t.capital;
   }
 
   get target(): Matrix {
@@ -87,6 +91,9 @@ export class Player {
   }
 
   getMovableGrids(): MapGrid[] {
-    return this.grid.connectedList.array.filter((x: MapGrid) => x.players.array.length == 0);
+    return this.grid.connectedList.array
+      .filter((x: MapGrid) => x.players.array.length == 0)
+      .filter((x: MapGrid) => x.id !== InvestmentGridID || this.hasMetTarget())
+      ;
   }
 }

@@ -141,3 +141,4 @@ export function isConnected(a: number, b: number) {
 }
 
 export const CornerIds = [1, 11, 101, 112];
+export const InvestmentGridID = 49;
