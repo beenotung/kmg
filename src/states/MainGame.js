@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { forEach } from 'kmg-core/node_modules/@beenotung/tslib';
 
 export default class extends Phaser.State {
   init () {
@@ -67,6 +68,11 @@ export default class extends Phaser.State {
     that.bag_left.inputEnabled = true
     that.bag_right.inputEnabled = true
     this.homebtn.events.onInputDown.add(function () {
+      that.game.global.bgm.stop()
+      that.timer.stop()
+      that.game.global.event.forEach(x=>{
+        x.unsubscribe()
+      })
       this.state.start('Menu')
     }, this)
 
