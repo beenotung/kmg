@@ -615,14 +615,16 @@ export default class extends Phaser.State {
 
     that.game.global.event = []
 
-    function playerRoundSubjectEvent (x, id) {
+    function playerChangeSubjectEvent (x, id) {
+      console.log('playerChangeSubjectEvent')
       console.log(x)
+      that['player_' + (id+1) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
     }
 
     for (let i = 0; i < 4; i++) {
-      that.game.global.event.push(window.game.global.game.players[i].roundSubject.subscribe(x => {
+      that.game.global.event.push(window.game.global.game.players[i].current.changeSubject.subscribe(x => {
         const id = (i + 1)
-        playerRoundSubjectEvent(x, id)
+        playerChangeSubjectEvent(x, id)
       }, e => {}, f => {}))
     }
 
@@ -750,14 +752,14 @@ export default class extends Phaser.State {
       case 'socialization':
         return 'status01'
 
-      case 'internalization':
-        return 'status02'
-
       case 'externalization':
-        return 'status03'
+        return 'status02'
 
       case 'combination':
         return 'status04'
+
+      case 'internalization':
+        return 'status03'
     }
   }
 
