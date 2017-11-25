@@ -88,6 +88,7 @@ export default class extends Phaser.State {
     function endTurnEvent () {
       console.log('end turn!')
       disableAllBlock()
+      openCardCloseEvent()
       that.game.global.game.endTurn()
       setCurrentRound()
     }
@@ -618,6 +619,7 @@ export default class extends Phaser.State {
     function playerChangeSubjectEvent (x, id) {
       console.log('playerChangeSubjectEvent')
       console.log(x)
+      console.log(id)
       that['player_' + (id+1) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
     }
 
