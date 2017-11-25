@@ -620,15 +620,24 @@ export default class extends Phaser.State {
       console.log('playerChangeSubjectEvent')
       console.log(x)
       console.log(id)
-      that['player_' + (id+1) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
+      that['player_' + (id) + '_status'].loadTexture(that.getStatusImgId(x.stage), 0)
     }
 
-    for (let i = 0; i < 4; i++) {
-      that.game.global.event.push(window.game.global.game.players[i].current.changeSubject.subscribe(x => {
-        const id = i
-        playerChangeSubjectEvent(x, id)
-      }, e => {}, f => {}))
-    }
+    that.game.global.event.push(window.game.global.game.players[0].current.changeSubject.subscribe(x => {
+      playerChangeSubjectEvent(x, 1)
+    }, e => {}, f => {}))
+
+    that.game.global.event.push(window.game.global.game.players[1].current.changeSubject.subscribe(x => {
+      playerChangeSubjectEvent(x, 2)
+    }, e => {}, f => {}))
+
+    that.game.global.event.push(window.game.global.game.players[2].current.changeSubject.subscribe(x => {
+      playerChangeSubjectEvent(x, 3)
+    }, e => {}, f => {}))
+
+    that.game.global.event.push(window.game.global.game.players[3].current.changeSubject.subscribe(x => {
+      playerChangeSubjectEvent(x, 4)
+    }, e => {}, f => {}))
 
     function cardEventSubjectEvent (x) {
       // console.log(x)
