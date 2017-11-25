@@ -52,6 +52,8 @@ var core = require('../kmg-ionic/lib/model/core');
     - content is movable grid
 10. [ ] make sure when init card, don't put multiple card on same grid
 11. [x] fix grid type, now is empty when a new card is placed (in the event)
+12. [ ] fix bug: risk & profit card change status
+13. [ ] check if not meet target cannot move into investment grid
 
 ## Discussion
 1. what is the target of each round?
