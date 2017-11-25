@@ -507,7 +507,7 @@ export default class extends Phaser.State {
     }
 
     function getRiskCard () {
-      return that.game.global.game.currentBackpackCardList.filter(x => (x.type === 'risk' || x.type === ' '))
+      return that.game.global.game.currentBackpackCardList.filter(x => (x.type === 'risk' || x.type === 'transient_profit'))
     }
 
     function redrawCardListNextPage () {
