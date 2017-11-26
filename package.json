@@ -1,9 +1,38 @@
 {
   "name": "kmg-ionic",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "version": "0.3.2",
+  "description": "Knowledge Management Game - Ionic module",
   "private": true,
+  "author": {
+    "name": "Beeno Tung",
+    "email": "aabbcc1241@yahoo.com.hk",
+    "url": "https://www.facebook.com/messages/t/beenotung"
+  },
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/beenotung/ionic-horizon-seed#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beenotung/ionic-horizon-seed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beenotung/ionic-horizon-seed/issues"
+  },
+  "main": "lib/model/core/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "keywords": [
+    "angular",
+    "angular4",
+    "aot",
+    "aot-compatible",
+    "aot-compilation",
+    "ionic",
+    "ng",
+    "typescript",
+    "typing",
+    "typestub",
+    "common"
+  ],
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -37,6 +66,5 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.1.2",
     "typescript": "2.4.2"
-  },
-  "description": "An Ionic project"
+  }
 }
