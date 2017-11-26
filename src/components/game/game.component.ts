@@ -44,4 +44,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.urlIdx = (this.urlIdx + 1) % urls.length;
     this.iframe.src = urls[this.urlIdx];
   }
+
+  hack() {
+    this.iframe.contentWindow.postMessage("hack", this.iframe.src);
+  }
 }

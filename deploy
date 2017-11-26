@@ -6,8 +6,10 @@ cd ../kmg-phaser
 cd ../kmg-ionic
 
 ./auto-init
+rm -rf www
 ionic build
 cp ../kmg-phaser/index.html www/phaser.html
 cp -r ../kmg-phaser/dist www/
 
-surge www kmg.surge.sh
+mv www dist
+surge dist kmg.surge.sh
