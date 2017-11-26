@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+./auto-init
+
+./ionic cordova platform add browser || ./ionic cordova prepare
+
+#./build-web && ./publish-web && echo 'done dev-web.'
+
+./build-web
+cd ./platforms/browser/www
+echo "kmg.surge.sh" > CNAME
+echo "*" > CORS
+npm-run surge .
+cd ../../../
+
+./publish-web
+
+echo 'done dev-web.'

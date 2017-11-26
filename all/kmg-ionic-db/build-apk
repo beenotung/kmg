@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+keystore="STUB-mobileapps.keystore"
+
+if [ ! -f "apk/$keystore" ]; then
+  echo "keystore file 'apk/$keystore' is not provided";
+  exit 1;
+fi
+
+echo -n "remember to increase the version number... [ok] :"; read line
+
+./auto-init
+
+if [ ! -d ./resources/android/ ] || [ ! -d ./res/ ]; then
+  cp ./resources/raw/android/*.png ./resources/
+  ./resource android
+fi
+
+rm -f platforms/android/build/outputs/apk/*.apk
+./cordova build --release android $@
+cp -f platforms/android/build/outputs/apk/*.apk apk/
+cd apk
+
+rm -f TDTMP-release-signed.apk
+./sign.sh
+./align.sh

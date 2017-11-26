@@ -1,0 +1,49 @@
+@import "variables";
+
+/* text color in ion-header > ion-navbar */
+
+.toolbar-md-primary .bar-button-clear-md,
+.toolbar-md-primary .bar-button-default-md,
+.toolbar-md-primary .bar-button-outline-md,
+.toolbar-md-primary .toolbar-title-md {
+  color: black;
+}
+
+.toolbar-ios-primary .toolbar-title-ios,
+.toolbar-ios-primary .bar-button-clear-ios,
+.toolbar-ios-primary .bar-button-default-ios {
+  color: black;
+}
+
+/* themed background color */
+[bg-color=dark] {
+  background-color: map_get($colors, dark);
+  color: white;
+}
+
+[bg-color=primary] {
+  background-color: map_get($colors, primary);
+  color: black;
+}
+
+[bg-color=white] {
+  background-color: white;
+  color: black;
+}
+
+[bg-color=alpha], [bg-color=transparent] {
+  background: transparent;
+}
+
+/* remove ion-header border */
+//.header-ios .toolbar-ios:last-child .toolbar-background-ios {
+//  border-width: 0 0 0;
+//}
+
+///* remove ion-header shadow */
+//.header-md::after,
+//.tabs-md[tabsPlacement="top"] > .tabbar::after,
+//.footer-md::before,
+//.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+//  background-image: none;
+//}

@@ -1,0 +1,9 @@
+#!/bin/bash
+## for minimum size of node_modules
+node ls-dep.js \
+  | grep -v ionic \
+  | grep -v angular \
+  | grep -v cordova \
+  | grep -v ngx \
+  | grep -v sw-toolbox \
+  | xargs npm i

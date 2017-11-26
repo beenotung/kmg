@@ -1,6 +1,3 @@
 [submodule "kmg-horizon"]
 	path = kmg-horizon
 	url = https://bitbucket.org/polyu-kmg/kmg-horizon.git
-[submodule "kmg-ionic-db"]
-	path = kmg-ionic-db
-	url = https://bitbucket.org/polyu-kmg/kmg-ionic.git
