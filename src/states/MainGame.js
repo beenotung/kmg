@@ -800,6 +800,26 @@ export default class extends Phaser.State {
       enableMainControl()
     }
   
+    that.winner_mask = that.add.sprite(0, 223, 'Winner') 
+    that.winner_icon = that.add.sprite(552, 259, 'IT') 
+    that.winner_mask.visible = false
+    that.winner_icon.visible = false
+    
+
+    function winner(x) {
+      that.winner_mask.visible = true
+      that.winner_icon.loadTexture(convertCompanyTypeToPicImage(x.companyType))
+      that.winner_icon.visible = true      
+      that.timer.stop()
+      disableAllBlock()
+    }
+
+    that.game.global.event.push(that.game.global.game.gameOverSubject.subscribe(x => {
+      winner(x)
+    }, e => {}, f => {}))
+
+    // that.winner_icon.scale.setTo, 0.8)
+    
     that.game.global.game.start()
     that.timer.start()
     showNextTurnAnimate()
