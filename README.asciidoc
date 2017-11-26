@@ -7,3 +7,27 @@ https://polyu-ikm.slack.com/files/U73P9U2BY/F7G1745L7/new_game_rule.docx[Latest 
 == TODO
 - add official guide / requirement
 - add schedule
+
+== Submodules
+
+=== kmg-core
+The core logic of the game.
+
+=== kmg-phaser
+The game UI of the game.
+Formly named kmg-game.
+
+=== kmg-ionic
+The control UI of the game.
+Lite rewrite version.
+
+=== kmg-ionic-db
+The control UI of the game.
+The full version with database, user tracking, e.t.c.
+
+(On Hold in current stage due to limited time)
+
+=== kmg-horizon
+The database (server) of the game.
+
+(On Hold in current stage due to limited time)
