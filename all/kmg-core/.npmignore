@@ -1,0 +1,83 @@
+## Source code control
+.git
+
+## Dev scripts
+auto-init
+auto-update
+build
+build-apk
+build-web
+bump
+bump-android
+clean
+cordova
+dev
+dist:move
+dist:unmove
+gc
+gs
+gu
+init
+install
+install-dev
+ionic
+lint
+publish
+resource
+test
+update
+upload
+version
+
+## Source config
+.editorconfig
+
+## Config
+
+## Typescript
+src/
+tsconfig.json
+tsconfig-ng.json
+tsconfig-ionic.json
+tslint.json
+
+## Ionic
+.sass-cache/
+.tmp/
+.versions/
+hooks/
+platforms/
+plugins/
+www/
+
+# Node
+node_modules
+npm-debug.log
+
+# Yarn
+yarn-error.log
+
+# JetBrains
+.idea/
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Temporary files
+coverage/
+demo/
+docs
+tmp
+
+# Library files
+src/
+
+# Build files
+dist.list
