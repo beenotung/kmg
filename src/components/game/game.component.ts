@@ -18,10 +18,16 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const iframe = this.iframe = this.gameRoot.nativeElement as HTMLIFrameElement;
-    this.iframe.onerror = e => {
+    iframe.onerror = e => {
       console.error("iframe error:", e);
-      this.urlIdx = (this.urlIdx + 1) % urls.length;
-      iframe.src = urls[this.urlIdx];
+      this.urlIdx++;
+      /* only reconnect when using localhost */
+      if (this.urlIdx < urls.length) {
+        iframe.src = urls[this.urlIdx];
+      }
+    };
+    iframe.onloadeddata = e => {
+      console.log("iframe loaded data", e);
     };
     iframe.src = urls[this.urlIdx];
   }
@@ -30,6 +36,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   reloadGame() {
-    this.iframe.src += "";
+    this.urlIdx = 0;
+    this.iframe.src = urls[this.urlIdx];
   }
 }
