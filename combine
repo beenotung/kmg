@@ -7,7 +7,7 @@ function step1 {
   cd "$1"
   git checkout -b "$1"
   mkdir ".$1"
-  git mv -v * ".$1"
+  ls -a | grep -v '^\.$' | grep -v '^\.\.$' | xargs -I {} git mv {} ".$1"
   git mv -v ".$1" "$1"
   git commit -m 'move for gource'
   cd ..
