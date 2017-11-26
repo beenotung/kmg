@@ -8,6 +8,17 @@ import {Targets} from "./player.data";
 import {GameMap} from "./game-map.type";
 import {zipArray} from "../utils-lib";
 
+export let hack = {
+  jetMe: () => {
+    console.log("hack is not ready");
+  }
+};
+window.addEventListener("message", (ev) => {
+  if (ev.data == "hack") {
+    hack.jetMe();
+  }
+}, false);
+
 /**
  * new instance for each game-play
  * */
@@ -71,6 +82,13 @@ export class Game {
     zipArray(this.players, this.gameMap.getCorners())
       .forEach(([p, g]) => p.grid = g);
     this.currentPlayer = Random.element(this.players);
+    hack.jetMe = () => {
+      const m = this.currentPlayer.current.matrix;
+      m.tacitKnowledge *= 1.2;
+      m.explicitKnowledge *= 1.2;
+      m.marketShare *= 1.2;
+      m.capital *= 1.2;
+    };
     return this.currentPlayer;
   }
 
