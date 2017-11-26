@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/kmg-core.iml" filepath="$PROJECT_DIR$/.idea/kmg-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/kmg.iml" filepath="$PROJECT_DIR$/.idea/kmg.iml" />
     </modules>
   </component>

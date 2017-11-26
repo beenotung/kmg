@@ -1,3 +1,7 @@
 inspectionProfiles
 vcs.xml
+dbnavigator.xml
+encodings.xml
 workspace.xml
+inspectionProfiles/
+emacs.xml

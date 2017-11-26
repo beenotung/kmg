@@ -1,0 +1,67 @@
+{
+  "name": "kmg-core",
+  "version": "0.0.1",
+  "description": "Knowledge Management Game - core module",
+  "private": true,
+  "author": {
+    "name": "Beeno Tung",
+    "email": "aabbcc1241@yahoo.com.hk",
+    "url": "https://www.facebook.com/messages/t/beenotung"
+  },
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/beenotung/ionic-horizon-seed#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beenotung/ionic-horizon-seed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beenotung/ionic-horizon-seed/issues"
+  },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "angular",
+    "angular4",
+    "aot",
+    "aot-compatible",
+    "aot-compilation",
+    "ng",
+    "typescript",
+    "typing",
+    "typestub",
+    "common"
+  ],
+  "scripts": {
+    "prebuild": "rimraf lib || rm -rf lib",
+    "build": "tsc",
+    "lint": "tslint --project tsconfig.json -c tslint.json",
+    "lint:watch": "chokidar src/**/*.ts -c \"npm run lint\" --initial --verbose",
+    "fix": "tslint --fix -p .",
+    "test": "run-p build lint"
+  },
+  "dependencies": {
+    "@beenotung/tslib": "^8.7.0",
+    "isomorphic-fetch": "^2.2.1",
+    "rxjs": "^5.5.2"
+  },
+  "peerDependencies": {
+    "typestub-horizon-client": "^0.1.7"
+  },
+  "devDependencies": {
+    "@angular/compiler": "^2.3.1 || >=4.0.0-beta <5.0.0",
+    "@angular/core": "^2.3.1 || >=4.0.0-beta <5.0.0",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/node": "^8.0.53",
+    "chokidar": "^1.7.0",
+    "chokidar-cli": "^1.2.0",
+    "codelyzer": "^3.0.1",
+    "npm-run-all": "^4.1.2",
+    "rimraf": "2.6.1",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "typescript": "^2.3.4",
+    "typestub-horizon-client": "^0.1.8",
+    "zone.js": "^0.8.4"
+  }
+}
