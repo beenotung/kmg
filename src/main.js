@@ -9,6 +9,7 @@ import PolyScreen from './states/PolyuLogoScreen'
 import Menu from './states/Menu'
 import Select from './states/Select'
 import MainGame from './states/MainGame'
+import Team from './states/Team'
 import config from './config'
 
 const core = require('kmg-core')
@@ -29,6 +30,7 @@ class Game extends Phaser.Game {
     this.state.add('PolyScreen', PolyScreen, false)
     this.state.add('Menu', Menu, false)
     this.state.add('Select', Select, false)
+    this.state.add('Team', Team, false)    
     this.state.add('MainGame', MainGame, false)
     // this.state.start("PolyScreen")
     this.state.start('Boot')
