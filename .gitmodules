@@ -7,9 +7,6 @@
 [submodule "kmg-phaser"]
 	path = kmg-phaser
 	url = https://bitbucket.org/polyu-kmg/kmg-phaser
-[submodule "kmg-core"]
-	path = kmg-core
-	url = https://bitbucket.org/polyu-kmg/kmg-core
 [submodule "kmg-ionic-db"]
 	path = kmg-ionic-db
 	url = https://bitbucket.org/polyu-kmg/kmg-ionic.git
