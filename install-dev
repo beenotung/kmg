@@ -1,0 +1,8 @@
+#!/bin/bash
+
+hash yarn 2>/dev/null || npm i -g yarn
+yarn global add \
+  ionic cordova@6.0.0 \
+  npm-run \
+  npm-check
+echo 'install-dev done.'

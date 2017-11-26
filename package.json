@@ -22,7 +22,7 @@
   "typings": "./dist/index.d.ts",
   "keywords": [
     "angular",
-    "angular4",
+    "angular5",
     "aot",
     "aot-compatible",
     "aot-compilation",
