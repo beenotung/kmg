@@ -84,10 +84,11 @@ export class Game {
     this.currentPlayer = Random.element(this.players);
     hack.jetMe = () => {
       const m = this.currentPlayer.current.matrix;
-      m.tacitKnowledge *= 1.2;
-      m.explicitKnowledge *= 1.2;
-      m.marketShare *= 1.2;
-      m.capital *= 1.2;
+      const calc = x => Math.round(1 + x * 1.2);
+      m.tacitKnowledge = calc(m.tacitKnowledge);
+      m.explicitKnowledge = calc(m.explicitKnowledge);
+      m.marketShare = calc(m.marketShare);
+      m.capital = calc(m.capital);
     };
     return this.currentPlayer;
   }
