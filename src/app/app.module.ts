@@ -17,7 +17,9 @@ import {GamePage} from "../pages/game/game";
 import {GameComponent} from "../components/game/game.component";
 import {SettingsPage} from "../pages/settings/settings";
 import {LoginPage} from "../pages/login/login";
-import {HLineComponent} from "ioniclib";
+import {HLineComponent, LineModule} from "ioniclib";
+import {ComponentsModule} from "../components/components.module";
+import {LineMode} from "ioniclib/components";
 
 export function provideStorage() {
   return new Storage({
@@ -33,14 +35,14 @@ export function provideStorage() {
     HomePage,
     TabsPage,
     GamePage,
-    GameComponent,
     SettingsPage,
     LoginPage,
-    HLineComponent,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    LineModule,
+    ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

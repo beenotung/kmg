@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
 
-const urls = ["http://localhost:3000", "https://kmg.surge.sh"];
+const urls = ["phaser.html", "http://localhost:3000", "https://kmg.surge.sh"];
 
 @Component({
   selector: "game-cmp",
@@ -37,6 +37,11 @@ export class GameComponent implements OnInit, OnDestroy {
 
   reloadGame() {
     this.urlIdx = 0;
+    this.iframe.src = urls[this.urlIdx];
+  }
+
+  nextUrl() {
+    this.urlIdx = (this.urlIdx + 1) % urls.length;
     this.iframe.src = urls[this.urlIdx];
   }
 }

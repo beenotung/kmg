@@ -15,7 +15,7 @@ export class LoginPage {
   phone_num = "";
   version = config.client_version;
 
-  lang: string;
+  lang: string = 'en';
 
   constructor(public navCtrl: NavController
     , private storage: StorageService
@@ -38,6 +38,7 @@ export class LoginPage {
 
   signup() {
     console.log("signup");
+    this.login();
   }
 
   //

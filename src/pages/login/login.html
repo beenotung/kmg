@@ -10,7 +10,14 @@
 
     <ion-row>
       <ion-col offset-1>
-        <img src="assets/imgs/small-logo.png"/>
+        <ion-row>
+          <img src="assets/imgs/small-logo.png" class="title"/>
+        </ion-row>
+        <ion-row>
+          <p class="title">
+            Welcome to KMG
+          </p>
+        </ion-row>
       </ion-col>
       <ion-col col-auto>
         <ion-row>
@@ -32,10 +39,6 @@
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
-
-    <p class="title">
-      Welcome to KMG
-    </p>
 
     <ion-row align-items-center class="inputfield">
       <ion-col col-2></ion-col>
@@ -69,11 +72,14 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-buttons no-margin bg-color="white">
-    <button ion-button full no-margin [disabled]="!validate()"
-            class="footer-button black-button" (click)="login()">
-      Login
-    </button>
-  </ion-buttons>
+<ion-footer no-border>
+  <ion-row no-padding>
+    <ion-col col-1></ion-col>
+    <ion-col col-10>
+      <ion-buttons>
+        <button ion-button block large (click)="login()" [disabled]="!validate()">Login</button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-1></ion-col>
+  </ion-row>
 </ion-footer>
