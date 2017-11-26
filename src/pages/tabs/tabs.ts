@@ -1,19 +1,27 @@
-import { Component } from '@angular/core';
-
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import {Component, OnInit, ViewChild} from "@angular/core";
+import {Tabs} from "ionic-angular";
+import {SettingsPage} from "../settings/settings";
+import {GamePage} from "../game/game";
 
 @Component({
-  templateUrl: 'tabs.html'
+  selector: "page-tabs",
+  templateUrl: "tabs.html"
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  static instant: TabsPage = undefined;
+
+  @ViewChild("tabs") tabs: Tabs;
+
+  tab1 = SettingsPage;
+  tab2 = GamePage;
+  tab3 = SettingsPage;
+  tab4 = SettingsPage;
 
   constructor() {
+    TabsPage.instant = this;
+  }
 
+  async ngOnInit() {
   }
 }
