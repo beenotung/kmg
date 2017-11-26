@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $# == 0 ]; then
+  echo "Invalid: missing argument"
+  exit 1
+fi
+while [ true ]; do
+  $@
+  if [ "$INTERVAL" ]; then
+    sleep "$INTERVAL"
+  fi
+done

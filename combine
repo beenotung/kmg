@@ -1,13 +1,23 @@
 #!/bin/bash
 ## for gource video
 
-git checkout -b combine
+git merge --abort
+git checkout origin/master
+git branch -D master
+git checkout -b master
+gr
+./gu
+
+git branch -D all
+git checkout -b all
 
 function step1 {
   cd "$1"
+  git branch -D "$1"
+  gr
   git checkout -b "$1"
-  mkdir -p "combine/$1"
-  ls -a | grep -v '^\.$' | grep -v '^\.\.$' | xargs -I {} git mv {} "combine/$1/"
+  mkdir -p "all/$1"
+  ls -a | grep -v '^\.$' | grep -v '^\.\.$' | xargs -I {} git mv {} "all/$1/"
   git commit -m 'move for gource'
   cd ..
 }
@@ -17,11 +27,15 @@ step1 kmg-phaser
 step1 kmg-ionic
 step1 kmg-ionic-db
 
+mkdir all
+
 function step2 {
-  git remote add "$1" "$1"
-  git pull --allow-unrelated "$1" "$1"
+  git remote add "$1" "all/$1"
+  git fetch "$1"
+  git merge --allow-unrelated --no-edit "$1/$1"
   git-mediate
   git mergetool
+  git rm -rf "$1"
   git commit -m "merged with $1"
 }
 
