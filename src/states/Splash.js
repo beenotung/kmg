@@ -107,9 +107,9 @@ export default class extends Phaser.State {
     this.load.image('leftbutton-map', './assets/images/leftbutton-map.png')
     this.load.image('rightbutton-map', './assets/images/rightbutton-map.png')
     this.load.image('background-map', './assets/images/background-map.png')
-    for (let i = 1; i < 113; i++) {
-      this.load.image('block_' + i, './assets/images/block_' + i + '.png')
-    }
+    // for (let i = 1; i < 113; i++) {
+    //   this.load.image('block_' + i, './assets/images/block_' + i + '.png')
+    // }
     this.load.image('circle', './assets/images/circle.png')
     this.load.image('blackpattern', './assets/images/blackpattern.png')
     this.load.image('purplepattern', './assets/images/purplepattern.png')
