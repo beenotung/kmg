@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+cd ../kmg-phaser
+./deploy
+cd ../kmg-ionic
+
+./auto-init
+rm -rf www
+ionic build
+cp ../kmg-phaser/index.html www/phaser.html
+cp -r ../kmg-phaser/dist www/
+
+mv www dist
+surge dist kmg.surge.sh

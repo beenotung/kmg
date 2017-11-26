@@ -1,0 +1,85 @@
+<ion-header>
+</ion-header>
+
+
+<ion-content no-padding>
+
+  <div fill-parent bg-color="yellow">
+
+    <h-line height="25px" [nocolor]="true"></h-line>
+
+    <ion-row>
+      <ion-col offset-1>
+        <ion-row>
+          <img src="assets/imgs/small-logo.png" class="title"/>
+        </ion-row>
+        <ion-row>
+          <p class="title">
+            Welcome to KMG
+          </p>
+        </ion-row>
+      </ion-col>
+      <ion-col col-auto>
+        <ion-row>
+          <ion-col no-padding text-right>
+            <span class="small-label">{{version}}</span>
+          </ion-col>
+        </ion-row>
+        <h-line nocolor></h-line>
+        <ion-row text-right class="small-label lang-wrapper"
+                 (click)="setAppLang('en')" *ngIf="lang!=='en'">
+          <ion-icon name="md-globe" padding-right></ion-icon>
+          <span>English version</span>
+        </ion-row>
+        <ion-row text-right class="small-label lang-wrapper"
+                 (click)="setAppLang('zh')" *ngIf="lang!=='zh'">
+          <ion-icon name="md-globe" padding-right></ion-icon>
+          <span>中文版</span>
+        </ion-row>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center class="inputfield">
+      <ion-col col-2></ion-col>
+      <ion-col text-center col-1>
+        <ion-icon name="call"></ion-icon>
+      </ion-col>
+      <ion-col col-7>
+        <ion-item no-lines>
+          <ion-input type="number" placeholder="Phone Number"
+                     [(ngModel)]="phone_num"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+
+    <h-line height="2px"></h-line>
+
+    <div text-right (click)="signup()" padding-vertical>
+      <ion-row>
+        <ion-col>
+          No Account?<br>
+          <span class="bold">Signup</span>
+          &nbsp;
+          <ion-icon name="arrow-round-forward"></ion-icon>
+        </ion-col>
+        <ion-col col-1></ion-col>
+      </ion-row>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border>
+  <ion-row no-padding>
+    <ion-col col-1></ion-col>
+    <ion-col col-10>
+      <ion-buttons>
+        <button ion-button block large (click)="login()" [disabled]="!validate()">Login</button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-1></ion-col>
+  </ion-row>
+</ion-footer>
