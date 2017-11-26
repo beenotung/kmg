@@ -1,0 +1,16 @@
+#!/bin/bash
+hash yarn 2>/dev/null || npm i -g yarn
+set -e
+lib="../kmg-core"
+cd "$lib"
+if [ -d node_modules/@types ]; then
+  dev=true
+fi
+./build-lib
+cd -
+if [ $dev ]; then
+  yarn add "$lib"
+  yarn install --dev
+else
+  npm link "$lib"
+fi

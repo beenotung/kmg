@@ -1,0 +1,36 @@
+{"frames": {
+
+"startbutton-home_bk.png":
+{
+	"frame": {"x":0,"y":0,"w":201,"h":58},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":58},
+	"sourceSize": {"w":201,"h":58}
+},
+"startbutton-home_clicked.png":
+{
+	"frame": {"x":201,"y":0,"w":201,"h":58},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":58},
+	"sourceSize": {"w":201,"h":58}
+},
+"startbutton-home_hover.png":
+{
+	"frame": {"x":402,"y":0,"w":201,"h":58},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":201,"h":58},
+	"sourceSize": {"w":201,"h":58}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "startbtn_home`.png",
+	"format": "RGBA8888",
+	"size": {"w":603,"h":58},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2a246c3405f4a7db63cf08d99a239e87:59f93635746e8da31b54bd4a7039264e:a2fc6ddb66529526aefd5a292a721ba9$"
+}
+}

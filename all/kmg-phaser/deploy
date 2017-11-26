@@ -1,0 +1,7 @@
+#!/bin/bash
+hash yarn 2>/dev/null || npm i -g yarn
+hash surge 2>/dev/null || yarn global add surge
+set -e
+yarn install --dev
+./install-lib
+yarn deploy
